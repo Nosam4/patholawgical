@@ -30,7 +30,7 @@ function singularizeNormalizedAnswer(text) {
 }
 
 export function isAnswerMatch(answerEntry, normalizedGuess) {
-  if (!normalizedGuess) {
+  if (!normalizedGuess || typeof answerEntry?.answer !== "string") {
     return false;
   }
 
@@ -256,10 +256,12 @@ export function getQuestionAnswers(question) {
   }
 
   if (question.type === "sporcle-grid") {
-    return question.columns.flatMap((column) => column.answers);
+    return question.columns
+      .flatMap((column) => column.answers)
+      .filter((answer) => answer?.quiz !== false);
   }
 
-  return question.nodes ?? [];
+  return (question.nodes ?? []).filter((node) => node?.quiz !== false);
 }
 
 export function getQuestionAnswerCount(question) {
@@ -283,12 +285,10 @@ export function questionHasMnemonic(question) {
     && question.columns.some((column) => getColumnMnemonicClues(column).some(Boolean));
 }
 
-export function readProgressMap(storage = globalThis.localStorage) {
-  if (!storage) {
-    return {};
-  }
-
+export function readProgressMap(storage) {
   try {
+    storage ??= globalThis.localStorage;
+    if (!storage) return {};
     const parsed = JSON.parse(storage.getItem(STORAGE_KEY));
     return parsed && typeof parsed === "object" && !Array.isArray(parsed)
       ? parsed
@@ -298,12 +298,15 @@ export function readProgressMap(storage = globalThis.localStorage) {
   }
 }
 
-export function writeProgressMap(map, storage = globalThis.localStorage) {
-  if (!storage) {
-    return;
+export function writeProgressMap(map, storage) {
+  try {
+    storage ??= globalThis.localStorage;
+    if (!storage) return false;
+    storage.setItem(STORAGE_KEY, JSON.stringify(map));
+    return true;
+  } catch {
+    return false;
   }
-
-  storage.setItem(STORAGE_KEY, JSON.stringify(map));
 }
 
 function numberOrZero(value) {

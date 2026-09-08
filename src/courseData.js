@@ -7,6 +7,8 @@ import {
 } from "./freRemainingQuestions.js";
 import { securedTransactionsQuestions } from "./securedTransactionsQuestions.js";
 import { commercialPaperQuestions } from "./commercialPaperQuestions.js";
+import { professionalResponsibilitySubjects } from "./professionalResponsibilityQuestions.js";
+import { jordanPeytonDirectExaminationQuestion } from "./directExaminationQuestions.js";
 
 const [
   twoDismissalRule,
@@ -1653,6 +1655,12 @@ const formCannedObjectionsQuestion = {
 
 export const courseCatalog = [
   {
+    id: "professional-responsibility-mpre",
+    title: "Professional Responsibility",
+    term: "MPRE",
+    subjects: professionalResponsibilitySubjects,
+  },
+  {
     id: "evidence-fall-2026",
     title: "Evidence",
     term: "Fall 2026",
@@ -1798,6 +1806,11 @@ export const courseCatalog = [
           openingStatementStructureQuestion,
           openingStatementIntroductionParagraphQuestion,
         ],
+      },
+      {
+        id: "direct-examination",
+        title: "Direct Examination",
+        questions: [jordanPeytonDirectExaminationQuestion],
       },
     ],
   },

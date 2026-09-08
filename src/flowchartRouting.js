@@ -1,3 +1,5 @@
+import { routeAroundNodes, segmentCrossesNode } from "./obstacleRouting.js";
+
 const ANCHORS = {
   top: { x: 0.5, y: 0, side: "top" },
   "top-left": { x: 0.25, y: 0, side: "top" },
@@ -160,9 +162,14 @@ export function buildArrows(flowchart) {
     const end = arrow.toPoint
       ? { ...arrow.toPoint, side: arrow.toSide ?? "point" }
       : anchorPoint(toNode, arrow.toAnchor, fromNode ?? arrow.fromPoint);
-    const points = arrow.waypoints?.length
+    let points = arrow.waypoints?.length
       ? [start, ...arrow.waypoints, end]
       : buildDefaultRoute(start, end);
+    if (flowchart.avoidNodes && !arrow.waypoints?.length
+      && points.some((p, i) => i > 0 && flowchart.nodes.some((node) =>
+        segmentCrossesNode(points[i - 1], p, node)))) {
+      points = routeAroundNodes(start, end, flowchart.nodes);
+    }
     const labelPoint = getLabelPoint(points, arrow);
 
     return [

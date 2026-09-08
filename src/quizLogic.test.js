@@ -9,6 +9,7 @@ import {
   findPreviousFieldAnswerId,
   getColumnMnemonicClues,
   getNextActiveAnswerIdAfterMatch,
+  getQuestionAnswers,
   getQuestionAnswerCount,
   isNodeMatch,
   localISODate,
@@ -302,6 +303,19 @@ test("getQuestionAnswerCount counts flowchart nodes and sporcle grid answers", (
     }),
     3,
   );
+});
+
+test("flowchart static nodes are visible context, not quiz answers", () => {
+  const question = {
+    type: "flowchart",
+    nodes: [
+      { id: "heading", quiz: false, label: "Rule 1.7" },
+      { id: "answer", answer: "directly adverse" },
+    ],
+  };
+
+  assert.deepEqual(getQuestionAnswers(question), [question.nodes[1]]);
+  assert.equal(getQuestionAnswerCount(question), 1);
 });
 
 test("mnemonic helpers map string characters and array clues by answer position", () => {

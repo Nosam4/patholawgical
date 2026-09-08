@@ -7,10 +7,14 @@ import {
   findPreviousFieldAnswerId,
   getColumnMnemonicClues,
   getNextActiveAnswerIdAfterMatch,
-  getQuestionAnswerCount,
+  getQuestionAnswers,
   normalizeAnswer,
   questionHasMnemonic,
+  readProgressMap,
+  writeProgressMap,
 } from "./quizLogic.js";
+
+import { latestResumableRun, missedAnswerIds, questionRevision, saveRun, savedRunFor } from "./studyProgress.js";
 
 function firstSubjectFor(course) {
   return course?.subjects[0] ?? null;
@@ -24,12 +28,29 @@ function questionTypeLabel(question) {
   return question?.type === "sporcle-grid" ? "Sporcle-style" : "Flowchart";
 }
 
-function FlowchartStage({ flowchart, guessedIds, revealed }) {
+function FlowchartStage({ flowchart, guessedIds, revealed, contextIds }) {
   const arrows = useMemo(() => buildArrows(flowchart), [flowchart]);
+  const scrollRef = useRef(null);
+
+  useEffect(() => {
+    const scroller = scrollRef.current;
+
+    if (scroller && scroller.scrollWidth > scroller.clientWidth) {
+      scroller.scrollLeft = (scroller.scrollWidth - scroller.clientWidth) / 2;
+    }
+  }, [flowchart.id]);
 
   return (
     <section className="panel chart-panel">
-      <div className="chart-scroll">
+      {flowchart.sourceUrl ? (
+        <p className="source-line">
+          Source:{" "}
+          <a href={flowchart.sourceUrl} target="_blank" rel="noreferrer">
+            {flowchart.sourceLabel ?? flowchart.sourceUrl}
+          </a>
+        </p>
+      ) : null}
+      <div className="chart-scroll" ref={scrollRef}>
         <div
           className="flowchart-stage"
           style={{ width: flowchart.width, height: flowchart.height }}
@@ -45,6 +66,7 @@ function FlowchartStage({ flowchart, guessedIds, revealed }) {
             <defs>
               <marker
                 id="arrowhead"
+                markerUnits="userSpaceOnUse"
                 markerWidth="10"
                 markerHeight="8"
                 refX="8"
@@ -78,12 +100,15 @@ function FlowchartStage({ flowchart, guessedIds, revealed }) {
 
             <g className="flowchart-nodes">
               {flowchart.nodes.map((node) => {
-                const solved = guessedIds.has(node.id);
-                const showAnswer = solved || revealed;
+                const isStatic = node.quiz === false || contextIds.has(node.id);
+                const solved = !isStatic && guessedIds.has(node.id);
+                const showAnswer = isStatic || solved || revealed;
                 const className = [
                   "flow-node",
+                  node.kind ? `flow-node-${node.kind}` : "",
+                  isStatic ? "static" : "",
                   solved ? "correct" : "",
-                  !solved && revealed ? "revealed" : "",
+                  !isStatic && !solved && revealed ? "revealed" : "",
                 ]
                   .filter(Boolean)
                   .join(" ");
@@ -98,8 +123,9 @@ function FlowchartStage({ flowchart, guessedIds, revealed }) {
                     height={node.height}
                   >
                     <article className={className}>
+                      {node.clue ? <p className="node-clue">{node.clue}</p> : null}
                       {showAnswer ? (
-                        <p className="node-answer">{node.answer}</p>
+                        <p className="node-answer">{node.label ?? node.answer}</p>
                       ) : (
                         <div className="node-blank" aria-label="Unanswered blank">
                           <span />
@@ -129,6 +155,7 @@ function SporcleGrid({
   onFieldKeyDown,
   onSubmit,
   showMnemonics,
+  contextIds,
 }) {
   return (
     <section className="panel sporcle-panel">
@@ -151,17 +178,19 @@ function SporcleGrid({
               <h3>{column.title}</h3>
               <ol className="answer-list">
                 {column.answers.map((answer, answerIndex) => {
-                  const solved = guessedIds.has(answer.id);
-                  const showAnswer = solved || revealed;
+                  const isStatic = answer.quiz === false || contextIds.has(answer.id);
+                  const solved = !isStatic && guessedIds.has(answer.id);
+                  const showAnswer = isStatic || solved || revealed;
                   const active = activeAnswerId === answer.id;
 
                   return (
                     <li
+                      data-answer-id={answer.id}
                       className={[
                         "answer-row",
                         answer.indicator ? "has-indicator" : "",
                         solved ? "correct" : "",
-                        !solved && revealed ? "revealed" : "",
+                        !isStatic && !solved && revealed ? "revealed" : "",
                       ]
                         .filter(Boolean)
                         .join(" ")}
@@ -184,7 +213,7 @@ function SporcleGrid({
                         ) : active ? (
                           <form onSubmit={(event) => onSubmit(event, column, answer)}>
                             <input
-                              aria-label={`Answer for ${column.title}`}
+                              aria-label={`Answer ${answerIndex + 1} for ${column.title}`}
                               autoComplete="off"
                               autoFocus
                               onChange={(event) => onDraftChange(event.target.value)}
@@ -194,7 +223,7 @@ function SporcleGrid({
                           </form>
                         ) : (
                           <button
-                            aria-label={`Blank answer for ${column.title}`}
+                            aria-label={`Blank answer ${answerIndex + 1} for ${column.title}`}
                             className="blank-answer"
                             onClick={() => onActivate(answer.id)}
                             type="button"
@@ -220,6 +249,13 @@ export default function App() {
   const firstSubject = firstSubjectFor(firstCourse);
   const firstQuestion = firstQuestionFor(firstSubject);
 
+  const [progressMap, setProgressMap] = useState(() => readProgressMap());
+  const [storageError, setStorageError] = useState(false);
+  const [targetIds, setTargetIds] = useState(null);
+  const [practice, setPractice] = useState(false);
+  const [runStarted, setRunStarted] = useState(false);
+  const controlsRef = useRef(null);
+
   const [courseId, setCourseId] = useState(firstCourse?.id ?? "");
   const [subjectId, setSubjectId] = useState(firstSubject?.id ?? "");
   const [questionId, setQuestionId] = useState(firstQuestion?.id ?? "");
@@ -244,7 +280,54 @@ export default function App() {
     () => subject?.questions.find((item) => item.id === questionId) ?? null,
     [subject, questionId],
   );
-  const totalBlanks = getQuestionAnswerCount(question);
+  const answers = getQuestionAnswers(question);
+  const targets = targetIds ?? answers.map((answer) => answer.id);
+  const totalBlanks = targets.length;
+  const contextIds = new Set(answers.filter((answer) => !targets.includes(answer.id)).map((answer) => answer.id));
+  const navigationQuestion = question?.type === "sporcle-grid" ? {
+    ...question, columns: question.columns.map((column) => ({ ...column,
+      answers: column.answers.filter((answer) => targets.includes(answer.id)),
+    })),
+  } : question;
+  const runClosed = revealed || (totalBlanks > 0 && guessedIds.size === totalBlanks);
+  const entry = progressMap[questionId];
+  const currentProgress = question && entry?.revision === questionRevision(question) ? entry : null;
+  const missedIds = question ? missedAnswerIds(question, entry) : [];
+  const resumable = latestResumableRun(courseCatalog, progressMap);
+
+  function persistRun(nextGuesses, closed = false, nextTargets = targets, nextPractice = practice) {
+    const nextMap = saveRun({ progressMap, question, targetIds: nextTargets,
+      guessedIds: nextGuesses, practice: nextPractice, closed });
+    setProgressMap(nextMap);
+    setStorageError(!writeProgressMap(nextMap));
+    setRunStarted(true);
+  }
+
+  function resumeRun() {
+    if (!resumable) return;
+    const { course: nextCourse, subject: nextSubject, question: nextQuestion, run } = resumable;
+    setCourseId(nextCourse.id);
+    setSubjectId(nextSubject.id);
+    setQuestionId(nextQuestion.id);
+    resetRun("Saved run resumed.");
+    setTargetIds(run.targetIds);
+    setGuessedIds(new Set(run.guessedIds));
+    setPractice(run.practice);
+    setRunStarted(true);
+  }
+
+  function startFresh() {
+    resetRun("New run started.");
+    persistRun(new Set(), false, answers.map((answer) => answer.id), false);
+  }
+
+  function practiceMissed() {
+    if (!missedIds.length) return;
+    resetRun("Practice the missed blanks. Previously correct answers are shown as context.");
+    setTargetIds(missedIds);
+    setPractice(true);
+    persistRun(new Set(), false, missedIds, true);
+  }
   const hasMnemonic = questionHasMnemonic(question);
 
   useEffect(() => {
@@ -258,6 +341,9 @@ export default function App() {
   }, [question?.id]);
 
   function resetRun(nextMessage = "Fresh run started.") {
+    setTargetIds(null);
+    setPractice(false);
+    setRunStarted(false);
     setGuessedIds(new Set());
     setRevealed(false);
     setFlowchartGuess("");
@@ -274,7 +360,7 @@ export default function App() {
     setCourseId(nextCourse?.id ?? "");
     setSubjectId(nextSubject?.id ?? "");
     setQuestionId(nextQuestion?.id ?? "");
-    resetRun("Class switched.");
+    loadQuestionRun(nextQuestion, "Class switched.");
   }
 
   function chooseSubject(nextSubjectId) {
@@ -283,18 +369,30 @@ export default function App() {
 
     setSubjectId(nextSubject?.id ?? "");
     setQuestionId(nextQuestion?.id ?? "");
-    resetRun("Subject switched.");
+    loadQuestionRun(nextQuestion, "Subject switched.");
   }
 
   function chooseQuestion(nextQuestionId) {
     setQuestionId(nextQuestionId);
-    resetRun("Question switched.");
+    loadQuestionRun(subject?.questions.find((item) => item.id === nextQuestionId), "Question switched.");
+  }
+
+  function loadQuestionRun(nextQuestion, nextMessage) {
+    resetRun(nextMessage);
+    const run = nextQuestion && savedRunFor(nextQuestion, progressMap[nextQuestion.id]);
+    if (!run) return;
+    setTargetIds(run.targetIds);
+    setGuessedIds(new Set(run.guessedIds));
+    setPractice(run.practice);
+    setRunStarted(true);
+    setMessage("Saved run resumed.");
   }
 
   function markCorrect(answerEntry) {
     const nextGuessedIds = new Set(guessedIds);
     nextGuessedIds.add(answerEntry.id);
     setGuessedIds(nextGuessedIds);
+    persistRun(nextGuessedIds, nextGuessedIds.size === totalBlanks);
 
     if (nextGuessedIds.size === totalBlanks) {
       setMessage("Complete. All blanks filled.");
@@ -308,7 +406,7 @@ export default function App() {
   function handleFlowchartSubmit(event) {
     event.preventDefault();
 
-    if (!question || revealed) {
+    if (!question || runClosed) {
       setMessage("This run is locked. Start a fresh run to keep guessing.");
       return;
     }
@@ -320,7 +418,11 @@ export default function App() {
       return;
     }
 
-    const matchedNode = findMatchingAnswer(question.nodes, guessedIds, normalizedGuess);
+    const matchedNode = findMatchingAnswer(
+      answers.filter((answer) => targets.includes(answer.id)),
+      guessedIds,
+      normalizedGuess,
+    );
 
     if (!matchedNode) {
       setMessage("No match yet.");
@@ -334,7 +436,7 @@ export default function App() {
   function handleSporcleSubmit(event, column, activeAnswer) {
     event.preventDefault();
 
-    if (!question || revealed) {
+    if (!question || runClosed) {
       setMessage("This run is locked. Start a fresh run to keep guessing.");
       return;
     }
@@ -347,7 +449,7 @@ export default function App() {
     }
 
     const matchedAnswer = findMatchingAnswer(
-      column.answers,
+      column.answers.filter((answer) => targets.includes(answer.id)),
       guessedIds,
       normalizedGuess,
     );
@@ -360,7 +462,7 @@ export default function App() {
     const nextGuessedIds = markCorrect(matchedAnswer);
     setActiveAnswerId(
       getNextActiveAnswerIdAfterMatch({
-        question,
+        question: navigationQuestion,
         columnId: column.id,
         activeAnswerId: activeAnswer.id,
         matchedAnswerId: matchedAnswer.id,
@@ -371,14 +473,15 @@ export default function App() {
   }
 
   function handleSporcleFieldKeyDown(event, column, activeAnswer) {
-    if (event.key !== "Tab") {
+    if (event.key !== "Tab" && event.key !== "ArrowDown" && event.key !== "ArrowUp") {
       return;
     }
 
     event.preventDefault();
-    const nextAnswerId = event.shiftKey
-      ? findPreviousFieldAnswerId(question, column.id, activeAnswer.id, guessedIds)
-      : findNextFieldAnswerId(question, column.id, activeAnswer.id, guessedIds);
+    const moveBackward = event.key === "ArrowUp" || (event.key === "Tab" && event.shiftKey);
+    const nextAnswerId = moveBackward
+      ? findPreviousFieldAnswerId(navigationQuestion, column.id, activeAnswer.id, guessedIds)
+      : findNextFieldAnswerId(navigationQuestion, column.id, activeAnswer.id, guessedIds);
 
     setActiveAnswerId(
       nextAnswerId,
@@ -387,6 +490,8 @@ export default function App() {
   }
 
   function handleReveal() {
+    if (runClosed) return;
+    persistRun(guessedIds, true);
     setRevealed(true);
     setActiveAnswerId("");
     setSporcleDraft("");
@@ -421,6 +526,7 @@ export default function App() {
         <div className="control-group">
           <label htmlFor="courseSelect">Class</label>
           <select
+            ref={controlsRef}
             id="courseSelect"
             aria-label="Select class"
             onChange={(event) => chooseCourse(event.target.value)}
@@ -467,6 +573,13 @@ export default function App() {
         </div>
       </section>
 
+      {resumable && (!runStarted || resumable.question.id !== questionId) ? (
+        <section className="panel resume-panel">
+          <p>Saved run: {resumable.question.title}</p>
+          <button type="button" onClick={resumeRun}>Resume saved run</button>
+        </section>
+      ) : null}
+
       <section className="panel quiz-panel">
         <div className="quiz-heading">
           <div>
@@ -477,7 +590,7 @@ export default function App() {
             </p>
           </div>
           <p className="completion-indicator">
-            Filled {guessedIds.size} of {totalBlanks}
+            {practice ? "Practice: " : "Filled "}{guessedIds.size} of {totalBlanks}
           </p>
         </div>
 
@@ -493,22 +606,28 @@ export default function App() {
               aria-label="Type a rule phrase"
               onChange={(event) => setFlowchartGuess(event.target.value)}
               value={flowchartGuess}
+              disabled={runClosed}
             />
-            <button type="submit">Submit Guess</button>
+            <button type="submit" disabled={runClosed}>Submit Guess</button>
           </form>
         ) : null}
 
         <div className="action-row">
-          <button type="button" onClick={handleReveal}>
+          <button type="button" onClick={handleReveal} disabled={runClosed}>
             Reveal Missed Answers
           </button>
           <button
             className="secondary-action"
             type="button"
-            onClick={() => resetRun("New run started.")}
+            onClick={startFresh}
           >
             Start Fresh
           </button>
+          {missedIds.length > 0 ? (
+            <button type="button" className="secondary-action" onClick={practiceMissed}>
+              Practice missed answers ({missedIds.length})
+            </button>
+          ) : null}
           {hasMnemonic ? (
             <button
               aria-controls="sporcleGrid"
@@ -522,7 +641,16 @@ export default function App() {
           ) : null}
         </div>
 
-        <p id="messageText">{message}</p>
+        <p id="messageText" role="status">{message}</p>
+        {question.type === "sporcle-grid" ? (
+          <p className="keyboard-hint">Use Tab or ↓ for the next blank, and Shift+Tab or ↑ for the previous blank.</p>
+        ) : null}
+        <p className="study-summary">
+          Full attempts: {currentProgress?.attempts ?? 0} · Best: {currentProgress?.bestScore ?? 0}/{answers.length}
+          {currentProgress?.lastAttempted ? ` · Last studied: ${currentProgress.lastAttempted}` : ""}
+          {currentProgress?.practiceAttempts ? ` · Practice attempts: ${currentProgress.practiceAttempts}` : ""}
+        </p>
+        {storageError ? <p role="alert">Progress could not be saved in this browser. Keep this tab open to continue this session.</p> : null}
       </section>
 
       {question.type === "sporcle-grid" ? (
@@ -530,6 +658,7 @@ export default function App() {
           activeAnswerId={activeAnswerId}
           draft={sporcleDraft}
           guessedIds={guessedIds}
+          contextIds={contextIds}
           onActivate={(answerId) => {
             setActiveAnswerId(answerId);
             setSporcleDraft("");
@@ -545,9 +674,13 @@ export default function App() {
         <FlowchartStage
           flowchart={question}
           guessedIds={guessedIds}
+          contextIds={contextIds}
           revealed={revealed}
         />
       )}
+      <button className="back-to-controls" type="button" onClick={() => controlsRef.current?.focus()}>
+        Back to study controls
+      </button>
     </main>
   );
 }
