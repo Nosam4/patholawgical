@@ -75,7 +75,7 @@ export const floridaCivilProcedureQuestions = [
         ["personal", "Physical delivery directly to the defendant", "Personal service", "personal"],
         ["abode", "Location for ordinary residential substitute delivery", "Usual place of abode", "usual abode", "abode"],
         ["resident", "Recipient must do this at the defendant's abode", "Reside there", "live there", "reside", "resident"],
-        ["explain", "Server must do this when delivering to the abode recipient", "Advise of the contents of the papers", "advise of the contents", "The contents of the papers", "contents", "explain the contents"],
+        ["explain", "Server must do this when delivering to the abode recipient", "Aware of the contents", "Advise of the contents of the papers", "advise of the contents", "The contents of the papers", "contents", "explain the contents"],
         ["age", "Minimum age of a person receiving abode service", "15 years", "15", "15 years old"],
       ], ["P", "U", "R", "A", "15"]),
       column("service-methods", "Other Service Concepts", [
