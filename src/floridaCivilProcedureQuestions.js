@@ -5,10 +5,11 @@ const rulesUrl = "https://www-media.floridabar.org/uploads/2026/04/Civil-Procedu
 const appellateUrl = "https://www-media.floridabar.org/uploads/2026/06/Appellate-Court-Rules-07-01-26.pdf";
 const smallClaimsUrl = "https://www-media.floridabar.org/uploads/2026/08/2026_01-JUL-Small-Claims-Rules-7-1-2026-1.pdf";
 
-function column(id, title, rows) {
+function column(id, title, rows, mnemonic) {
   return {
     id,
     title,
+    ...(mnemonic ? { mnemonic } : {}),
     answers: rows.map(([key, indicator, answer, ...acceptedAnswers]) => ({
       id: `fl-civpro-${id}-${key}`,
       indicator,
@@ -73,10 +74,10 @@ export const floridaCivilProcedureQuestions = [
       column("delivery", "Serving an Individual", [
         ["personal", "Physical delivery directly to the defendant", "Personal service", "personal"],
         ["abode", "Location for ordinary residential substitute delivery", "Usual place of abode", "usual abode", "abode"],
-        ["age", "Minimum age of a person receiving abode service", "15 years", "15", "15 years old"],
         ["resident", "Recipient must do this at the defendant's abode", "Reside there", "live there", "reside", "resident"],
-        ["explain", "Server must tell the abode recipient this", "The contents of the papers", "contents", "explain the contents"],
-      ]),
+        ["explain", "Server must do this when delivering to the abode recipient", "Advise of the contents of the papers", "advise of the contents", "The contents of the papers", "contents", "explain the contents"],
+        ["age", "Minimum age of a person receiving abode service", "15 years", "15", "15 years old"],
+      ], ["P", "U", "R", "A", "15"]),
       column("service-methods", "Other Service Concepts", [
         ["agent", "First service target for a corporation or LLC", "Registered agent"],
         ["publication", "Notice through publication in authorized cases", "Constructive service", "service by publication", "publication"],

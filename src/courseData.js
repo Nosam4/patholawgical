@@ -8,6 +8,7 @@ import {
 import { securedTransactionsQuestions } from "./securedTransactionsQuestions.js";
 import { commercialPaperQuestions } from "./commercialPaperQuestions.js";
 import { floridaCivilProcedureQuestions } from "./floridaCivilProcedureQuestions.js";
+import { floridaCivilProcedureTimelineQuestions } from "./floridaCivilProcedureTimelines.js";
 import { professionalResponsibilitySubjects } from "./professionalResponsibilityQuestions.js";
 import { jordanPeytonDirectExaminationQuestion } from "./directExaminationQuestions.js";
 
@@ -1780,6 +1781,11 @@ export const courseCatalog = [
         id: "florida-civil-procedure",
         title: "Florida Civil Procedure",
         questions: floridaCivilProcedureQuestions,
+      },
+      {
+        id: "florida-civil-procedure-timelines",
+        title: "Florida Civil Procedure: Timelines",
+        questions: floridaCivilProcedureTimelineQuestions,
       },
     ],
   },

@@ -449,13 +449,16 @@ export default function App() {
     }
 
     const matchedAnswer = findMatchingAnswer(
-      column.answers.filter((answer) => targets.includes(answer.id)),
+      column.answers.filter((answer) => targets.includes(answer.id)
+        && (question.answerMatching !== "active" || answer.id === activeAnswer.id)),
       guessedIds,
       normalizedGuess,
     );
 
     if (!matchedAnswer) {
-      setMessage(`No match in ${column.title} yet.`);
+      setMessage(question.answerMatching === "active"
+        ? "No match for this blank yet."
+        : `No match in ${column.title} yet.`);
       return;
     }
 
