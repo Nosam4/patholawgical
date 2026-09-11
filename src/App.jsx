@@ -158,7 +158,7 @@ function SporcleGrid({
   contextIds,
 }) {
   return (
-    <section className="panel sporcle-panel">
+    <section className={`panel sporcle-panel${question.clueLayout === "above" ? " stacked-clues" : ""}`}>
       {question.sourceUrl ? (
         <p className="source-line">
           Source:{" "}

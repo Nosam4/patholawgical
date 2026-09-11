@@ -7,6 +7,7 @@ import {
 } from "./freRemainingQuestions.js";
 import { securedTransactionsQuestions } from "./securedTransactionsQuestions.js";
 import { commercialPaperQuestions } from "./commercialPaperQuestions.js";
+import { floridaCivilProcedureQuestions } from "./floridaCivilProcedureQuestions.js";
 import { professionalResponsibilitySubjects } from "./professionalResponsibilityQuestions.js";
 import { jordanPeytonDirectExaminationQuestion } from "./directExaminationQuestions.js";
 
@@ -1774,6 +1775,11 @@ export const courseCatalog = [
         id: "ucc-9-secured-transactions",
         title: "UCC 9: Secured Transactions",
         questions: securedTransactionsQuestions,
+      },
+      {
+        id: "florida-civil-procedure",
+        title: "Florida Civil Procedure",
+        questions: floridaCivilProcedureQuestions,
       },
     ],
   },

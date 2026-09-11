@@ -403,6 +403,23 @@ button:focus-visible, select:focus-visible, a:focus-visible {
   padding: 0;
 }
 
+.stacked-clues .sporcle-grid {
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr));
+}
+
+.stacked-clues .answer-row {
+  flex-direction: column;
+}
+
+.stacked-clues .answer-indicator {
+  flex: 0 0 auto;
+  padding: 8px 10px;
+  justify-content: flex-start;
+  border-right: 0;
+  border-bottom: 1px solid #c2cbd3;
+  line-height: 1.4;
+}
+
 .answer-row {
   min-height: 48px;
   border-top: 1px solid #c2cbd3;
