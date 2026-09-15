@@ -18,6 +18,9 @@ Live site: https://nosam4.github.io/patholawgical/
 - Tab or ↓ moves to the next unanswered grid blank; Shift+Tab or ↑ moves to the previous one.
 - Includes a source-backed Professional Responsibility / MPRE curriculum covering
   Model Rules 1–8.
+- Includes 64 outline-based Sales & Leases drills across eight sections, with
+  slide and case context, statutory links, and expandable course-material references.
+  See [coverage and source corrections](docs/sales-and-leases-curriculum.md).
 
 ## Run locally
 

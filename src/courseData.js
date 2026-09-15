@@ -11,6 +11,9 @@ import { floridaCivilProcedureQuestions } from "./floridaCivilProcedureQuestions
 import { floridaCivilProcedureTimelineQuestions } from "./floridaCivilProcedureTimelines.js";
 import { professionalResponsibilitySubjects } from "./professionalResponsibilityQuestions.js";
 import { jordanPeytonDirectExaminationQuestion } from "./directExaminationQuestions.js";
+import { trialAdvocacyLitanyQuestions } from "./trialAdvocacyLitanies.js";
+import { salesAndLeasesSubjects } from "./salesAndLeasesQuestions.js";
+import { aiAndLawWeek3Questions, aiAndLawWeek4Questions } from "./aiAndLawQuestions.js";
 
 const [
   twoDismissalRule,
@@ -172,6 +175,7 @@ const freRuleNamesQuestion = {
         ruleNameAnswer("1002", "Requirement of the Original", ["best evidence rule", "original writing rule"]),
         ruleNameAnswer("1003", "Admissibility of Duplicates", ["duplicates"]),
         ruleNameAnswer("1004", "Admissibility of Other Evidence of Content"),
+        ruleNameAnswer("1006", "Summaries to Prove Content", ["summaries"]),
       ],
     },
   ],
@@ -1751,6 +1755,7 @@ export const courseCatalog = [
     title: "Sales & Leases",
     term: "Fall 2026",
     subjects: [
+      salesAndLeasesSubjects[0],
       {
         id: "hybrid-transactions",
         title: "Hybrid Transactions",
@@ -1760,6 +1765,7 @@ export const courseCatalog = [
           { ...ucc2022Amendments, type: "flowchart" },
         ],
       },
+      ...salesAndLeasesSubjects.slice(1),
     ],
   },
   {
@@ -1804,6 +1810,16 @@ export const courseCatalog = [
         title: "Week 2: AI History",
         questions: [aiHistoryTimelineQuestion],
       },
+      {
+        id: "week-3-technical-primer",
+        title: "Week 3: Technical Primer",
+        questions: aiAndLawWeek3Questions,
+      },
+      {
+        id: "week-4-gc-hat",
+        title: "Week 4: Putting on the GC Hat",
+        questions: aiAndLawWeek4Questions,
+      },
     ],
   },
   {
@@ -1823,6 +1839,11 @@ export const courseCatalog = [
         id: "direct-examination",
         title: "Direct Examination",
         questions: [jordanPeytonDirectExaminationQuestion],
+      },
+      {
+        id: "litanies",
+        title: "Litanies",
+        questions: trialAdvocacyLitanyQuestions,
       },
     ],
   },

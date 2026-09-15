@@ -127,7 +127,7 @@ test("Evidence includes the syllabus-listed FRE rule names question", () => {
   const rule804 = hearsayColumn.answers.find((answer) => answer.indicator === "Rule 804");
 
   assert.equal(question.type, "sporcle-grid");
-  assert.equal(getQuestionAnswerCount(question), 50);
+  assert.equal(getQuestionAnswerCount(question), 51);
   assert.equal(rule101.answer, "Scope; Definitions");
   assert.equal(rule102.answer, "Purpose");
   assert.equal(rule1101.answer, "Applicability of the Rules");
@@ -581,6 +581,47 @@ test("AI and the Law includes the Week 2 AI history timeline", () => {
   assert.equal(chatGptMatch.id, "ai-history-2022-chatgpt");
 });
 
+test("AI and the Law adds separate Week 3 and Week 4 topic sections", () => {
+  const aiAndLaw = courseCatalog.find((course) => course.id === "ai-and-law-fall-2026");
+  const weekThree = aiAndLaw.subjects.find((subject) => subject.id === "week-3-technical-primer");
+  const weekFour = aiAndLaw.subjects.find((subject) => subject.id === "week-4-gc-hat");
+
+  assert.equal(weekThree.title, "Week 3: Technical Primer");
+  assert.equal(weekFour.title, "Week 4: Putting on the GC Hat");
+  assert.equal(weekThree.questions.length, 5);
+  assert.equal(weekFour.questions.length, 6);
+
+  const newQuestions = [...weekThree.questions, ...weekFour.questions];
+  assert.ok(newQuestions.every((question) => question.type === "sporcle-grid"));
+  assert.ok(newQuestions.every((question) => getQuestionAnswerCount(question) > 0));
+  assert.ok(newQuestions.every((question) => question.courseSources.length >= 1));
+
+  const answerIds = newQuestions
+    .flatMap((question) => question.columns)
+    .flatMap((column) => column.answers)
+    .map((item) => item.id);
+  assert.equal(new Set(answerIds).size, answerIds.length);
+
+  const responsibleAi = findAiAndLawQuestion("ai-week4-responsible-ai-compass");
+  assert.equal(responsibleAi.columns[0].mnemonic, "HASTE");
+  assert.deepEqual(
+    responsibleAi.columns[0].answers.map((item) => item.answer),
+    [
+      "Human-centeredness",
+      "Accountability",
+      "Safety and security",
+      "Transparency and explainability",
+      "Ethics and fairness",
+    ],
+  );
+
+  const archetypes = findAiAndLawQuestion("ai-week4-legal-department-archetypes");
+  assert.deepEqual(
+    archetypes.columns[0].answers.map((item) => item.answer),
+    ["Scaled Enablement", "Advisory Plus", "Empowering Peer", "Seamless Integrator", "Global Leverage"],
+  );
+});
+
 test("Trial Advocacy drills opening-statement structure in order", () => {
   const question = findTrialAdvocacyQuestion("opening-statements-structure");
   const structure = question.columns[0];
@@ -621,5 +662,36 @@ test("Trial Advocacy drills introduction-paragraph sentence openings in order", 
       "caused the victim's death",
       "So, let's talk about",
     ],
+  );
+});
+
+test("Trial Advocacy includes dedicated litany memorization drills", () => {
+  const trialAdvocacy = courseCatalog.find((course) => course.id === "trial-advocacy-fall-2026");
+  const litanies = trialAdvocacy.subjects.find((subject) => subject.id === "litanies");
+
+  assert.equal(litanies.title, "Litanies");
+  assert.equal(litanies.questions.length, 8);
+  assert.ok(litanies.questions.every((question) => question.type === "sporcle-grid"));
+  assert.ok(litanies.questions.every((question) => getQuestionAnswerCount(question) > 0));
+  assert.ok(litanies.questions.every((question) => question.courseSources.length > 0));
+
+  const exhibitSequence = findTrialAdvocacyQuestion("trial-litanies-exhibit-sequence");
+  assert.deepEqual(
+    exhibitSequence.columns[0].answers.map((item) => item.answer),
+    ["Set Up", "Mark", "Show", "Approach", "Give", "Ask the foundation questions", "Offer", "Publish"],
+  );
+
+  const impeachment = findTrialAdvocacyQuestion("trial-litanies-impeachment-three-cs");
+  assert.equal(impeachment.columns[0].mnemonic, "CCC");
+  assert.deepEqual(
+    impeachment.columns[0].answers.map((item) => item.answer),
+    ["Confirm", "Credit", "Confront"],
+  );
+
+  const directSequence = findTrialAdvocacyQuestion("trial-litanies-direct-sequence");
+  assert.equal(directSequence.columns[0].mnemonic, "IDOFDSATL");
+  assert.deepEqual(
+    directSequence.columns[0].answers.map((item) => item.answer),
+    ["Intro", "Date", "Order", "Feeling", "Drive", "Scratch", "Arrive", "Test", "Learn"],
   );
 });

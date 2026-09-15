@@ -28,6 +28,16 @@ function questionTypeLabel(question) {
   return question?.type === "sporcle-grid" ? "Sporcle-style" : "Flowchart";
 }
 
+function CourseSources({ question }) {
+  if (!question.courseSources?.length) return null;
+  return (
+    <details className="source-line course-sources">
+      <summary>Course material</summary>
+      <ul>{question.courseSources.map((reference) => <li key={reference}>{reference}</li>)}</ul>
+    </details>
+  );
+}
+
 function FlowchartStage({ flowchart, guessedIds, revealed, contextIds }) {
   const arrows = useMemo(() => buildArrows(flowchart), [flowchart]);
   const scrollRef = useRef(null);
@@ -50,6 +60,7 @@ function FlowchartStage({ flowchart, guessedIds, revealed, contextIds }) {
           </a>
         </p>
       ) : null}
+      <CourseSources question={flowchart} />
       <div className="chart-scroll" ref={scrollRef}>
         <div
           className="flowchart-stage"
@@ -167,6 +178,8 @@ function SporcleGrid({
           </a>
         </p>
       ) : null}
+
+      <CourseSources question={question} />
 
       <div className="sporcle-grid" id="sporcleGrid">
         {question.columns.map((column) => {
