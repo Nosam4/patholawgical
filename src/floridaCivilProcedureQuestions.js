@@ -1,4 +1,5 @@
-// Original recall drills organized around the user's Allen handout (2025).
+// Original recall drills organized around the user's Allen handout (2025),
+// with separately labeled rule-based supplements for document discovery.
 // Chapter/page references refer to FL.Allen.CivilProcedure.pdf, not the linked
 // rule compilation. The handout itself is not redistributed with the app.
 const rulesUrl = "https://www-media.floridabar.org/uploads/2026/04/Civil-Procedure-Rules-04-01-26.pdf";
@@ -277,6 +278,74 @@ export const floridaCivilProcedureQuestions = [
         ["esi", "State of mind for adverse-inference sanctions for lost ESI", "Intent to deprive", "intent to deprive another party of the information"],
       ]),
     ]),
+
+  {
+    id: "fl-civpro-document-discovery",
+    type: "sporcle-grid",
+    clueLayout: "above",
+    title: "Florida Civil Procedure: RFP vs. Subpoena Duces Tecum",
+    prompt: "Choose the document-discovery device by the recipient's party status. These questions concern Florida state court. Assume the requested records are discoverable; nonparty scenarios seek records without a deposition.",
+    sourceUrl: rulesUrl,
+    sourceLabel: "Florida Rules of Civil Procedure — Rules 1.350, 1.351, and 1.410",
+    columns: [
+      column("document-devices", "Choose the Device", [
+        ["party", "Ordinary device to obtain documents from an opposing party", "Request for production", "RFP", "production request", "request for production of documents"],
+        ["nonparty", "Process compelling a nonparty to produce documents", "Subpoena duces tecum", "document subpoena", "subpoena for production", "subpoena"],
+        ["party-rule", "Florida rule governing ordinary production requests to parties", "Rule 1.350", "1.350", "Fla. R. Civ. P. 1.350"],
+        ["nonparty-rule", "Florida rule specifically governing nonparty document production without a deposition", "Rule 1.351", "1.351", "Fla. R. Civ. P. 1.351"],
+      ]),
+      column("document-scenarios", "Apply the Distinction", [
+        ["defendant", "You sue a store and seek its incident report from the store. Ordinary device?", "Request for production", "RFP", "production request", "request for production of documents"],
+        ["outsider", "A neighboring business, not a party, has video of the accident. Compulsory device?", "Subpoena duces tecum", "document subpoena", "subpoena for production", "subpoena"],
+        ["notice", "Before issuing a Rule 1.351 subpoena, notice and the proposed subpoena go to whom?", "Every other party", "all other parties", "other parties", "each other party"],
+        ["testimony", "May testimony be taken under the documents-only Rule 1.351 procedure?", "No", "no testimony"],
+      ]),
+    ],
+  },
+
+  {
+    id: "fl-civpro-federal-rfp-comparison",
+    type: "sporcle-grid",
+    clueLayout: "above",
+    title: "Federal Comparison: Party Documents — FRCP 34",
+    prompt: "Federal civil litigation: identify the ordinary device for party document discovery and its scope. This is a federal comparison supplement, not a Florida state-rule drill.",
+    sourceUrl: "https://www.law.cornell.edu/rules/frcp/rule_34",
+    sourceLabel: "FRCP 34 — party production requests and the Rule 45 cross-reference",
+    columns: [
+      column("federal-production", "Party Discovery", [
+        ["device", "You seek a defendant's internal emails from that defendant. Ordinary device?", "Request for production", "RFP", "production request", "request for production of documents"],
+        ["rule", "Federal rule governing that request", "Rule 34", "34", "FRCP 34"],
+        ["recipient", "A Rule 34 request is served on another ___ in the lawsuit", "Party", "another party", "a party"],
+      ]),
+      column("federal-production-scope", "Scope and Limits", [
+        ["control", "Requested materials must be in the responding party's possession, custody, or ___", "Control"],
+        ["esi", "Are emails and other electronically stored information within Rule 34's scope?", "Yes"],
+        ["outsider", "An unrelated nonparty has records you need to compel directly from it. Rule 34(c) points to which rule?", "Rule 45", "45", "FRCP 45"],
+      ]),
+    ],
+  },
+
+  {
+    id: "fl-civpro-federal-subpoena-comparison",
+    type: "sporcle-grid",
+    clueLayout: "above",
+    title: "Federal Comparison: Nonparty Documents — FRCP 45",
+    prompt: "Federal civil litigation: practice compulsory document production from a nonparty. Distinguish a command to produce records from a command to appear and testify; assume the records are discoverable.",
+    sourceUrl: "https://www.law.cornell.edu/rules/frcp/rule_45",
+    sourceLabel: "FRCP 45 — subpoenas, notice, and appearance requirements",
+    columns: [
+      column("federal-subpoena", "Nonparty Records", [
+        ["device", "A bank is not a party. You want to compel its records without testimony. Name the process.", "Subpoena duces tecum", "document subpoena", "subpoena for production", "subpoena"],
+        ["rule", "Federal rule governing that subpoena", "Rule 45", "45", "FRCP 45"],
+        ["notice", "Before serving a pretrial document subpoena on its recipient, serve notice and a copy on whom?", "Each party", "every party", "all parties"],
+      ]),
+      column("federal-subpoena-limits", "Avoid the Traps", [
+        ["appearance", "Must the custodian appear in person if commanded only to produce documents?", "No", "no appearance required"],
+        ["additional-command", "Personal appearance requires a separate or combined command to attend a deposition, hearing, or ___", "Trial"],
+        ["exclusive", "Is Rule 45 categorically limited to nonparties?", "No", "not exclusively", "not limited to nonparties"],
+      ]),
+    ],
+  },
 
   drill("case-management", "Case Management", 16, "34–38",
     "Recall the tracks and court-controlled deadlines for nonexempt civil cases.", [
