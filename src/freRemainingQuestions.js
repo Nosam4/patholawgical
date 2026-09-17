@@ -815,6 +815,34 @@ export const freRule703Question = question(
   ],
 );
 
+export const freRule704Question = question(
+  "704",
+  "ultimate-issue",
+  "Opinion on an Ultimate Issue",
+  "Fill the general rule for ultimate-issue opinions and the criminal-case exception for expert testimony about the defendant's mental state.",
+  [
+    {
+      id: "general-rule",
+      title: "(a) General Rule",
+      answers: [
+        entry("rule-704-not-objectionable", "not objectionable just because it embraces an ultimate issue", ["ultimate issue alone is not grounds for objection", "not automatically objectionable"], "An opinion is"),
+        entry("rule-704-opinions", "lay and expert opinions", ["lay and expert", "both lay and expert opinions"], "Applies to"),
+      ],
+    },
+    {
+      id: "criminal-exception",
+      title: "(b) Criminal-Case Exception",
+      answers: [
+        entry("rule-704-criminal-case", "criminal case", ["criminal cases"], "Case type"),
+        entry("rule-704-expert", "expert witness", ["expert"], "Restricted witness"),
+        entry("rule-704-mental-state", "whether the defendant did or did not have a mental state or condition", ["defendant's mental state or condition", "defendant's mental state"], "Must not opine on"),
+        entry("rule-704-element", "an element of the crime charged or of a defense", ["element of the crime or a defense", "element of the offense or a defense"], "That constitutes"),
+        entry("rule-704-trier", "trier of fact alone", ["trier of fact", "factfinder"], "Reserved for"),
+      ],
+    },
+  ],
+);
+
 export const freRule705Question = question(
   "705",
   "expert-underlying-data",
@@ -1316,6 +1344,7 @@ export const freOpinionsAndHearsayQuestions = [
   freRule701Question,
   freRule702Question,
   freRule703Question,
+  freRule704Question,
   freRule705Question,
   freRule801Question,
   freRule802Question,

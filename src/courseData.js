@@ -44,7 +44,7 @@ function answer(id, answerText, acceptedAnswers = [], indicator = null) {
 const freRuleNamesQuestion = {
   id: "fre-rule-names-from-syllabus",
   type: "sporcle-grid",
-  title: "FRE Rule Names Listed on the Evidence Syllabus",
+  title: "FRE Rule Names from the Evidence Syllabus & Class",
   prompt: "Use the rule number as the clue and fill in the official Federal Rules of Evidence rule title.",
   sourceUrl: "https://www.uscourts.gov/sites/default/files/document/federal-rules-of-evidence.pdf",
   sourceLabel: "U.S. Courts Federal Rules of Evidence PDF",
@@ -143,6 +143,7 @@ const freRuleNamesQuestion = {
         ruleNameAnswer("701", "Opinion Testimony by Lay Witnesses", ["lay opinion"]),
         ruleNameAnswer("702", "Testimony by Expert Witnesses", ["expert testimony"]),
         ruleNameAnswer("703", "Bases of an Expert's Opinion Testimony", ["bases of expert opinion"]),
+        ruleNameAnswer("704", "Opinion on an Ultimate Issue", ["ultimate issue", "opinion on ultimate issue"]),
         ruleNameAnswer("705", "Disclosing the Facts or Data Underlying an Expert's Opinion"),
         ruleNameAnswer(
           "801",

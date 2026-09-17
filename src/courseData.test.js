@@ -115,7 +115,7 @@ test("Rule 1101 courts column accepts district court as a lenient alias", () => 
   assert.equal(match.id, "us-district-courts");
 });
 
-test("Evidence includes the syllabus-listed FRE rule names question", () => {
+test("Evidence includes the syllabus and class FRE rule names question", () => {
   const question = findEvidenceQuestion("fre-rule-names-from-syllabus");
   const relevanceColumn = question.columns.find((column) => column.id === "relevance-and-policy");
   const generalColumn = question.columns.find((column) => column.id === "general-provisions");
@@ -127,7 +127,7 @@ test("Evidence includes the syllabus-listed FRE rule names question", () => {
   const rule804 = hearsayColumn.answers.find((answer) => answer.indicator === "Rule 804");
 
   assert.equal(question.type, "sporcle-grid");
-  assert.equal(getQuestionAnswerCount(question), 51);
+  assert.equal(getQuestionAnswerCount(question), 52);
   assert.equal(rule101.answer, "Scope; Definitions");
   assert.equal(rule102.answer, "Purpose");
   assert.equal(rule1101.answer, "Applicability of the Rules");
@@ -226,7 +226,7 @@ test("Evidence includes rule and form objection cadence drills", () => {
   assert.equal(getQuestionAnswerCount(formCadences), 13);
 });
 
-test("Evidence organizes all 50 syllabus rules into individual Sporcle questions", () => {
+test("Evidence organizes all 51 syllabus and class rules into individual Sporcle questions", () => {
   const evidence = courseCatalog.find((course) => course.id === "evidence-fall-2026");
   const syllabusSubjectIds = new Set([
     "general-provisions",
@@ -257,10 +257,10 @@ test("Evidence organizes all 50 syllabus rules into individual Sporcle questions
     "101", "102", "103", "104", "105", "106", "1101",
     "401", "402", "403", "404", "405", "406", "407", "408", "409", "410", "411", "412", "413", "414", "415",
     "501", "601", "602", "607", "608", "609", "610", "611", "612", "613", "615",
-    "701", "702", "703", "705", "801", "802", "803", "804", "805", "806", "807",
+    "701", "702", "703", "704", "705", "801", "802", "803", "804", "805", "806", "807",
     "901", "902", "1001", "1002", "1003", "1004",
   ]);
-  assert.equal(questions.length, 50);
+  assert.equal(questions.length, 51);
   assert.ok(questions.every((question) => question.type === "sporcle-grid"));
   assert.ok(questions.every((question) => getQuestionAnswerCount(question) > 0));
   assert.ok(questions.every((question) => question.sourceUrl));
