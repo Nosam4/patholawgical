@@ -765,6 +765,7 @@ export const freRule702Question = question(
     {
       id: "qualifications",
       title: "Expert Qualification",
+      mnemonic: "SKEET",
       answers: [
         entry("rule-702-skill", "skill", [], "1"),
         entry("rule-702-knowledge", "knowledge", [], "2"),
