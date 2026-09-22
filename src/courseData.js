@@ -14,6 +14,7 @@ import { jordanPeytonDirectExaminationQuestion } from "./directExaminationQuesti
 import { trialAdvocacyLitanyQuestions } from "./trialAdvocacyLitanies.js";
 import { salesAndLeasesSubjects } from "./salesAndLeasesQuestions.js";
 import { aiAndLawWeek3Questions, aiAndLawWeek4Questions } from "./aiAndLawQuestions.js";
+import { aiAndLawWeek5Questions, aiAndLawWeek6Questions } from "./aiAndLawWeeks5And6.js";
 
 const [
   twoDismissalRule,
@@ -1820,6 +1821,16 @@ export const courseCatalog = [
         id: "week-4-gc-hat",
         title: "Week 4: Putting on the GC Hat",
         questions: aiAndLawWeek4Questions,
+      },
+      {
+        id: "week-5-which-law-applies",
+        title: "Week 5: Which Law Applies?",
+        questions: aiAndLawWeek5Questions,
+      },
+      {
+        id: "week-6-compliance-and-ftc",
+        title: "Week 6: Compliance and the FTC",
+        questions: aiAndLawWeek6Questions,
       },
     ],
   },
