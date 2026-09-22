@@ -11,6 +11,7 @@ import { floridaCivilProcedureQuestions } from "./floridaCivilProcedureQuestions
 import { floridaCivilProcedureTimelineQuestions } from "./floridaCivilProcedureTimelines.js";
 import { professionalResponsibilitySubjects } from "./professionalResponsibilityQuestions.js";
 import { jordanPeytonDirectExaminationQuestion } from "./directExaminationQuestions.js";
+import { sarahBakerCrossExaminationQuestion } from "./crossExaminationQuestions.js";
 import { trialAdvocacyLitanyQuestions } from "./trialAdvocacyLitanies.js";
 import { salesAndLeasesSubjects } from "./salesAndLeasesQuestions.js";
 import { aiAndLawWeek3Questions, aiAndLawWeek4Questions } from "./aiAndLawQuestions.js";
@@ -1851,6 +1852,11 @@ export const courseCatalog = [
         id: "direct-examination",
         title: "Direct Examination",
         questions: [jordanPeytonDirectExaminationQuestion],
+      },
+      {
+        id: "cross-examination",
+        title: "Cross Examination",
+        questions: [sarahBakerCrossExaminationQuestion],
       },
       {
         id: "litanies",
