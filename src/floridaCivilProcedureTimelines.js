@@ -1,3 +1,5 @@
+import { floridaCivilProcedureNumbersQuestion } from "./floridaCivilProcedureNumbers.js";
+
 // Timelines from Allen's handout, with related rule details checked against
 // the official compilations on 2026-09-11. Each clock is explicit: deadlines,
 // minimum waiting periods, advance notice, and disposition targets differ.
@@ -199,7 +201,8 @@ const periods = [...new Set(floridaCivilProcedureTimelines.map((item) => item.pe
   .sort((a, b) => unitOrder[a.split(" ")[1]] - unitOrder[b.split(" ")[1]] || parseInt(a) - parseInt(b));
 
 export const floridaCivilProcedureTimelineQuestions = [
-  makeQuestion("mixed", "All Deadlines — Mixed Review", "Name the period for each procedure. Include days, months, or hours; a bare number also works.", mixedTimelines),
+  floridaCivilProcedureNumbersQuestion,
+  makeQuestion("mixed", "All Deadlines — Mixed Review (Optional)", "Optional expansion after the professor’s Numbers to Know core; this is not a daily checklist. Name the period for each procedure. Include days, months, or hours; a bare number also works.", mixedTimelines),
   {
     id: "fl-civpro-timelines-clock-rules",
     type: "sporcle-grid",

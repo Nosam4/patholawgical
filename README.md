@@ -21,6 +21,12 @@ Live site: https://nosam4.github.io/patholawgical/
 - Includes 64 outline-based Sales & Leases drills across eight sections, with
   slide and case context, statutory links, and expandable course-material references.
   See [coverage and source corrections](docs/sales-and-leases-curriculum.md).
+- Florida Civil Procedure: Timelines opens with the professor's **FL Civ —
+  Numbers to Know** core: 23 blanks covering the handout's 12 timing rows and
+  3 other-number rows. Course material notes distinguish the handout's
+  summary-judgment discrepancy and shorthand from current-rule clarifications.
+  The comprehensive mixed review is optional; existing drill IDs and progress
+  remain unchanged.
 
 ## Run locally
 

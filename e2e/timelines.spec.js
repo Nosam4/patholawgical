@@ -8,6 +8,32 @@ async function openTimelines(page) {
   await page.getByLabel("Select subject", { exact: true }).selectOption("florida-civil-procedure-timelines");
 }
 
+test("professor core opens first and distinguishes current summary-judgment clocks", async ({ page }) => {
+  await openTimelines(page);
+  const selector = page.getByLabel("Select question", { exact: true });
+  await expect(selector).toHaveValue("fl-civpro-numbers-to-know");
+  await expect(selector.locator("option").nth(1)).toHaveAttribute("value", "fl-civpro-timelines-mixed");
+  await expect(page.locator(".completion-indicator")).toHaveText("Filled 0 of 23");
+  await page.getByText("Course material", { exact: true }).click();
+  await expect(page.locator(".course-sources")).toContainText("20 days prior to summary judgement hearing");
+  const response = page.locator('[data-answer-id="fl-civpro-numbers-to-know-summary-response"]');
+  await response.getByRole("button").click();
+  await page.getByRole("textbox").fill("20 days");
+  await page.getByRole("textbox").press("Enter");
+  await expect(page.locator(".completion-indicator")).toHaveText("Filled 0 of 23");
+  await page.getByRole("textbox").fill("forty days");
+  await page.getByRole("textbox").press("Enter");
+  await expect(response.locator(".answer-value")).toHaveText("40 days");
+  await page.reload();
+  await page.getByRole("button", { name: "Resume saved run" }).click();
+  await expect(selector).toHaveValue("fl-civpro-numbers-to-know");
+  await expect(page.locator(".completion-indicator")).toHaveText("Filled 1 of 23");
+  await page.getByRole("button", { name: "Reveal Missed Answers" }).click();
+  await page.getByRole("button", { name: "Practice missed answers (22)", exact: true }).click();
+  await expect(page.locator(".completion-indicator")).toHaveText("Practice: 0 of 22");
+  await expect(response.locator(".answer-value")).toHaveText("40 days");
+});
+
 test("timeline answers score only the selected clock and resume in the timeline section", async ({ page }) => {
   await openTimelines(page);
   await page.getByLabel("Select question", { exact: true }).selectOption("fl-civpro-timelines-service");

@@ -30,7 +30,7 @@ test("every sourced timeline is reachable in mixed, topic, and period practice w
 });
 
 test("calendar periods accept year equivalents but never silently substitute days for months", () => {
-  const answers = getQuestionAnswers(questions[0]);
+  const answers = getQuestionAnswers(questions.find((q) => q.id === "fl-civpro-timelines-mixed"));
   const sixMonths = answers.find((a) => a.timelineId === "complex-earliest-trial");
   assert.ok(isAnswerMatch(sixMonths, normalizeAnswer("six months")));
   assert.ok(!isAnswerMatch(sixMonths, normalizeAnswer("180 days")));
