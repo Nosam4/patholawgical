@@ -14,6 +14,7 @@ import { jordanPeytonDirectExaminationQuestion } from "./directExaminationQuesti
 import { sarahBakerCrossExaminationQuestion } from "./crossExaminationQuestions.js";
 import { trialAdvocacyLitanyQuestions } from "./trialAdvocacyLitanies.js";
 import { salesAndLeasesSubjects } from "./salesAndLeasesQuestions.js";
+import { salesAnalysisPatternsSubject } from "./salesAnalysisPatterns.js";
 import { aiAndLawWeek3Questions, aiAndLawWeek4Questions } from "./aiAndLawQuestions.js";
 import { aiAndLawWeek5Questions, aiAndLawWeek6Questions } from "./aiAndLawWeeks5And6.js";
 
@@ -1769,6 +1770,7 @@ export const courseCatalog = [
         ],
       },
       ...salesAndLeasesSubjects.slice(1),
+      salesAnalysisPatternsSubject,
     ],
   },
   {

@@ -21,6 +21,10 @@ Live site: https://nosam4.github.io/patholawgical/
 - Includes 64 outline-based Sales & Leases drills across eight sections, with
   slide and case context, statutory links, and expandable course-material references.
   See [coverage and source corrections](docs/sales-and-leases-curriculum.md).
+- Sales & Leases → **Analysis Patterns** adds six short recall drills based on
+  the Writing Option 1 rubric: the seven-step order, each rubric item, and an
+  optional fact-to-test practice pattern. Rubric point values are shown as context;
+  quiz scores count recalled boxes, not essay points.
 - Florida Civil Procedure: Timelines opens with the professor's **FL Civ —
   Numbers to Know** core: 23 blanks covering the handout's 12 timing rows and
   3 other-number rows. Course material notes distinguish the handout's
