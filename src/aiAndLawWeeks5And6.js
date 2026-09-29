@@ -8,7 +8,7 @@ const eu = "https://digital-strategy.ec.europa.eu/en/policies/regulatory-framewo
 const eo = "https://www.whitehouse.gov/presidential-actions/2025/12/eliminating-state-law-obstruction-of-national-artificial-intelligence-policy/";
 const row = (key, indicator, answer, ...acceptedAnswers) => ({ key, indicator, answer, acceptedAnswers });
 
-function drill(week, key, title, prompt, rows, references, sourceUrl, sourceLabel) {
+function drill(week, key, title, prompt, rows, references, sourceUrl, sourceLabel, mnemonic) {
   const id = `ai-week${week}-${key}`;
   return {
     id, type: "sporcle-grid", clueLayout: "above", title, prompt,
@@ -16,6 +16,7 @@ function drill(week, key, title, prompt, rows, references, sourceUrl, sourceLabe
     ...(sourceUrl ? { sourceUrl, sourceLabel } : {}),
     columns: [{
       id: `${id}-steps`, title: "Main Points",
+      ...(mnemonic ? { mnemonic } : {}),
       answers: rows.map(({ key: answerKey, ...entry }) => ({ id: `${id}-${answerKey}`, ...entry })),
     }],
   };
@@ -98,10 +99,10 @@ export const aiAndLawWeek6Questions = [
   drill(6, "deception-check", "The Deception Check",
     "Use three short phrases to recall the FTC's deception analysis.", [
       row("misleading", "1. The statement, omission, or practice must be likely to do this.", "Mislead", "mislead consumers", "misleading", "likely to mislead"),
-      row("consumer", "2. Evaluate the message from the perspective of a consumer acting ____ in the circumstances.", "Reasonably", "reasonable", "reasonable consumer"),
-      row("material", "3. The information must matter to the consumer's choice or conduct: it must be ____.", "Material", "materiality"),
+      row("material", "2. The information must matter to the consumer's choice or conduct: it must be ____.", "Material", "materiality"),
+      row("consumer", "3. Evaluate the message from the perspective of a consumer acting ____ in the circumstances.", "Reasonably", "reasonable", "reasonable consumer"),
     ], ["FTC · Policy Statement on Deception; assigned privacy and confidentiality reading"],
-    "https://www.ftc.gov/legal-library/browse/ftc-policy-statement-deception", "FTC · deception analysis"),
+    "https://www.ftc.gov/legal-library/browse/ftc-policy-statement-deception", "FTC · deception analysis", "MMR"),
   drill(6, "privacy-process", "Before Using Customer Data for AI",
     "Follow these basic steps before a new use of customer data.", [
       row("promises", "1. Review what policies, contracts, and marketing already promised about data use.", "Check commitments", "commitments", "privacy commitments", "check promises", "review promises"),
