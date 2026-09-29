@@ -210,7 +210,19 @@ function SporcleGrid({
                       key={answer.id}
                     >
                       {answer.indicator ? (
-                        <span className="answer-indicator">{answer.indicator}</span>
+                        <div className={`answer-indicator${answer.indicatorDetails?.length ? " has-details" : ""}`}>
+                          <span>{answer.indicator}</span>
+                          {answer.indicatorDetails?.length ? (
+                            <ul className="indicator-details">
+                              {answer.indicatorDetails.map((detail) => (
+                                <li key={detail.rule}>
+                                  <a href={detail.sourceUrl} target="_blank" rel="noreferrer">FRE {detail.rule}</a>
+                                  {" — "}{detail.text}
+                                </li>
+                              ))}
+                            </ul>
+                          ) : null}
+                        </div>
                       ) : null}
                       {showColumnMnemonic ? (
                         <span
