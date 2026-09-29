@@ -244,6 +244,7 @@ test("Evidence organizes all 51 syllabus and class rules into individual Sporcle
   assert.deepEqual(
     evidence.subjects.map((subject) => subject.id),
     [
+      "evidence-basic-analysis",
       "rule-names",
       "general-provisions",
       "relevance-and-policy-exclusions",
