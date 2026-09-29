@@ -678,7 +678,7 @@ test("Trial Advocacy includes dedicated litany memorization drills", () => {
   const exhibitSequence = findTrialAdvocacyQuestion("trial-litanies-exhibit-sequence");
   assert.deepEqual(
     exhibitSequence.columns[0].answers.map((item) => item.answer),
-    ["Set Up", "Mark", "Show", "Approach", "Give", "Ask the foundation questions", "Offer", "Publish"],
+    ["Set Up", "Mark", "Show", "Approach", "Give", "Ask the necessary foundation questions", "Offer", "Publish"],
   );
 
   const impeachment = findTrialAdvocacyQuestion("trial-litanies-impeachment-three-cs");

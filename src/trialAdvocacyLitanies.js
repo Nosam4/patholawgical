@@ -15,7 +15,7 @@ export const trialAdvocacyLitanyQuestions = [
     id: "trial-litanies-exhibit-sequence",
     type: "sporcle-grid",
     title: "Admitting an Exhibit: Eight-Step Litany",
-    prompt: "Recite the basic order for introducing an exhibit on direct examination.",
+    prompt: "Recite the basic order of what you need to do to introduce evidence.",
     courseSources: [litanySource],
     columns: [
       {
@@ -28,7 +28,7 @@ export const trialAdvocacyLitanyQuestions = [
           answer("trial-litany-exhibit-show", "Show", ["show opposing counsel"], "3"),
           answer("trial-litany-exhibit-approach", "Approach", ["ask to approach"], "4"),
           answer("trial-litany-exhibit-give", "Give", ["give the exhibit to the witness"], "5"),
-          answer("trial-litany-exhibit-foundation", "Ask the foundation questions", ["foundation questions", "lay foundation"], "6"),
+          answer("trial-litany-exhibit-foundation", "Ask the necessary foundation questions", ["ask the foundation questions", "foundation questions", "lay foundation"], "6"),
           answer("trial-litany-exhibit-offer", "Offer", ["offer into evidence"], "7"),
           answer("trial-litany-exhibit-publish", "Publish", ["publish to the jury"], "8"),
         ],
