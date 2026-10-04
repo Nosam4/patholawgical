@@ -15,6 +15,7 @@ import {
 } from "./quizLogic.js";
 
 import { latestResumableRun, missedAnswerIds, questionRevision, saveRun, savedRunFor } from "./studyProgress.js";
+import { OVERVIEW_COURSE_ID, OVERVIEW_REVIEW_LEVELS, getOverviewQuestionLevel, getOverviewSubjects } from "./overviewReview.js";
 
 function firstSubjectFor(course) {
   return course?.subjects[0] ?? null;
@@ -282,6 +283,7 @@ export default function App() {
   const controlsRef = useRef(null);
 
   const [courseId, setCourseId] = useState(firstCourse?.id ?? "");
+  const [overviewReviewLevel, setOverviewReviewLevel] = useState("core");
   const [subjectId, setSubjectId] = useState(firstSubject?.id ?? "");
   const [questionId, setQuestionId] = useState(firstQuestion?.id ?? "");
   const [guessedIds, setGuessedIds] = useState(() => new Set());
@@ -297,9 +299,15 @@ export default function App() {
     () => courseCatalog.find((item) => item.id === courseId) ?? null,
     [courseId],
   );
+  const subjects = useMemo(
+    () => getOverviewSubjects(course, overviewReviewLevel),
+    [course, overviewReviewLevel],
+  );
+  const isOverview = course?.id === OVERVIEW_COURSE_ID;
+  const reviewLevel = OVERVIEW_REVIEW_LEVELS.find((level) => level.id === overviewReviewLevel);
   const subject = useMemo(
-    () => course?.subjects.find((item) => item.id === subjectId) ?? null,
-    [course, subjectId],
+    () => subjects.find((item) => item.id === subjectId) ?? null,
+    [subjects, subjectId],
   );
   const question = useMemo(
     () => subject?.questions.find((item) => item.id === questionId) ?? null,
@@ -331,6 +339,11 @@ export default function App() {
   function resumeRun() {
     if (!resumable) return;
     const { course: nextCourse, subject: nextSubject, question: nextQuestion, run } = resumable;
+    if (nextCourse.id === OVERVIEW_COURSE_ID &&
+        !getOverviewSubjects(nextCourse, overviewReviewLevel)
+          .some((item) => item.questions.some((question) => question.id === nextQuestion.id))) {
+      setOverviewReviewLevel(getOverviewQuestionLevel(nextQuestion.id));
+    }
     setCourseId(nextCourse.id);
     setSubjectId(nextSubject.id);
     setQuestionId(nextQuestion.id);
@@ -379,7 +392,7 @@ export default function App() {
 
   function chooseCourse(nextCourseId) {
     const nextCourse = courseCatalog.find((item) => item.id === nextCourseId);
-    const nextSubject = firstSubjectFor(nextCourse);
+    const nextSubject = getOverviewSubjects(nextCourse, overviewReviewLevel)[0];
     const nextQuestion = firstQuestionFor(nextSubject);
 
     setCourseId(nextCourse?.id ?? "");
@@ -389,12 +402,25 @@ export default function App() {
   }
 
   function chooseSubject(nextSubjectId) {
-    const nextSubject = course?.subjects.find((item) => item.id === nextSubjectId);
+    const nextSubject = subjects.find((item) => item.id === nextSubjectId);
     const nextQuestion = firstQuestionFor(nextSubject);
 
     setSubjectId(nextSubject?.id ?? "");
     setQuestionId(nextQuestion?.id ?? "");
     loadQuestionRun(nextQuestion, "Subject switched.");
+  }
+
+  function chooseReviewLevel(nextLevel) {
+    const nextSubjects = getOverviewSubjects(course, nextLevel);
+    const nextSubject = nextSubjects.find((item) => item.id === subjectId) ?? nextSubjects[0];
+    const nextQuestion = nextSubject?.questions.find((item) => item.id === questionId)
+      ?? firstQuestionFor(nextSubject);
+    setOverviewReviewLevel(nextLevel);
+    setSubjectId(nextSubject?.id ?? "");
+    setQuestionId(nextQuestion?.id ?? "");
+    if (nextQuestion?.id !== questionId) {
+      loadQuestionRun(nextQuestion, "Review depth switched.");
+    }
   }
 
   function chooseQuestion(nextQuestionId) {
@@ -568,6 +594,23 @@ export default function App() {
           </select>
         </div>
 
+        {isOverview ? (
+          <div className="control-group">
+            <label htmlFor="reviewDepthSelect">Review depth</label>
+            <select
+              id="reviewDepthSelect"
+              aria-label="Select review depth"
+              aria-describedby="overviewReviewDescription"
+              onChange={(event) => chooseReviewLevel(event.target.value)}
+              value={overviewReviewLevel}
+            >
+              {OVERVIEW_REVIEW_LEVELS.map((level) => (
+                <option key={level.id} value={level.id}>{level.label}</option>
+              ))}
+            </select>
+          </div>
+        ) : null}
+
         <div className="control-group">
           <label htmlFor="subjectSelect">Subject</label>
           <select
@@ -576,7 +619,7 @@ export default function App() {
             onChange={(event) => chooseSubject(event.target.value)}
             value={subject.id}
           >
-            {course.subjects.map((item) => (
+            {subjects.map((item) => (
               <option key={item.id} value={item.id}>
                 {item.title}
               </option>
@@ -599,6 +642,13 @@ export default function App() {
             ))}
           </select>
         </div>
+        {isOverview ? (
+          <p className="review-depth-description" id="overviewReviewDescription">
+            <strong>{reviewLevel.label}:</strong> {reviewLevel.description}
+            {" "}{subjects.reduce((count, item) => count + item.questions.length, 0)} of{" "}
+            {course.subjects.reduce((count, item) => count + item.questions.length, 0)} Overview drills.
+          </p>
+        ) : null}
       </section>
 
       {resumable && (!runStarted || resumable.question.id !== questionId) ? (

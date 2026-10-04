@@ -5,6 +5,7 @@ import { getQuestionAnswers } from "../src/quizLogic.js";
 async function openTimelines(page) {
   await page.goto("./");
   await page.getByLabel("Select class", { exact: true }).selectOption("overview-of-florida-law-fall-2026");
+  await page.getByLabel("Select review depth", { exact: true }).selectOption("comprehensive");
   await page.getByLabel("Select subject", { exact: true }).selectOption("florida-civil-procedure-timelines");
 }
 
@@ -53,6 +54,7 @@ test("timeline answers score only the selected clock and resume in the timeline 
   await expect(page.getByLabel("Select subject", { exact: true })).toHaveValue("florida-civil-procedure-timelines");
   await expect(page.locator(".completion-indicator")).toHaveText("Filled 1 of 6");
 
+  await page.getByLabel("Select review depth", { exact: true }).selectOption("comprehensive");
   await page.getByLabel("Select question", { exact: true }).selectOption("fl-civpro-timelines-period-6-months");
   await page.locator(".blank-answer").first().click();
   await page.getByRole("textbox").fill("6 months");

@@ -15,6 +15,12 @@ Live site: https://nosam4.github.io/patholawgical/
   **Start Fresh** keeps score history.
 - Offers **Practice missed answers** after revealing a run. Previously correct
   answers stay visible as context; practice never inflates the full-drill best score.
+- Overview of Florida Law has a **Review depth** selector: **Core** (default)
+  starts with foundations, **Standard** adds broader topics and topical deadlines,
+  and **Comprehensive** includes every existing drill. Levels are cumulative and
+  keep each drill intact. Switching depth preserves saved progress; resuming a
+  drill outside the selected depth opens the level needed to show it. See
+  [coverage and selection rationale](docs/overview-review-levels.md).
 - Tab or ↓ moves to the next unanswered grid blank; Shift+Tab or ↑ moves to the previous one.
 - Includes a source-backed Professional Responsibility / MPRE curriculum covering
   Model Rules 1–8.
