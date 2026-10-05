@@ -14,6 +14,7 @@ import { jordanPeytonDirectExaminationQuestion } from "./directExaminationQuesti
 import { sarahBakerCrossExaminationQuestion } from "./crossExaminationQuestions.js";
 import { trialAdvocacyLitanyQuestions } from "./trialAdvocacyLitanies.js";
 import { trialAdvocacyLitanyWordsSubject } from "./trialAdvocacyLitanyWords.js";
+import { miniTrialSubject } from "./miniTrialQuestions.js";
 import { salesAndLeasesSubjects } from "./salesAndLeasesQuestions.js";
 import { salesAnalysisPatternsSubject } from "./salesAnalysisPatterns.js";
 import { aiAndLawWeek3Questions, aiAndLawWeek4Questions } from "./aiAndLawQuestions.js";
@@ -1845,6 +1846,7 @@ export const courseCatalog = [
     title: "Trial Advocacy",
     term: "Fall 2026",
     subjects: [
+      miniTrialSubject,
       {
         id: "opening-statements",
         title: "Opening Statements",
