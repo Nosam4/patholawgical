@@ -21,6 +21,10 @@ Live site: https://nosam4.github.io/patholawgical/
   keep each drill intact. Switching depth preserves saved progress; resuming a
   drill outside the selected depth opens the level needed to show it. See
   [coverage and selection rationale](docs/overview-review-levels.md).
+- Overview of Florida Law → **Florida Criminal Procedure** adds course-based
+  recall drills across Core, Standard, and Comprehensive, with source-page
+  references and clarifications for updated Florida rules. See
+  [curriculum sources and corrections](docs/florida-criminal-procedure-curriculum.md).
 - Tab or ↓ moves to the next unanswered grid blank; Shift+Tab or ↑ moves to the previous one.
 - Includes a source-backed Professional Responsibility / MPRE curriculum covering
   Model Rules 1–8.

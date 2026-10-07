@@ -20,7 +20,7 @@ test("every Overview drill has an explicit, valid minimum review level", () => {
   const catalogIds = allQuestions.map((question) => question.id).sort();
   assert.deepEqual(Object.keys(OVERVIEW_QUESTION_LEVELS).sort(), catalogIds);
   assert.equal(new Set(catalogIds).size, catalogIds.length);
-  assert.equal(catalogIds.length, 77);
+  assert.equal(catalogIds.length, 110);
 
   const levels = OVERVIEW_REVIEW_LEVELS.map((level) => level.id);
   assert.deepEqual(levels, ["core", "standard", "comprehensive"]);
@@ -29,7 +29,7 @@ test("every Overview drill has an explicit, valid minimum review level", () => {
   }
 });
 
-test("Core and Standard are nested selections with all four subjects available", () => {
+test("Core and Standard are nested selections with all five subjects available", () => {
   const [core, standard, comprehensive] = OVERVIEW_REVIEW_LEVELS.map(({ id }) =>
     getOverviewSubjects(overview, id),
   );

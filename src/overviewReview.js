@@ -72,6 +72,43 @@ export const OVERVIEW_QUESTION_LEVELS = Object.freeze({
   "fl-civpro-small-claims": "comprehensive",
   "fl-civpro-remedies": "standard",
 
+  // Florida criminal procedure: Core follows the main pretrial and trial path;
+  // Standard adds release, depositions, and courtroom details. Comprehensive
+  // retains the Flowers supplements and broader discovery/remedy coverage.
+  "fl-crimpro-courts-and-process": "core",
+  "fl-crimpro-warrants": "comprehensive",
+  "fl-crimpro-counsel": "core",
+  "fl-crimpro-first-appearance": "core",
+  "fl-crimpro-pretrial-release": "standard",
+  "fl-crimpro-probable-cause": "core",
+  "fl-crimpro-preliminary-hearing-and-charges": "core",
+  "fl-crimpro-charging-documents": "core",
+  "fl-crimpro-charging-sufficiency": "comprehensive",
+  "fl-crimpro-pleas": "core",
+  "fl-crimpro-dismissal": "core",
+  "fl-crimpro-suppression-and-venue": "comprehensive",
+  "fl-crimpro-joinder-and-severance": "comprehensive",
+  "fl-crimpro-speedy-default": "core",
+  "fl-crimpro-speedy-demand": "core",
+  "fl-crimpro-speedy-expiration": "core",
+  "fl-crimpro-speedy-extensions": "standard",
+  "fl-crimpro-insanity": "core",
+  "fl-crimpro-competency": "core",
+  "fl-crimpro-alibi": "core",
+  "fl-crimpro-discovery": "comprehensive",
+  "fl-crimpro-depositions": "standard",
+  "fl-crimpro-jury-selection": "core",
+  "fl-crimpro-jury-waiver-and-alternates": "standard",
+  "fl-crimpro-witnesses-and-jury-view": "standard",
+  "fl-crimpro-instructions-and-deliberations": "standard",
+  "fl-crimpro-verdict-and-juror-inquiries": "core",
+  "fl-crimpro-presentence-report": "standard",
+  "fl-crimpro-judgment-of-acquittal": "core",
+  "fl-crimpro-new-trial": "core",
+  "fl-crimpro-arrest-of-judgment": "standard",
+  "fl-crimpro-sentence-and-postconviction": "comprehensive",
+  "fl-crimpro-judicial-disqualification-and-contempt": "comprehensive",
+
   // Timelines: retain the focused handout drill and clock rules in Core.
   // Repeated mixed/reverse formats and specialized clocks stay available in full.
   "fl-civpro-numbers-to-know": "core",
