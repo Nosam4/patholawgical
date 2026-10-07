@@ -170,7 +170,7 @@ function SporcleGrid({
   contextIds,
 }) {
   return (
-    <section className={`panel sporcle-panel${question.clueLayout === "above" ? " stacked-clues" : ""}`}>
+    <section className={`panel sporcle-panel${question.clueLayout === "above" ? " stacked-clues" : ""}${question.answerLayout === "stacked" ? " stacked-answers" : ""}`}>
       {question.sourceUrl ? (
         <p className="source-line">
           Source:{" "}
@@ -235,7 +235,10 @@ function SporcleGrid({
                       ) : null}
                       <div className="answer-slot">
                         {showAnswer ? (
-                          <span className="answer-value">{answer.answer}</span>
+                          <>
+                            <span className="answer-value">{answer.answer}</span>
+                            {answer.explanation ? <p className="answer-explanation">{answer.explanation}</p> : null}
+                          </>
                         ) : active ? (
                           <form onSubmit={(event) => onSubmit(event, column, answer)}>
                             <input
