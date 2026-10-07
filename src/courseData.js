@@ -20,6 +20,7 @@ import { salesAndLeasesSubjects } from "./salesAndLeasesQuestions.js";
 import { salesAnalysisPatternsSubject } from "./salesAnalysisPatterns.js";
 import { aiAndLawWeek3Questions, aiAndLawWeek4Questions } from "./aiAndLawQuestions.js";
 import { aiAndLawWeek5Questions, aiAndLawWeek6Questions } from "./aiAndLawWeeks5And6.js";
+import { aiAndLawWeeks8And9Questions } from "./aiAndLawWeeks8And9.js";
 import { evidenceAnalysisSubject } from "./evidenceAnalysisQuestions.js";
 
 const [
@@ -1844,6 +1845,11 @@ export const courseCatalog = [
         id: "week-6-compliance-and-ftc",
         title: "Week 6: Compliance and the FTC",
         questions: aiAndLawWeek6Questions,
+      },
+      {
+        id: "week-8-9-intellectual-property",
+        title: "Weeks 8–9: Intellectual Property",
+        questions: aiAndLawWeeks8And9Questions,
       },
     ],
   },
