@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { courseCatalog } from "./courseData.js";
 import { buildArrows } from "./flowchartRouting.js";
+import CompletionConfetti from "./CompletionConfetti.jsx";
 import {
   findMatchingAnswer,
   findNextFieldAnswerId,
@@ -283,6 +284,7 @@ export default function App() {
   const [targetIds, setTargetIds] = useState(null);
   const [practice, setPractice] = useState(false);
   const [runStarted, setRunStarted] = useState(false);
+  const [confettiBurst, setConfettiBurst] = useState(0);
   const controlsRef = useRef(null);
 
   const [courseId, setCourseId] = useState(firstCourse?.id ?? "");
@@ -382,6 +384,7 @@ export default function App() {
   }, [question?.id]);
 
   function resetRun(nextMessage = "Fresh run started.") {
+    setConfettiBurst(0);
     setTargetIds(null);
     setPractice(false);
     setRunStarted(false);
@@ -450,6 +453,7 @@ export default function App() {
 
     if (nextGuessedIds.size === totalBlanks) {
       setMessage("Complete. All blanks filled.");
+      setConfettiBurst((burst) => burst + 1);
     } else {
       setMessage(`Correct: ${answerEntry.answer}`);
     }
@@ -571,6 +575,7 @@ export default function App() {
 
   return (
     <main className="app-shell">
+      {confettiBurst > 0 ? <CompletionConfetti key={confettiBurst} /> : null}
       <header className="app-header">
         <p className="eyebrow">{course.term} Memory Trainer</p>
         <h1>RulePath</h1>

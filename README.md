@@ -9,6 +9,8 @@ Live site: https://nosam4.github.io/patholawgical/
 - Organizes prompts by Fall 2026 class, subject, and question.
 - Supports flowchart prompts with a global guess input.
 - Supports Sporcle-style grid prompts with clickable blanks.
+- Showers confetti from the top of the screen when every blank in a question or
+  missed-answer practice run is answered correctly. Respects reduced-motion settings.
 - Reveals missed answers on demand.
 - Saves completed attempts and unfinished runs in this browser. Use **Resume saved
   run** after reloading. Reselecting an unfinished drill restores its run.
