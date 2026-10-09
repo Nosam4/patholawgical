@@ -228,8 +228,9 @@ function SporcleGrid({
                       ) : null}
                       {showColumnMnemonic ? (
                         <span
-                          aria-label={`Mnemonic ${mnemonicClues[answerIndex] ?? ""}`}
+                          aria-label={`Mnemonic ${mnemonicClues[answerIndex] ?? ""}${answer.mnemonicLabel ? `: ${answer.mnemonicLabel}` : ""}`}
                           className="mnemonic-clue"
+                          title={answer.mnemonicLabel}
                         >
                           {mnemonicClues[answerIndex] ?? ""}
                         </span>

@@ -960,29 +960,48 @@ const rule803ExceptionNames = [
   ["history-judgment", "Judgments Involving Personal, Family, or General History, or a Boundary", ["history or boundary judgment"], "(23)"],
 ];
 
-export const freRule803Question = question(
-  "803",
-  "hearsay-exceptions",
-  "Hearsay Exceptions Regardless of Declarant Availability",
-  "Use each subsection number as the clue and name all 23 Rule 803 exceptions.",
-  [
-    {
-      id: "exceptions-1-8",
-      title: "Exceptions 1-8",
-      answers: rule803ExceptionNames.slice(0, 8).map(([id, text, aliases, indicator]) => entry(`rule-803-${id}`, text, aliases, indicator)),
-    },
-    {
-      id: "exceptions-9-16",
-      title: "Exceptions 9-16",
-      answers: rule803ExceptionNames.slice(8, 16).map(([id, text, aliases, indicator]) => entry(`rule-803-${id}`, text, aliases, indicator)),
-    },
-    {
-      id: "exceptions-17-23",
-      title: "Exceptions 17-23",
-      answers: rule803ExceptionNames.slice(16).map(([id, text, aliases, indicator]) => entry(`rule-803-${id}`, text, aliases, indicator)),
-    },
-  ],
-);
+function rule803MnemonicColumn(id, title, mnemonic, numbers, labels) {
+  return {
+    id,
+    title,
+    mnemonic,
+    answers: numbers.map((number, index) => {
+      const [slug, text, aliases, indicator] = rule803ExceptionNames[number - 1];
+      return {
+        ...entry(`rule-803-${slug}`, text, aliases, indicator),
+        mnemonicLabel: labels[index],
+      };
+    }),
+  };
+}
+
+export const freRule803Question = {
+  ...question(
+    "803",
+    "hearsay-exceptions",
+    "Hearsay Exceptions Regardless of Declarant Availability",
+    "Use each subsection number as the clue and name all 23 Rule 803 exceptions. Show Mnemonic reveals the letter cues for PERMS, BAR, CRAFT, VAMPS, three reputations, and two judgments. Hover over a letter for its recall label.",
+    [
+      rule803MnemonicColumn("perms-bar", "PERMS + BAR", "PERMS BAR",
+        [1, 2, 5, 4, 3, 6, 7, 14],
+        ["Present sense impression", "Excited utterance", "Recorded recollection",
+          "Medical diagnosis or treatment", "State—mental, emotional, or physical condition",
+          "Business records", "Absent business record", "Records of property documents"]),
+      rule803MnemonicColumn("craft-reputations", "CRAFT + 3 Reputations", "CRAFT RRR",
+        [12, 11, 16, 13, 18, 19, 20, 21],
+        ["Certificates", "Religious records", "Ancient documents", "Family records",
+          "Treatises", "Reputation—personal or family history",
+          "Reputation—boundaries or general history", "Reputation—character"]),
+      rule803MnemonicColumn("vamps-judgments", "VAMPS + 2 Judgments", "VAMPS JJ",
+        [9, 10, 17, 8, 15, 22, 23],
+        ["Vital statistics", "Absent public record", "Market reports", "Public records",
+          "Statements in property documents", "Judgment—previous conviction",
+          "Judgments—personal, family, or general history, or a boundary"]),
+    ],
+  ),
+  // Preserve saved runs and scores from the original numerical layout.
+  progressAnswerOrder: rule803ExceptionNames.map(([id]) => `rule-803-${id}`),
+};
 
 export const freRule804Question = question(
   "804",

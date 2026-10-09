@@ -2,7 +2,12 @@ import { buildUpdatedProgressMap, getQuestionAnswers, localISODate } from "./qui
 
 export function questionRevision(question) {
   // Invalidate saved answers when the doctrine or recall targets change.
-  return JSON.stringify(getQuestionAnswers(question).map(({ id, answer }) => [id, answer]));
+  const answers = getQuestionAnswers(question);
+  if (question?.progressAnswerOrder) {
+    const order = new Map(question.progressAnswerOrder.map((id, index) => [id, index]));
+    answers.sort((a, b) => (order.get(a.id) ?? answers.length) - (order.get(b.id) ?? answers.length));
+  }
+  return JSON.stringify(answers.map(({ id, answer }) => [id, answer]));
 }
 
 export function validAnswerIds(question, ids) {
