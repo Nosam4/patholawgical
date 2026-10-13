@@ -889,7 +889,7 @@ export const freRule801Question = question(
       title: "Declarant-Witness's Prior Statement",
       answers: [
         entry("rule-801-cross", "declarant testifies and is subject to cross-examination about a prior statement", ["testifies and subject to cross", "declarant testifies and is subject to cross-examination"], "Foundation"),
-        entry("rule-801-inconsistent", "is inconsistent with the declarant's testimony", ["inconsistent with declarants testimony", "prior inconsistent statement", "inconsistent statement"], "(A)"),
+        entry("rule-801-inconsistent", "inconsistent with the declarant's testimony", ["inconsistent with declarants testimony", "prior inconsistent statement", "inconsistent statement"], "(A)"),
         entry("rule-801-consistent-fabrication", "consistent statement rebutting recent fabrication or improper influence or motive", ["rebut recent fabrication or improper motive"], "(B)(i)"),
         entry("rule-801-consistent-rehab", "consistent statement rehabilitating credibility after another attack", ["rehabilitate credibility"], "(B)(ii)"),
         entry("rule-801-identification", "prior identification of a person perceived earlier", ["prior identification"], "(C)"),
