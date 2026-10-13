@@ -7,13 +7,13 @@ function entry(id, answer, acceptedAnswers = [], indicator = null) {
   };
 }
 
-function question(ruleNumber, slug, title, prompt, columns) {
+function question(ruleNumber, slug, title, prompt, columns, sourceUrl = `https://www.law.cornell.edu/rules/fre/rule_${ruleNumber}`) {
   return {
     id: `fre-rule-${ruleNumber}-${slug}`,
     type: "sporcle-grid",
     title: `FRE Rule ${ruleNumber}: ${title}`,
     prompt,
-    sourceUrl: `https://www.law.cornell.edu/rules/fre/rule_${ruleNumber}`,
+    sourceUrl,
     sourceLabel: `FRE Rule ${ruleNumber}`,
     columns,
   };
@@ -872,7 +872,7 @@ export const freRule801Question = question(
   "801",
   "hearsay-definitions",
   "Definitions and Exclusions from Hearsay",
-  "Fill the hearsay definitions and the categories of statements defined as not hearsay.",
+  "Fill the hearsay definitions and the categories of statements defined as not hearsay. This drill uses the amendment effective December 1, 2026. Authentication remains required under Rule 901 or an applicable self-authentication provision of Rule 902.",
   [
     {
       id: "definitions",
@@ -888,8 +888,8 @@ export const freRule801Question = question(
       id: "prior-statements",
       title: "Declarant-Witness's Prior Statement",
       answers: [
-        entry("rule-801-cross", "declarant testifies and is subject to cross-examination", ["testifies and subject to cross"], "Foundation"),
-        entry("rule-801-inconsistent", "inconsistent statement made under penalty of perjury at a proceeding or deposition", ["prior inconsistent statement under oath"], "(A)"),
+        entry("rule-801-cross", "declarant testifies and is subject to cross-examination about a prior statement", ["testifies and subject to cross", "declarant testifies and is subject to cross-examination"], "Foundation"),
+        entry("rule-801-inconsistent", "is inconsistent with the declarant's testimony", ["inconsistent with declarants testimony", "prior inconsistent statement", "inconsistent statement"], "(A)"),
         entry("rule-801-consistent-fabrication", "consistent statement rebutting recent fabrication or improper influence or motive", ["rebut recent fabrication or improper motive"], "(B)(i)"),
         entry("rule-801-consistent-rehab", "consistent statement rehabilitating credibility after another attack", ["rehabilitate credibility"], "(B)(ii)"),
         entry("rule-801-identification", "prior identification of a person perceived earlier", ["prior identification"], "(C)"),
@@ -907,6 +907,7 @@ export const freRule801Question = question(
       ],
     },
   ],
+  "https://www.uscourts.gov/sites/default/files/document/2026_congressional_package_final.pdf#page=87",
 );
 
 export const freRule802Question = question(
