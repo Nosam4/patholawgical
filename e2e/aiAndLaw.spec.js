@@ -10,7 +10,7 @@ async function openIntellectualProperty(page) {
   await page.getByLabel("Select subject", { exact: true }).selectOption(subjectId);
 }
 
-test("Weeks 8–9 accepts an alias, preserves progress, and practices missed answers", async ({ page }) => {
+test("Weeks 8–9 accepts aliases, preserves progress, practices misses, and grades the selected scenario", async ({ page }) => {
   const question = aiAndLawWeeks8And9Questions.find((item) => item.id === "ai-weeks8-9-ip-toolkit");
   const answers = getQuestionAnswers(question);
   const patent = answers.find((answer) => answer.answer === "Patent");
@@ -43,6 +43,24 @@ test("Weeks 8–9 accepts an alias, preserves progress, and practices missed ans
   await expect(page.locator(".completion-indicator")).toHaveText(`Practice: 0 of ${answers.length - 1}`);
   await expect(patentRow.locator(".answer-value")).toHaveText("Patent");
   await expect(page.locator(".study-summary")).toContainText(`Best: 1/${answers.length}`);
+
+  const tradeSecrets = aiAndLawWeeks8And9Questions.find((item) => item.id === "ai-weeks8-9-trade-secrets");
+  const tradeSecretAnswers = getQuestionAnswers(tradeSecrets);
+  await page.getByLabel("Select question", { exact: true }).selectOption(tradeSecrets.id);
+  const leakRow = page.locator('[data-answer-id="ai-weeks8-9-trade-secrets-applied-leak"]');
+  const authorshipRow = page.locator('[data-answer-id="ai-weeks8-9-trade-secrets-applied-authorship"]');
+  await leakRow.getByRole("button").click();
+  await leakRow.getByRole("textbox").fill("contract");
+  await leakRow.getByRole("textbox").press("Enter");
+  await expect(page.locator(".completion-indicator")).toHaveText(`Filled 0 of ${tradeSecretAnswers.length}`);
+  await expect(leakRow.locator(".answer-value")).toHaveCount(0);
+
+  await leakRow.getByRole("textbox").fill("no");
+  await leakRow.getByRole("textbox").press("Enter");
+  await expect(leakRow.locator(".answer-value")).toHaveText("Not automatically");
+  await expect(authorshipRow.locator(".answer-value")).toHaveCount(0);
+  await expect(page.locator(".answer-row.correct")).toHaveCount(1);
+  await expect(page.locator(".completion-indicator")).toHaveText(`Filled 1 of ${tradeSecretAnswers.length}`);
 });
 
 for (const width of [1280, 390]) {

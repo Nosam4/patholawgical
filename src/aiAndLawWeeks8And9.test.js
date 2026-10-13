@@ -30,12 +30,13 @@ test("Weeks 8–9 are selectable with source-backed, globally unique drills", ()
   assert.ok([...newAnswerIds].every((id) => !otherAnswerIds.has(id)));
 });
 
-test("every new answer and alias selects its intended blank without column collisions", () => {
+test("every answer and alias selects its intended blank within the declared matching scope", () => {
   for (const question of aiAndLawWeeks8And9Questions) {
     for (const column of question.columns) {
       for (const answer of column.answers) {
         for (const guess of [answer.answer, ...answer.acceptedAnswers]) {
-          const match = findMatchingAnswer(column.answers, new Set(), normalizeAnswer(guess));
+          const candidates = question.answerMatching === "active" ? [answer] : column.answers;
+          const match = findMatchingAnswer(candidates, new Set(), normalizeAnswer(guess));
           assert.equal(match?.id, answer.id, `${question.id}: ${guess}`);
         }
       }
@@ -54,6 +55,9 @@ test("legal shorthand is accepted while distinct doctrines and opposing answers 
     ["ai-weeks8-9-human-conception-goal", "not alone", "yes"],
     ["ai-weeks8-9-patent-eligibility-more", "inventive concept", "novelty"],
     ["ai-weeks8-9-trade-secrets-proper", "lawful means", "improper means"],
+    ["ai-weeks8-9-trade-secrets-applied-contract", "contracts", "trade secret"],
+    ["ai-weeks8-9-trade-secrets-applied-knowledge", "knowledge", "ignorance"],
+    ["ai-weeks8-9-trade-secrets-applied-leak", "no", "contract"],
   ];
   for (const [id, accepted, rejected] of cases) {
     const answer = answers.find((item) => item.id === id);
