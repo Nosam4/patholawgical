@@ -245,6 +245,7 @@ test("Evidence organizes all 51 syllabus and class rules into individual Sporcle
     evidence.subjects.map((subject) => subject.id),
     [
       "evidence-basic-analysis",
+      "evidence-confrontation-clause",
       "rule-names",
       "general-provisions",
       "relevance-and-policy-exclusions",

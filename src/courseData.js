@@ -22,6 +22,7 @@ import { aiAndLawWeek3Questions, aiAndLawWeek4Questions } from "./aiAndLawQuesti
 import { aiAndLawWeek5Questions, aiAndLawWeek6Questions } from "./aiAndLawWeeks5And6.js";
 import { aiAndLawWeeks8And9Questions } from "./aiAndLawWeeks8And9.js";
 import { evidenceAnalysisSubject } from "./evidenceAnalysisQuestions.js";
+import { evidenceConfrontationSubject } from "./evidenceConfrontationQuestions.js";
 
 const [
   twoDismissalRule,
@@ -1681,6 +1682,7 @@ export const courseCatalog = [
     term: "Fall 2026",
     subjects: [
       evidenceAnalysisSubject,
+      evidenceConfrontationSubject,
       {
         id: "rule-names",
         title: "Rule Names",

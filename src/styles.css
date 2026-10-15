@@ -518,6 +518,10 @@ button:focus-visible, select:focus-visible, a:focus-visible {
   overflow-wrap: anywhere;
 }
 
+.course-sources {
+  overflow-wrap: anywhere;
+}
+
 .answer-row.revealed .answer-value {
   background: var(--reveal-soft);
   color: #6f3d08;
