@@ -10,6 +10,7 @@ import { commercialPaperQuestions } from "./commercialPaperQuestions.js";
 import { floridaCivilProcedureQuestions } from "./floridaCivilProcedureQuestions.js";
 import { floridaCivilProcedureTimelineQuestions } from "./floridaCivilProcedureTimelines.js";
 import { floridaCriminalProcedureQuestions } from "./floridaCriminalProcedureQuestions.js";
+import { floridaBusinessEntitiesQuestions } from "./floridaBusinessEntitiesQuestions.js";
 import { professionalResponsibilitySubjects } from "./professionalResponsibilityQuestions.js";
 import { jordanPeytonDirectExaminationQuestion } from "./directExaminationQuestions.js";
 import { sarahBakerCrossExaminationQuestion } from "./crossExaminationQuestions.js";
@@ -1810,6 +1811,11 @@ export const courseCatalog = [
         id: "florida-criminal-procedure",
         title: "Florida Criminal Procedure",
         questions: floridaCriminalProcedureQuestions,
+      },
+      {
+        id: "florida-business-entities",
+        title: "Business Entities",
+        questions: floridaBusinessEntitiesQuestions,
       },
     ],
   },

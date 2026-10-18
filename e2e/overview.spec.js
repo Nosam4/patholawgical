@@ -50,7 +50,7 @@ test("Overview defaults to Core and exposes three cumulative review depths", asy
     }
     counts[level] = questionIds[level].length;
   }
-  expect(counts).toEqual({ core: 45, standard: 71, comprehensive: 110 });
+  expect(counts).toEqual({ core: 64, standard: 107, comprehensive: 152 });
   expect(questionIds.standard).toEqual(expect.arrayContaining(questionIds.core));
   expect(questionIds.comprehensive).toEqual(expect.arrayContaining(questionIds.standard));
   expect(questionIds.comprehensive).toEqual(overview.subjects.flatMap((subject) => subject.questions.map((question) => question.id)));

@@ -1,3 +1,5 @@
+import { floridaBusinessEntitiesLevels } from "./floridaBusinessEntitiesQuestions.js";
+
 export const OVERVIEW_COURSE_ID = "overview-of-florida-law-fall-2026";
 
 export const OVERVIEW_REVIEW_LEVELS = Object.freeze([
@@ -22,6 +24,8 @@ export const OVERVIEW_REVIEW_LEVELS = Object.freeze([
 // drill content, not exam predictions. Keep this list explicit so catalog changes
 // require a coverage decision; see docs/overview-review-levels.md for rationale.
 export const OVERVIEW_QUESTION_LEVELS = Object.freeze({
+  // Corporations, partnerships, and LLCs retain intact, source-backed drills.
+  ...floridaBusinessEntitiesLevels,
   // UCC 3: negotiability, transfer, and defenses form the Core foundation.
   "ucc-3-is-the-note-cash": "core",
   "ucc-3-no-unauthorized-undertakings": "core",

@@ -15,9 +15,10 @@ Each cell gives **drills / answer blanks**, including overlap among drills. Coun
 | Florida Civil Procedure | 11 / 96 | 21 / 177 | 26 / 213 |
 | Florida Civil Procedure: Timelines | 2 / 31 | 7 / 86 | 34 / 283 |
 | Florida Criminal Procedure | 18 / 134 | 26 / 189 | 33 / 237 |
-| **Total** | **45 / 349** | **71 / 557** | **110 / 838** |
+| Business Entities | 19 / 134 | 36 / 252 | 42 / 297 |
+| **Total** | **64 / 483** | **107 / 809** | **152 / 1135** |
 
-Core reduces the current blank count by about 58%. Most of that reduction comes from deferring detailed procedure and repeated timeline formats, rather than cutting qualifications out of existing rules.
+Core reduces the current blank count by about 57%. Most of that reduction comes from deferring detailed procedure and repeated timeline formats, rather than cutting qualifications out of existing rules.
 
 ## Selection rationale
 
@@ -55,8 +56,26 @@ Standard adds the pretrial-release framework, speedy-trial extensions, discovery
 
 Comprehensive adds warrant foundations, charging sufficiency, suppression and venue, joinder and severance, reciprocal discovery, sentence correction and postconviction relief, judicial disqualification, and contempt. These include selected Flowers supplements beyond the slide notes; they do not exhaust every topic in that handout. See [sources and rule clarifications](florida-criminal-procedure-curriculum.md).
 
+### Business Entities
+
+Core covers corporate identity, incorporation and governing documents, promoters,
+share financing and voting rights, distributions, shareholder claims, board
+structure and director duties; general partnership formation, internal economics,
+duties and authority; the LLP/LP/LLLP distinction; and LLC formation, voting,
+agency and liability. Each major entity family is available in the default path.
+
+Standard adds corporate powers, annual reports, veil piercing, meeting numbers,
+inspection, board action, conflicts, fundamental changes and dissolution;
+partnership profit-sharing exceptions, property, transfers, dissociation and
+dissolution; and LLC economics, fiduciary limits and exit rules.
+
+Comprehensive adds derivative-demand procedure, indemnification, federal securities
+claims, special corporation forms, LP operation, and LLC transfers and member
+actions. These are selected coverage choices from the supplied unit, not a claim
+to reproduce every topic in the handouts. See [sources and corrections](florida-business-entities-curriculum.md).
+
 ## Maintenance
 
-`src/overviewReview.js` contains an explicit minimum-level entry for every current Overview drill ID. New IDs fall back to Comprehensive at runtime so they remain accessible without silently expanding Core. The catalog-coverage test fails until each new drill receives an explicit classification. Filtering another course returns its original subjects unchanged.
+`src/overviewReview.js` defines the minimum levels and imports the explicit Business Entities classifications from its curriculum modules. Every current Overview drill ID is classified. New IDs fall back to Comprehensive at runtime so they remain accessible without silently expanding Core. The catalog-coverage test fails until each new drill receives an explicit classification. Filtering another course returns its original subjects unchanged.
 
 The review selector does not introduce time-limited sessions, adaptive selection, difficulty settings, or progress migrations. New curriculum drills receive separate persistent IDs.

@@ -27,6 +27,10 @@ Live site: https://nosam4.github.io/patholawgical/
   recall drills across Core, Standard, and Comprehensive, with source-page
   references and clarifications for updated Florida rules. See
   [curriculum sources and corrections](docs/florida-criminal-procedure-curriculum.md).
+- Overview of Florida Law → **Business Entities** adds 42 recall drills with 297
+  blanks covering corporations, partnerships, and LLCs across all three review
+  depths. Each drill includes course PDF references and legal-source links, with
+  current-law clarifications. See [coverage and corrections](docs/florida-business-entities-curriculum.md).
 - Tab or ↓ moves to the next unanswered grid blank; Shift+Tab or ↑ moves to the previous one.
 - Includes a source-backed Professional Responsibility / MPRE curriculum covering
   Model Rules 1–8.
