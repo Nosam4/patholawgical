@@ -1,7 +1,7 @@
 # Florida Business Entities curriculum
 
 Business Entities is a subject in Overview of Florida Law. The 42 original
-short-answer drills contain 297 recall blanks across corporations, general and
+short-answer drills contain 299 recall blanks across corporations, general and
 limited partnerships, LLPs/LLLPs, and LLCs. Course materials determine scope;
 official statutes and decisions verify the legal targets. The application does
 not redistribute the source PDFs or their proprietary hypotheticals.
@@ -40,9 +40,9 @@ saved progress in other subjects are unchanged.
 
 | Review depth | Drills | Blanks |
 | --- | ---: | ---: |
-| Core | 19 | 134 |
-| Standard | 36 | 252 |
-| Comprehensive | 42 | 297 |
+| Core | 19 | 136 |
+| Standard | 36 | 254 |
+| Comprehensive | 42 | 299 |
 
 Core includes formation, governance, financial and liability foundations for all
 three major entity families. Standard adds meeting procedure, rights enforcement,

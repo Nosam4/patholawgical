@@ -15,8 +15,8 @@ Each cell gives **drills / answer blanks**, including overlap among drills. Coun
 | Florida Civil Procedure | 11 / 96 | 21 / 177 | 26 / 213 |
 | Florida Civil Procedure: Timelines | 2 / 31 | 7 / 86 | 34 / 283 |
 | Florida Criminal Procedure | 18 / 134 | 26 / 189 | 33 / 237 |
-| Business Entities | 19 / 134 | 36 / 252 | 42 / 297 |
-| **Total** | **64 / 483** | **107 / 809** | **152 / 1135** |
+| Business Entities | 19 / 136 | 36 / 254 | 42 / 299 |
+| **Total** | **64 / 485** | **107 / 811** | **152 / 1137** |
 
 Core reduces the current blank count by about 57%. Most of that reduction comes from deferring detailed procedure and repeated timeline formats, rather than cutting qualifications out of existing rules.
 

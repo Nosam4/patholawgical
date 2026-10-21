@@ -72,13 +72,15 @@ const corporations = [
         ["start", "Absent a specified effective date, corporate existence begins upon this event", "Filing", "filing the articles", "articles filed"],
       ]),
       column("articles", "Required Article Contents", [
-        ["name", "The articles must identify the corporation by its corporate ____", "Name", "corporate name"],
-        ["shares", "The articles state the number of shares the corporation is ____ to issue", "Authorized", "authorized shares"],
-        ["agent", "The initial registered office and this service-of-process representative must be identified", "Registered agent"],
-        ["office", "The articles must give the street address of the initial ____ office", "Principal", "principal office"],
+        ["name", "What identifying name must the articles state?", "Name of the corporation", "name", "corporate name", "corporation name"],
+        ["shares", "What share-issuance limit must the articles state?", "Number of authorized shares", "authorized", "authorized shares", "number of shares authorized to issue"],
+        ["registered-office", "What address must the articles give for the corporation's service-of-process office?", "Address of registered office", "registered office address", "street address of registered office", "address of registered agent", "registered agent address", "address of registered agent and or office"],
+        ["agent", "Who must be named as the corporation's service-of-process representative?", "Name of registered agent", "registered agent", "registered agent name"],
+        ["incorporators", "Whose names and addresses must the articles include as the people forming the corporation?", "Names and addresses of incorporators", "incorporators names and addresses", "name and address of each incorporator"],
+        ["office", "What address must the articles give for the corporation's main business location?", "Address of principal place of business", "principal", "principal office", "principal office address", "address of principal office", "principal place of business address"],
       ]),
     ], "607.0202", "§§ 607.0201–607.0203, 607.0501",
-    "Also include each incorporator's name and address, a different mailing address if applicable, and the registered agent's written acceptance. Initial directors are optional article contents; a delayed effective date can alter the filing default."),
+    "The registered office requires a street address; the principal office also requires a mailing address if different. Include the registered agent's written acceptance. Initial directors are optional article contents; a delayed effective date can alter the filing default."),
 
   drill("governing-documents", "Articles, Bylaws, and Organization", ["8–9, 31", "2, 6–7", "5–6"],
     "Distinguish the public charter from internal operating rules.", [
