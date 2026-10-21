@@ -17,6 +17,7 @@ import {
 
 import { latestResumableRun, missedAnswerIds, questionRevision, saveRun, savedRunFor } from "./studyProgress.js";
 import { OVERVIEW_COURSE_ID, OVERVIEW_REVIEW_LEVELS, getOverviewQuestionLevel, getOverviewSubjects } from "./overviewReview.js";
+import { nextRandomQuestion } from "./randomPractice.js";
 
 function firstSubjectFor(course) {
   return course?.subjects[0] ?? null;
@@ -287,6 +288,7 @@ export default function App() {
   const [runStarted, setRunStarted] = useState(false);
   const [confettiBurst, setConfettiBurst] = useState(0);
   const controlsRef = useRef(null);
+  const randomBagsRef = useRef(new Map());
 
   const [courseId, setCourseId] = useState(firstCourse?.id ?? "");
   const [overviewReviewLevel, setOverviewReviewLevel] = useState("core");
@@ -430,9 +432,18 @@ export default function App() {
     }
   }
 
-  function chooseQuestion(nextQuestionId) {
+  function chooseQuestion(nextQuestionId, nextMessage = "Question switched.") {
     setQuestionId(nextQuestionId);
-    loadQuestionRun(subject?.questions.find((item) => item.id === nextQuestionId), "Question switched.");
+    loadQuestionRun(subject?.questions.find((item) => item.id === nextQuestionId), nextMessage);
+  }
+
+  function randomizeQuestion() {
+    if (!subject || subject.questions.length < 2) return;
+    const scope = JSON.stringify([courseId, subjectId, isOverview ? overviewReviewLevel : "all"]);
+    const next = nextRandomQuestion(subject.questions, questionId, randomBagsRef.current.get(scope));
+    randomBagsRef.current.set(scope, next.remainingIds);
+    const nextQuestion = subject.questions.find((item) => item.id === next.questionId);
+    chooseQuestion(next.questionId, `Random drill: ${nextQuestion.title}.`);
   }
 
   function loadQuestionRun(nextQuestion, nextMessage) {
@@ -443,7 +454,7 @@ export default function App() {
     setGuessedIds(new Set(run.guessedIds));
     setPractice(run.practice);
     setRunStarted(true);
-    setMessage("Saved run resumed.");
+    setMessage(`${nextQuestion.title}. Saved run resumed.`);
   }
 
   function markCorrect(answerEntry) {
@@ -638,18 +649,34 @@ export default function App() {
 
         <div className="control-group">
           <label htmlFor="questionSelect">Question</label>
-          <select
-            id="questionSelect"
-            aria-label="Select question"
-            onChange={(event) => chooseQuestion(event.target.value)}
-            value={question.id}
-          >
-            {subject.questions.map((item) => (
-              <option key={item.id} value={item.id}>
-                {item.title}
-              </option>
-            ))}
-          </select>
+          <div className="question-picker">
+            <select
+              id="questionSelect"
+              aria-label="Select question"
+              onChange={(event) => chooseQuestion(event.target.value)}
+              value={question.id}
+            >
+              {subject.questions.map((item) => (
+                <option key={item.id} value={item.id}>
+                  {item.title}
+                </option>
+              ))}
+            </select>
+            <button
+              className="randomize-action"
+              type="button"
+              onClick={randomizeQuestion}
+              disabled={subject.questions.length < 2}
+              aria-describedby="randomizeDescription"
+            >
+              Randomize
+            </button>
+          </div>
+          <p className="control-hint" id="randomizeDescription">
+            {subject.questions.length < 2
+              ? "Only one drill in this subject."
+              : `Explore all ${subject.questions.length} drills in this subject${isOverview ? ` at ${reviewLevel.label.toLowerCase()} depth` : ""}. No repeats until the set is covered this session.`}
+          </p>
         </div>
         {isOverview ? (
           <p className="review-depth-description" id="overviewReviewDescription">

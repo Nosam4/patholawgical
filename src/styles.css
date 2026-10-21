@@ -80,6 +80,31 @@ select {
   gap: 6px;
 }
 
+.question-picker {
+  display: flex;
+  gap: 8px;
+}
+
+.question-picker select {
+  min-width: 0;
+  flex: 1;
+}
+
+.randomize-action {
+  flex: 0 0 auto;
+  width: auto;
+  min-height: 44px;
+  padding: 8px 12px;
+  font-size: 0.88rem;
+}
+
+.control-hint {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.82rem;
+  line-height: 1.4;
+}
+
 .review-depth-description {
   grid-column: 1 / -1;
   margin: 0;

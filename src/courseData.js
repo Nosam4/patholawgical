@@ -27,7 +27,7 @@ import { evidenceConfrontationSubject } from "./evidenceConfrontationQuestions.j
 
 const [
   twoDismissalRule,
-  negligenceCoreElements,
+  ,
   predominantPurposeTest,
   gravamenOfTheAction,
   ucc2022Amendments,
@@ -1748,18 +1748,6 @@ export const courseCatalog = [
         id: "dismissals",
         title: "Dismissals",
         questions: [{ ...twoDismissalRule, type: "flowchart" }],
-      },
-    ],
-  },
-  {
-    id: "torts-fall-2026",
-    title: "Torts",
-    term: "Fall 2026",
-    subjects: [
-      {
-        id: "negligence",
-        title: "Negligence",
-        questions: [{ ...negligenceCoreElements, type: "flowchart" }],
       },
     ],
   },

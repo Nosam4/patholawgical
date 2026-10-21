@@ -7,6 +7,11 @@ Live site: https://nosam4.github.io/patholawgical/
 ## What it does
 
 - Organizes prompts by Fall 2026 class, subject, and question.
+- **Randomize** beside the Question selector picks another drill in the current
+  subject. It uses a shuffled set without repeats until the set is covered, respects
+  Overview review depth, and restores unfinished runs. Each subject/depth keeps
+  its own set while the app is open; reloading starts new shuffled sets. The button
+  is disabled when the selected subject has only one available drill.
 - Supports flowchart prompts with a global guess input.
 - Supports Sporcle-style grid prompts with clickable blanks.
 - Showers confetti from the top of the screen when every blank in a question or
