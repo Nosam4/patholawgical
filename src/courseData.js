@@ -11,6 +11,7 @@ import { floridaCivilProcedureQuestions } from "./floridaCivilProcedureQuestions
 import { floridaCivilProcedureTimelineQuestions } from "./floridaCivilProcedureTimelines.js";
 import { floridaCriminalProcedureQuestions } from "./floridaCriminalProcedureQuestions.js";
 import { floridaBusinessEntitiesQuestions } from "./floridaBusinessEntitiesQuestions.js";
+import { overviewListsCourse } from "./overviewLists.js";
 import { professionalResponsibilitySubjects } from "./professionalResponsibilityQuestions.js";
 import { jordanPeytonDirectExaminationQuestion } from "./directExaminationQuestions.js";
 import { sarahBakerCrossExaminationQuestion } from "./crossExaminationQuestions.js";
@@ -1808,6 +1809,7 @@ export const courseCatalog = [
       },
     ],
   },
+  overviewListsCourse,
   {
     id: "ai-and-law-fall-2026",
     title: "AI and the Law",

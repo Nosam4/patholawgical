@@ -28,6 +28,12 @@ Live site: https://nosam4.github.io/patholawgical/
   keep each drill intact. Switching depth preserves saved progress; resuming a
   drill outside the selected depth opens the level needed to show it. See
   [coverage and selection rationale](docs/overview-review-levels.md).
+- **Overview | Lists** is a separate 13-list bank, capped at 15, for recalling complete
+  requirements, prerequisites, and categories without individual clues. Use one
+  input to enter items in any order, reveal omissions, and practice misses.
+  It includes the six-item arrest-warrant course checklist and a seven-group
+  current-rule companion. Original Overview progress remains separate. See
+  [pilot coverage and sources](docs/overview-lists-pilot.md).
 - Overview of Florida Law → **Florida Criminal Procedure** adds course-based
   recall drills across Core, Standard, and Comprehensive, with source-page
   references and clarifications for updated Florida rules. See

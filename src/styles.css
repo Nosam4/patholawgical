@@ -105,7 +105,8 @@ select {
   line-height: 1.4;
 }
 
-.review-depth-description {
+.review-depth-description,
+.list-bank-description {
   grid-column: 1 / -1;
   margin: 0;
   color: var(--muted);
@@ -587,6 +588,115 @@ button:focus-visible, select:focus-visible, a:focus-visible {
   border-bottom: 2px dashed #6d7782;
 }
 
+.list-recall-panel {
+  max-width: 850px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.list-entry-form .guess-row {
+  margin-top: 6px;
+}
+
+.list-entry-form input:focus-visible {
+  outline: 3px solid rgba(39, 93, 88, 0.35);
+  outline-offset: 2px;
+}
+
+.list-entry-form .keyboard-hint {
+  margin: 8px 0 16px;
+}
+
+.list-recall-answers {
+  display: grid;
+  gap: 8px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.list-recall-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 58px;
+  padding: 12px;
+  border: 1px solid #c2cbd3;
+  border-radius: 8px;
+  background: #f8fafb;
+}
+
+.list-item-number {
+  flex: 0 0 28px;
+  display: grid;
+  place-items: center;
+  height: 28px;
+  border-radius: 50%;
+  background: #e8edef;
+  color: var(--muted);
+  font-size: 0.85rem;
+  font-weight: 700;
+}
+
+.list-item-content {
+  flex: 1;
+  min-width: 0;
+  line-height: 1.45;
+  overflow-wrap: anywhere;
+}
+
+.list-item-blank {
+  display: block;
+  width: 100%;
+  border-bottom: 2px dashed #7c8591;
+}
+
+.list-item-status {
+  flex: 0 0 auto;
+  font-size: 0.76rem;
+  font-weight: 700;
+}
+
+.list-recall-item.correct {
+  border-color: var(--good);
+  background: var(--good-soft);
+  color: #164f38;
+}
+
+.list-recall-item.revealed {
+  border-color: var(--reveal);
+  background: var(--reveal-soft);
+  color: #6f3d08;
+}
+
+.list-recall-item.context {
+  color: var(--muted);
+}
+
+.list-item-mnemonic {
+  flex: 0 0 28px;
+  text-align: center;
+  color: #7a5314;
+  font-weight: 900;
+}
+
+.list-item-explanation,
+.list-explanation {
+  color: var(--muted);
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+.list-item-explanation {
+  margin: 6px 0 0;
+}
+
+.list-explanation {
+  margin: 16px 0 0;
+  padding-top: 12px;
+  border-top: 1px solid #d7dddf;
+}
+
 @media (max-width: 760px) {
   .quiz-heading {
     display: block;
@@ -607,6 +717,20 @@ button:focus-visible, select:focus-visible, a:focus-visible {
 
   .flowchart-stage {
     margin-left: 0;
+  }
+
+  .list-recall-item {
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .list-item-content {
+    flex-basis: calc(100% - 80px);
+  }
+
+  .list-item-status {
+    width: 100%;
+    padding-left: 36px;
   }
 
   button {

@@ -28,6 +28,7 @@ function firstQuestionFor(subject) {
 }
 
 function questionTypeLabel(question) {
+  if (question?.recallMode === "list") return "List recall";
   return question?.type === "sporcle-grid" ? "Sporcle-style" : "Flowchart";
 }
 
@@ -154,6 +155,100 @@ function FlowchartStage({ flowchart, guessedIds, revealed, contextIds }) {
           </svg>
         </div>
       </div>
+    </section>
+  );
+}
+
+function ListRecall({
+  question,
+  guessedIds,
+  revealed,
+  contextIds,
+  draft,
+  onDraftChange,
+  onSubmit,
+  runClosed,
+  showMnemonics,
+  focusVersion,
+}) {
+  const inputRef = useRef(null);
+  const entries = question.columns.flatMap((column) => {
+    const mnemonicClues = getColumnMnemonicClues(column);
+    return column.answers.map((answer, index) => ({ answer, mnemonic: mnemonicClues[index] }));
+  });
+
+  useEffect(() => {
+    if (!runClosed) inputRef.current?.focus();
+  }, [question.id, runClosed, focusVersion]);
+
+  return (
+    <section className="panel list-recall-panel" aria-label="List recall answers">
+      {question.sourceUrl ? (
+        <p className="source-line">
+          Source:{" "}
+          <a href={question.sourceUrl} target="_blank" rel="noreferrer">
+            {question.sourceLabel ?? question.sourceUrl}
+          </a>
+        </p>
+      ) : null}
+      <CourseSources question={question} />
+
+      <form className="list-entry-form" onSubmit={(event) => {
+        onSubmit(event);
+        inputRef.current?.focus();
+      }}>
+        <label htmlFor="listAnswer">List answer</label>
+        <div className="guess-row">
+          <input
+            ref={inputRef}
+            id="listAnswer"
+            type="text"
+            autoComplete="off"
+            aria-describedby="listEntryHint"
+            placeholder="Recall an item from the list"
+            value={draft}
+            onChange={(event) => onDraftChange(event.target.value)}
+            disabled={runClosed}
+          />
+          <button type="submit" disabled={runClosed}>Submit answer</button>
+        </div>
+        <p className="keyboard-hint" id="listEntryHint">Enter one item at a time, in any order. Press Enter to submit.</p>
+      </form>
+
+      <ol className="list-recall-answers" id="listRecallAnswers">
+        {entries.map(({ answer, mnemonic }, index) => {
+          const isContext = answer.quiz === false || contextIds.has(answer.id);
+          const solved = !isContext && guessedIds.has(answer.id);
+          const missed = !isContext && !solved && revealed;
+          const showAnswer = isContext || solved || revealed;
+          return (
+            <li
+              key={answer.id}
+              data-answer-id={answer.id}
+              className={`list-recall-item${solved ? " correct" : ""}${missed ? " revealed" : ""}${isContext ? " context" : ""}`}
+            >
+              <span className="list-item-number" aria-hidden="true">{index + 1}</span>
+              {showMnemonics && mnemonic ? (
+                <span className="list-item-mnemonic" aria-label={`Mnemonic ${mnemonic}${answer.mnemonicLabel ? `: ${answer.mnemonicLabel}` : ""}`} title={answer.mnemonicLabel}>{mnemonic}</span>
+              ) : null}
+              <div className="list-item-content">
+                {showAnswer ? (
+                  <>
+                    <span className="list-item-answer">{answer.answer}</span>
+                    {runClosed && answer.explanation ? <p className="list-item-explanation">{answer.explanation}</p> : null}
+                  </>
+                ) : (
+                  <span className="list-item-blank" aria-label={`Unrecalled item ${index + 1}`} />
+                )}
+              </div>
+              {solved || missed || isContext ? (
+                <span className="list-item-status">{solved ? "Recalled" : missed ? "Missed" : "Previously recalled"}</span>
+              ) : null}
+            </li>
+          );
+        })}
+      </ol>
+      {runClosed && question.listExplanation ? <p className="list-explanation">{question.listExplanation}</p> : null}
     </section>
   );
 }
@@ -300,6 +395,7 @@ export default function App() {
   const [activeAnswerId, setActiveAnswerId] = useState("");
   const [sporcleDraft, setSporcleDraft] = useState("");
   const [showMnemonics, setShowMnemonics] = useState(false);
+  const [listFocusVersion, setListFocusVersion] = useState(0);
   const [message, setMessage] = useState("Choose a blank and start filling from memory.");
   const flowchartInputRef = useRef(null);
 
@@ -321,6 +417,7 @@ export default function App() {
     () => subject?.questions.find((item) => item.id === questionId) ?? null,
     [subject, questionId],
   );
+  const isListRecall = question?.recallMode === "list";
   const answers = getQuestionAnswers(question);
   const targets = targetIds ?? answers.map((answer) => answer.id);
   const totalBlanks = targets.length;
@@ -396,6 +493,10 @@ export default function App() {
     setFlowchartGuess("");
     setActiveAnswerId("");
     setSporcleDraft("");
+    if (isListRecall) {
+      setShowMnemonics(false);
+      setListFocusVersion((version) => version + 1);
+    }
     setMessage(nextMessage);
   }
 
@@ -545,6 +646,32 @@ export default function App() {
     setSporcleDraft("");
   }
 
+  function handleListSubmit(event) {
+    event.preventDefault();
+    if (!question || runClosed) return;
+
+    const normalizedGuess = normalizeAnswer(sporcleDraft);
+    if (!normalizedGuess) {
+      setMessage("Type a list item before submitting.");
+      return;
+    }
+
+    const targetedAnswers = answers.filter((answer) => targets.includes(answer.id));
+    const matchedAnswer = findMatchingAnswer(targetedAnswers, guessedIds, normalizedGuess);
+    if (!matchedAnswer) {
+      const alreadyRecalled = findMatchingAnswer(
+        targetedAnswers.filter((answer) => guessedIds.has(answer.id)),
+        new Set(),
+        normalizedGuess,
+      );
+      setMessage(alreadyRecalled ? "You already recalled that item. Try another." : "No match yet. Try another wording or recall another item.");
+      return;
+    }
+
+    markCorrect(matchedAnswer);
+    setSporcleDraft("");
+  }
+
   function handleSporcleFieldKeyDown(event, column, activeAnswer) {
     if (event.key !== "Tab" && event.key !== "ArrowDown" && event.key !== "ArrowUp") {
       return;
@@ -685,6 +812,12 @@ export default function App() {
             {course.subjects.reduce((count, item) => count + item.questions.length, 0)} Overview drills.
           </p>
         ) : null}
+        {Number.isInteger(course.listLimit) ? (
+          <p className="list-bank-description">
+            {course.subjects.reduce((count, item) => count + item.questions.length, 0)} focused lists across {course.subjects.length} subjects.
+            {" "}Limited to {course.listLimit} to keep review manageable.
+          </p>
+        ) : null}
       </section>
 
       {resumable && (!runStarted || resumable.question.id !== questionId) ? (
@@ -704,7 +837,7 @@ export default function App() {
             </p>
           </div>
           <p className="completion-indicator">
-            {practice ? "Practice: " : "Filled "}{guessedIds.size} of {totalBlanks}
+            {isListRecall ? `${practice ? "Practice: " : ""}Recalled ` : practice ? "Practice: " : "Filled "}{guessedIds.size} of {totalBlanks}
           </p>
         </div>
 
@@ -744,7 +877,7 @@ export default function App() {
           ) : null}
           {hasMnemonic ? (
             <button
-              aria-controls="sporcleGrid"
+              aria-controls={isListRecall ? "listRecallAnswers" : "sporcleGrid"}
               aria-pressed={showMnemonics}
               className="mnemonic-action"
               onClick={() => setShowMnemonics((isShowing) => !isShowing)}
@@ -756,7 +889,7 @@ export default function App() {
         </div>
 
         <p id="messageText" role="status">{message}</p>
-        {question.type === "sporcle-grid" ? (
+        {question.type === "sporcle-grid" && !isListRecall ? (
           <p className="keyboard-hint">Use Tab or ↓ for the next blank, and Shift+Tab or ↑ for the previous blank.</p>
         ) : null}
         <p className="study-summary">
@@ -767,7 +900,20 @@ export default function App() {
         {storageError ? <p role="alert">Progress could not be saved in this browser. Keep this tab open to continue this session.</p> : null}
       </section>
 
-      {question.type === "sporcle-grid" ? (
+      {isListRecall ? (
+        <ListRecall
+          question={question}
+          guessedIds={guessedIds}
+          revealed={revealed}
+          contextIds={contextIds}
+          draft={sporcleDraft}
+          onDraftChange={setSporcleDraft}
+          onSubmit={handleListSubmit}
+          runClosed={runClosed}
+          showMnemonics={showMnemonics}
+          focusVersion={listFocusVersion}
+        />
+      ) : question.type === "sporcle-grid" ? (
         <SporcleGrid
           activeAnswerId={activeAnswerId}
           draft={sporcleDraft}
