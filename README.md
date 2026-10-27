@@ -44,6 +44,10 @@ Live site: https://nosam4.github.io/patholawgical/
   eligibility, trademarks, and trade secrets. The Week 9 Class 2 **Can We Ship It?**
   slides refine those drills with the GC playbook, statutory analysis order, and
   Meridian launch scenarios. See [coverage and sources](docs/ai-and-law-weeks8-and9.md).
+- AI and the Law → **Quiz #4** reviews the two assigned GC go/no-go decks:
+  **Should We Patent It?** and **Can We Ship It?** It has separate patent and
+  copyright, trade secret, trademark, and launch-decision drills, with deck links
+  and page/slide references. See [coverage and sources](docs/ai-and-law-quiz4.md).
 - Includes 64 outline-based Sales & Leases drills across eight sections, with
   slide and case context, statutory links, and expandable course-material references.
   See [coverage and source corrections](docs/sales-and-leases-curriculum.md).

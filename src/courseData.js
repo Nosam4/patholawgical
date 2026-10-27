@@ -22,6 +22,7 @@ import { salesAnalysisPatternsSubject } from "./salesAnalysisPatterns.js";
 import { aiAndLawWeek3Questions, aiAndLawWeek4Questions } from "./aiAndLawQuestions.js";
 import { aiAndLawWeek5Questions, aiAndLawWeek6Questions } from "./aiAndLawWeeks5And6.js";
 import { aiAndLawWeeks8And9Questions } from "./aiAndLawWeeks8And9.js";
+import { aiAndLawQuiz4Subject } from "./aiAndLawQuiz4.js";
 import { evidenceAnalysisSubject } from "./evidenceAnalysisQuestions.js";
 import { evidenceConfrontationSubject } from "./evidenceConfrontationQuestions.js";
 
@@ -1847,6 +1848,7 @@ export const courseCatalog = [
         title: "Weeks 8–9: Intellectual Property",
         questions: aiAndLawWeeks8And9Questions,
       },
+      aiAndLawQuiz4Subject,
     ],
   },
   {
