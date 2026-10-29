@@ -45,6 +45,11 @@ Live site: https://nosam4.github.io/patholawgical/
 - Tab or ↓ moves to the next unanswered grid blank; Shift+Tab or ↑ moves to the previous one.
 - Includes a source-backed Professional Responsibility / MPRE curriculum covering
   Model Rules 1–8.
+- Evidence → **Hearsay Exception Elements** adds eight drills from the recent
+  Class 20–21 PowerPoints: FRE 803(1)–(6), including the professor's six-element
+  recorded-recollection checklist, the two business-records checklists, and
+  hearsay within hearsay under FRE 805. Recall list items in any order, reveal
+  omissions, and practice misses. See [coverage and sources](docs/evidence-hearsay-elements.md).
 - AI and the Law → **Weeks 8–9: Intellectual Property** adds 15 recall drills
   covering copyright, fair use and the assigned cases, AI inventorship, patent
   eligibility, trademarks, and trade secrets. The Week 9 Class 2 **Can We Ship It?**

@@ -246,6 +246,7 @@ test("Evidence organizes all 51 syllabus and class rules into individual Sporcle
     [
       "evidence-basic-analysis",
       "evidence-confrontation-clause",
+      "evidence-hearsay-exception-elements",
       "rule-names",
       "general-provisions",
       "relevance-and-policy-exclusions",
