@@ -3,8 +3,40 @@ import { test } from "node:test";
 import { courseCatalog } from "./courseData.js";
 import { OVERVIEW_LISTS_COURSE_ID, OVERVIEW_LIST_LIMIT, overviewListQuestions, overviewListsCourse } from "./overviewLists.js";
 import { OVERVIEW_COURSE_ID, getOverviewSubjects } from "./overviewReview.js";
-import { findMatchingAnswer, getQuestionAnswers, normalizeAnswer } from "./quizLogic.js";
-import { latestResumableRun, saveRun, savedRunFor } from "./studyProgress.js";
+import { findMatchingAnswer, getColumnMnemonicClues, getQuestionAnswers, normalizeAnswer } from "./quizLogic.js";
+import { latestResumableRun, missedAnswerIds, questionRevision, saveRun, savedRunFor } from "./studyProgress.js";
+
+test("SCANND presentation preserves the arrest-warrant list's legacy scores and unfinished run", () => {
+  const question = overviewListQuestions.find((item) => item.id === "fl-lists-arrest-warrant-course-contents");
+  const legacyAnswers = [
+    ["defendant-name", "Name of the defendant, if known"],
+    ["offense", "Nature of the offense"],
+    ["date", "Date the warrant is issued"],
+    ["county", "County where it is issued"],
+    ["bail", "Amount of bail"],
+    ["signature", "Signature of the judge"],
+  ].map(([key, answer]) => [`fl-lists-warrant-course-${key}`, answer]);
+  const legacyIds = legacyAnswers.map(([id]) => id);
+  const entry = {
+    revision: JSON.stringify(legacyAnswers), attempts: 4, bestScore: 3,
+    missedIds: legacyIds.slice(3),
+    run: { targetIds: legacyIds, guessedIds: legacyIds.slice(0, 3), practice: false, closed: false },
+  };
+  assert.deepEqual(getQuestionAnswers(question).map(({ answer }) => answer), [
+    "Signature of the judge", "County where it is issued", "Amount of bail",
+    "Name of the defendant, if known", "Nature of the offense", "Date the warrant is issued",
+  ]);
+  assert.deepEqual(getColumnMnemonicClues(question.columns[0]), [..."SCANND"]);
+  assert.equal(questionRevision(question), entry.revision);
+  const run = savedRunFor(question, entry);
+  assert.deepEqual(run, { targetIds: legacyIds, guessedIds: legacyIds.slice(0, 3), practice: false });
+  assert.deepEqual(missedAnswerIds(question, entry), legacyIds.slice(3));
+  const saved = saveRun({ progressMap: { [question.id]: entry }, question,
+    targetIds: run.targetIds, guessedIds: new Set([...run.guessedIds, legacyIds[3]]) });
+  assert.equal(saved[question.id].attempts, 4);
+  assert.equal(saved[question.id].bestScore, 3);
+  assert.deepEqual(savedRunFor(question, saved[question.id]).guessedIds, legacyIds.slice(0, 4));
+});
 
 test("the thirteen-list bank stays under its fifteen-list ceiling across all review depths", () => {
   assert.equal(courseCatalog.find((course) => course.id === OVERVIEW_LISTS_COURSE_ID), overviewListsCourse);

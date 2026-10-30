@@ -14,7 +14,7 @@ function answer(id, answerText, acceptedAnswers = [], explanation) {
 }
 
 function list({ id, subjectId, title, prompt, sourceUrl, sourceLabel,
-  courseSources, answers, listExplanation }) {
+  courseSources, answers, listExplanation, mnemonic, progressAnswerOrder }) {
   return {
     id: `fl-lists-${id}`,
     subjectId,
@@ -27,7 +27,9 @@ function list({ id, subjectId, title, prompt, sourceUrl, sourceLabel,
     sourceLabel,
     courseSources,
     listExplanation,
-    columns: [{ id: `fl-lists-${id}-items`, title: "Recall the list", answers }],
+    ...(progressAnswerOrder ? { progressAnswerOrder } : {}),
+    columns: [{ id: `fl-lists-${id}-items`, title: "Recall the list",
+      ...(mnemonic ? { mnemonic } : {}), answers }],
   };
 }
 
@@ -44,7 +46,21 @@ const warrantCourseContents = list({
   sourceUrl: criminalRulesUrl,
   sourceLabel: "Fla. R. Crim. P. 3.121(a) — current-rule comparison (October 1, 2026)",
   courseSources: warrantCourseSources,
+  mnemonic: "SCANND",
+  // Keep the original signature so the mnemonic order preserves saved runs.
+  progressAnswerOrder: ["defendant-name", "offense", "date", "county", "bail", "signature"]
+    .map((key) => `fl-lists-warrant-course-${key}`),
   answers: [
+    answer("warrant-course-signature", "Signature of the judge", [
+      "judge signature", "judges signature", "signature of judge", "signed by the judge",
+      "signed by judge", "judicial signature",
+    ]),
+    answer("warrant-course-county", "County where it is issued", [
+      "county of issuance", "county issued", "issuing county", "county where issued",
+    ]),
+    answer("warrant-course-bail", "Amount of bail", [
+      "bail amount", "amount of bond", "bond amount", "bail",
+    ], "Rule 3.121(a)(7) applies when a right to bail exists and calls for bail or other release conditions, plus a return date."),
     answer("warrant-course-defendant-name", "Name of the defendant, if known", [
       "name of defendant", "defendant name", "defendants name", "name of the defendant",
       "name of defendant if known", "defendant identification", "name or description",
@@ -54,16 +70,6 @@ const warrantCourseContents = list({
     ]),
     answer("warrant-course-date", "Date the warrant is issued", [
       "date of issuance", "issuance date", "date issued", "date of issue", "warrant date",
-    ]),
-    answer("warrant-course-county", "County where it is issued", [
-      "county of issuance", "county issued", "issuing county", "county where issued",
-    ]),
-    answer("warrant-course-bail", "Amount of bail", [
-      "bail amount", "amount of bond", "bond amount", "bail",
-    ], "Rule 3.121(a)(7) applies when a right to bail exists and calls for bail or other release conditions, plus a return date."),
-    answer("warrant-course-signature", "Signature of the judge", [
-      "judge signature", "judges signature", "signature of judge", "signed by the judge",
-      "signed by judge", "judicial signature",
     ]),
   ],
   listExplanation: "These six course items are a memory checklist. The companion seven-group Rule 3.121(a) drill also covers the written State-of-Florida form and arrest-and-bring command; it groups date with county and includes identification, judicial-signature, and release qualifications. Completing this checklist does not establish compliance with the entire rule.",

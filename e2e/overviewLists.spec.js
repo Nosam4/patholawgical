@@ -24,6 +24,11 @@ test("list recall accepts arbitrary order, rejects vague entries, and never scor
   await expect(page.locator(".list-item-blank")).toHaveCount(answers.length);
   await expect(page.locator(".answer-indicator, .list-item-explanation, .list-explanation")).toHaveCount(0);
   await expect(page.locator(".list-item-mnemonic")).toHaveCount(0);
+  await page.getByRole("button", { name: "Show Mnemonic", exact: true }).click();
+  await expect(page.locator(".list-item-mnemonic")).toHaveText([..."SCANND"]);
+  await expect(page.locator(".list-item-answer")).toHaveCount(0);
+  await page.getByRole("button", { name: "Hide Mnemonic", exact: true }).click();
+  await expect(page.locator(".list-item-mnemonic")).toHaveCount(0);
   await submit(page, "county");
   await expect(page.locator(".completion-indicator")).toHaveText(`Recalled 0 of ${answers.length}`);
   await expect(page.getByRole("status")).toContainText("No match");

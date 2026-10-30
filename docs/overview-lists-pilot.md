@@ -7,9 +7,12 @@ available with their existing question IDs and browser progress.
 
 Each pilot drill asks for one bounded legal list. Enter one member at a time in
 any order using the persistent **List answer** input. Empty numbered slots have
-no element-specific clues. Answers appear in the authored source order; that
-display order is not a required submission order. Duplicate answers do not add
-credit. Reveal marks missing entries, and missed-answer practice preserves the
+no element-specific clues. Answers appear in each list's study order; that
+display order is not a required submission order. The six-item arrest-warrant
+course checklist uses **SCANND**: Signature, County, Amount of bail, Name,
+Nature of the offense, Date. **Show Mnemonic** displays those initials.
+Duplicate answers do not add credit. Reveal marks missing entries, and
+missed-answer practice preserves the
 full-drill best score. Counts measure recalled entries in a run, not mastery.
 
 ## Coverage
