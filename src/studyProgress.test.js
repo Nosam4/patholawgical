@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import { test } from "node:test";
-import { saveRun, savedRunFor, missedAnswerIds, latestResumableRun } from "./studyProgress.js";
+import { saveRun, savedRunFor, missedAnswerIds, latestResumableRun, questionRevision } from "./studyProgress.js";
 import { readProgressMap, writeProgressMap } from "./quizLogic.js";
 
 const question = { id: "q", type: "flowchart", nodes: [
@@ -54,4 +54,33 @@ test("blocked storage cannot crash a study session", () => {
   const storage = { getItem() { throw new Error("blocked"); }, setItem() { throw new Error("quota"); } };
   assert.deepEqual(readProgressMap(storage), {});
   assert.equal(writeProgressMap({}, storage), false);
+});
+
+test("content versions invalidate substantive clue and alias corrections while preserving legacy signatures", () => {
+  const original = { ...question, prompt: "Original prompt", nodes: question.nodes.map((node) => ({ ...node,
+    clue: "Original clue", acceptedAnswers: ["original alias"],
+  })) };
+  const map = saveRun({ progressMap: {}, question: original, targetIds: targets, guessedIds: new Set(["a"]) });
+  assert.equal(questionRevision(original), JSON.stringify(getAnswers(original)));
+  const edited = { ...original, prompt: "Corrected qualification", nodes: original.nodes.map((node) => ({ ...node,
+    clue: "Corrected clue", acceptedAnswers: ["corrected alias"],
+  })), contentVersion: 1 };
+  assert.notEqual(questionRevision(edited), questionRevision(original));
+  assert.equal(savedRunFor(edited, map.q), null);
+  assert.deepEqual(missedAnswerIds(edited, map.q), []);
+  const versioned = saveRun({ progressMap: map, question: edited, targetIds: targets, guessedIds: new Set(["b"]) });
+  assert.deepEqual(savedRunFor(edited, versioned.q).guessedIds, ["b"]);
+  assert.equal(savedRunFor({ ...edited, contentVersion: 2 }, versioned.q), null);
+});
+
+function getAnswers(value) {
+  return value.nodes.filter((node) => node.quiz !== false).map(({ id, answer }) => [id, answer]);
+}
+
+test("source-link and presentation edits preserve an explicitly versioned run", () => {
+  const versioned = { ...question, contentVersion: 2, sourceUrl: "https://example.com/old" };
+  const map = saveRun({ progressMap: {}, question: versioned, targetIds: targets, guessedIds: new Set(["a"]) });
+  const correctedLink = { ...versioned, sourceUrl: "https://example.com/new", title: "Typo fixed" };
+  assert.equal(questionRevision(correctedLink), questionRevision(versioned));
+  assert.deepEqual(savedRunFor(correctedLink, map.q).guessedIds, ["a"]);
 });

@@ -32,7 +32,7 @@ test("resume after reload; practice misses without inflating the best score", as
   await expect(page.getByRole("button", { name: /Practice missed answers/ })).toHaveCount(0);
 });
 
-test("Tab and Shift+Tab navigate unanswered blanks just like the arrow keys", async ({ page }) => {
+test("arrow keys navigate unanswered blanks while Tab preserves normal focus navigation", async ({ page }) => {
   await page.goto("./");
   await page.getByRole("button", { name: "Blank answer 1 for Required for Competence", exact: true }).click();
   await page.getByRole("textbox").press("ArrowDown");
@@ -40,19 +40,40 @@ test("Tab and Shift+Tab navigate unanswered blanks just like the arrow keys", as
   await page.getByRole("textbox").press("ArrowUp");
   const firstAnswer = page.getByRole("textbox", { name: "Answer 1 for Required for Competence", exact: true });
   await expect(firstAnswer).toBeFocused();
+  await firstAnswer.fill("unfinished draft");
   await firstAnswer.press("Tab");
-  await expect(page.getByRole("textbox", { name: "Answer 2 for Required for Competence", exact: true })).toBeFocused();
-  await page.getByRole("textbox").press("Shift+Tab");
+  const secondBlank = page.getByRole("button", { name: "Blank answer 2 for Required for Competence", exact: true });
+  await expect(secondBlank).toBeFocused();
+  await secondBlank.press("Shift+Tab");
   await expect(firstAnswer).toBeFocused();
+  await expect(firstAnswer).toHaveValue("unfinished draft");
   await firstAnswer.press("Shift+Tab");
-  await expect(page.getByRole("textbox", { name: "Answer 4 for Required for Competence", exact: true })).toBeFocused();
-  await page.getByRole("textbox").press("Tab");
-  await expect(firstAnswer).toBeFocused();
+  const source = page.getByRole("link", { name: "ABA Model Rules of Professional Conduct", exact: true });
+  await expect(source).toBeFocused();
+  await source.press("Shift+Tab");
+  await page.getByRole("button", { name: "Show Mnemonic", exact: true }).press("Shift+Tab");
+  await page.getByRole("button", { name: "Start Fresh", exact: true }).press("Shift+Tab");
+  await expect(page.getByRole("button", { name: "Reveal Missed Answers", exact: true })).toBeFocused();
+
+  await firstAnswer.click();
+  await firstAnswer.press("ArrowUp");
+  const lastAnswer = page.getByRole("textbox", { name: "Answer 4 for Required for Competence", exact: true });
+  await expect(lastAnswer).toBeFocused();
+  await lastAnswer.press("Tab");
+  const back = page.getByRole("button", { name: "Back to study controls", exact: true });
+  await expect(back).toBeFocused();
+  await back.press("Shift+Tab");
+  await expect(lastAnswer).toBeFocused();
+  await lastAnswer.press("Escape");
+  await expect(page.getByLabel("Select class", { exact: true })).toBeFocused();
+
+  await lastAnswer.click();
+  await lastAnswer.press("ArrowDown");
   await firstAnswer.fill("knowledge");
   await firstAnswer.press("Enter");
-  await page.getByRole("textbox").press("Shift+Tab");
+  await page.getByRole("textbox").press("ArrowUp");
   await expect(page.getByRole("textbox", { name: "Answer 4 for Required for Competence", exact: true })).toBeFocused();
-  await page.getByRole("textbox").press("Tab");
+  await page.getByRole("textbox").press("ArrowDown");
   await expect(page.getByRole("textbox", { name: "Answer 2 for Required for Competence", exact: true })).toBeFocused();
 });
 

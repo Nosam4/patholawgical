@@ -10,8 +10,16 @@ export function localISODate(date = new Date()) {
 export function normalizeAnswer(text) {
   return String(text)
     .toLowerCase()
+    // Comparisons and numeric signs change the answer's meaning. Keep them
+    // distinct from an unsigned number; hyphens inside rule citations and
+    // ordinary phrases remain harmless punctuation.
+    .replace(/[\u2264\u2265\u2260]/g, (symbol) => ({ "≤": "<=", "≥": ">=", "≠": "!=" })[symbol])
+    .replace(/(^|[^a-z0-9])([+\-\u2212\u2013])\s*(?=\d)/g,
+      (_, prefix, sign) => `${prefix} ${sign === "+" ? "plus" : "minus"} `)
+    .replace(/!=/g, " not equal to ")
+    .replace(/([<>]=?|=)/g, " $1 ")
     .replace(/['\u2019]/g, "")
-    .replace(/[^a-z0-9\s]/g, " ")
+    .replace(/[^a-z0-9\s<>=]/g, " ")
     .replace(/\s+/g, " ")
     .trim();
 }

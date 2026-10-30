@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { courseCatalog } from "./courseData.js";
-import { buildArrows } from "./flowchartRouting.js";
+import FlowchartStage from "./FlowchartStage.jsx";
 import CompletionConfetti from "./CompletionConfetti.jsx";
 import {
   findMatchingAnswer,
@@ -11,11 +11,10 @@ import {
   getQuestionAnswers,
   normalizeAnswer,
   questionHasMnemonic,
-  readProgressMap,
-  writeProgressMap,
 } from "./quizLogic.js";
 
-import { latestResumableRun, missedAnswerIds, questionRevision, saveRun, savedRunFor } from "./studyProgress.js";
+import { latestResumableRun, missedAnswerIds, questionRevision, savedRunFor } from "./studyProgress.js";
+import { createProgressStore, createRunId } from "./progressStore.js";
 import { OVERVIEW_COURSE_ID, OVERVIEW_REVIEW_LEVELS, getOverviewQuestionLevel, getOverviewSubjects } from "./overviewReview.js";
 import { nextRandomQuestion } from "./randomPractice.js";
 
@@ -39,123 +38,6 @@ function CourseSources({ question }) {
       <summary>Course material</summary>
       <ul>{question.courseSources.map((reference) => <li key={reference}>{reference}</li>)}</ul>
     </details>
-  );
-}
-
-function FlowchartStage({ flowchart, guessedIds, revealed, contextIds }) {
-  const arrows = useMemo(() => buildArrows(flowchart), [flowchart]);
-  const scrollRef = useRef(null);
-
-  useEffect(() => {
-    const scroller = scrollRef.current;
-
-    if (scroller && scroller.scrollWidth > scroller.clientWidth) {
-      scroller.scrollLeft = (scroller.scrollWidth - scroller.clientWidth) / 2;
-    }
-  }, [flowchart.id]);
-
-  return (
-    <section className="panel chart-panel">
-      {flowchart.sourceUrl ? (
-        <p className="source-line">
-          Source:{" "}
-          <a href={flowchart.sourceUrl} target="_blank" rel="noreferrer">
-            {flowchart.sourceLabel ?? flowchart.sourceUrl}
-          </a>
-        </p>
-      ) : null}
-      <CourseSources question={flowchart} />
-      <div className="chart-scroll" ref={scrollRef}>
-        <div
-          className="flowchart-stage"
-          style={{ width: flowchart.width, height: flowchart.height }}
-        >
-          <svg
-            className="flowchart-canvas"
-            viewBox={`0 0 ${flowchart.width} ${flowchart.height}`}
-            width={flowchart.width}
-            height={flowchart.height}
-            aria-label={`${flowchart.title} flowchart`}
-            role="img"
-          >
-            <defs>
-              <marker
-                id="arrowhead"
-                markerUnits="userSpaceOnUse"
-                markerWidth="10"
-                markerHeight="8"
-                refX="8"
-                refY="4"
-                orient="auto"
-              >
-                <polygon points="0 0, 10 4, 0 8" />
-              </marker>
-            </defs>
-
-            <g className="flowchart-arrows">
-              {arrows.map((arrow) => (
-                <g key={arrow.id}>
-                  <path
-                    className="arrow-line"
-                    d={arrow.path}
-                    markerEnd={arrow.markerEnd === false ? undefined : "url(#arrowhead)"}
-                  />
-                  {arrow.label ? (
-                    <text
-                      className="arrow-label"
-                      x={arrow.labelX}
-                      y={arrow.labelY}
-                    >
-                      {arrow.label}
-                    </text>
-                  ) : null}
-                </g>
-              ))}
-            </g>
-
-            <g className="flowchart-nodes">
-              {flowchart.nodes.map((node) => {
-                const isStatic = node.quiz === false || contextIds.has(node.id);
-                const solved = !isStatic && guessedIds.has(node.id);
-                const showAnswer = isStatic || solved || revealed;
-                const className = [
-                  "flow-node",
-                  node.kind ? `flow-node-${node.kind}` : "",
-                  isStatic ? "static" : "",
-                  solved ? "correct" : "",
-                  !isStatic && !solved && revealed ? "revealed" : "",
-                ]
-                  .filter(Boolean)
-                  .join(" ");
-
-                return (
-                  <foreignObject
-                    className="flowchart-node-wrapper"
-                    key={node.id}
-                    x={node.x}
-                    y={node.y}
-                    width={node.width}
-                    height={node.height}
-                  >
-                    <article className={className}>
-                      {node.clue ? <p className="node-clue">{node.clue}</p> : null}
-                      {showAnswer ? (
-                        <p className="node-answer">{node.label ?? node.answer}</p>
-                      ) : (
-                        <div className="node-blank" aria-label="Unanswered blank">
-                          <span />
-                          <span />
-                        </div>
-                      )}
-                    </article>
-                  </foreignObject>
-                );
-              })}
-            </g>
-          </svg>
-        </div>
-      </div>
-    </section>
   );
 }
 
@@ -309,7 +191,7 @@ function SporcleGrid({
                     >
                       {answer.indicator ? (
                         <div className={`answer-indicator${answer.indicatorDetails?.length ? " has-details" : ""}`}>
-                          <span>{answer.indicator}</span>
+                          <span id={`answer-clue-${answer.id}`}>{answer.indicator}</span>
                           {answer.indicatorDetails?.length ? (
                             <ul className="indicator-details">
                               {answer.indicatorDetails.map((detail) => (
@@ -341,6 +223,7 @@ function SporcleGrid({
                           <form onSubmit={(event) => onSubmit(event, column, answer)}>
                             <input
                               aria-label={`Answer ${answerIndex + 1} for ${column.title}`}
+                              aria-describedby={answer.indicator ? `answer-clue-${answer.id} gridKeyboardHint` : "gridKeyboardHint"}
                               autoComplete="off"
                               autoFocus
                               onChange={(event) => onDraftChange(event.target.value)}
@@ -351,6 +234,7 @@ function SporcleGrid({
                         ) : (
                           <button
                             aria-label={`Blank answer ${answerIndex + 1} for ${column.title}`}
+                            aria-describedby={answer.indicator ? `answer-clue-${answer.id}` : undefined}
                             className="blank-answer"
                             onClick={() => onActivate(answer.id)}
                             type="button"
@@ -376,8 +260,11 @@ export default function App() {
   const firstSubject = firstSubjectFor(firstCourse);
   const firstQuestion = firstQuestionFor(firstSubject);
 
-  const [progressMap, setProgressMap] = useState(() => readProgressMap());
+  const [progressStore] = useState(() => createProgressStore());
+  const [progressMap, setProgressMap] = useState(() => progressStore.read());
   const [storageError, setStorageError] = useState(false);
+  const [pendingSaves, setPendingSaves] = useState(0);
+  const activeSessionRef = useRef({ questionId: firstQuestion?.id, runId: null });
   const [targetIds, setTargetIds] = useState(null);
   const [practice, setPractice] = useState(false);
   const [runStarted, setRunStarted] = useState(false);
@@ -433,12 +320,47 @@ export default function App() {
   const missedIds = question ? missedAnswerIds(question, entry) : [];
   const resumable = latestResumableRun(courseCatalog, progressMap);
 
-  function persistRun(nextGuesses, closed = false, nextTargets = targets, nextPractice = practice) {
-    const nextMap = saveRun({ progressMap, question, targetIds: nextTargets,
-      guessedIds: nextGuesses, practice: nextPractice, closed });
-    setProgressMap(nextMap);
-    setStorageError(!writeProgressMap(nextMap));
+  useEffect(() => progressStore.subscribe(setProgressMap), [progressStore]);
+
+  async function persistRun(nextGuesses, closed = false, nextTargets = targets, nextPractice = practice, newRun = false) {
+    const session = activeSessionRef.current;
+    const sequence = session.saveSequence = (session.saveSequence ?? 0) + 1;
+    if (newRun) session.runId = createRunId();
     setRunStarted(true);
+    setPendingSaves((count) => count + 1);
+    try {
+      const saving = progressStore.save({ question, targetIds: [...nextTargets],
+        guessedIds: new Set(nextGuesses), practice: nextPractice, closed,
+        runId: session.runId, newRun });
+      const stagedProgress = progressStore.read();
+      setProgressMap(stagedProgress);
+      session.runId ??= stagedProgress[question.id]?.run?.id ?? null;
+      const result = await saving;
+      setProgressMap(progressStore.read());
+      setStorageError(!result.saved);
+      // A save may finish after the student switches drills or starts again.
+      if (activeSessionRef.current !== session || session.saveSequence !== sequence) return;
+      session.runId = result.runId;
+      const run = result.entry.run;
+      setTargetIds(run.targetIds);
+      setGuessedIds(new Set(run.guessedIds));
+      setPractice(run.practice);
+      setRevealed(run.closed && run.guessedIds.length < run.targetIds.length);
+      setActiveAnswerId((id) => run.closed || run.guessedIds.includes(id) ? "" : id);
+      if (result.conflict) {
+        setConfettiBurst(0);
+        setFlowchartGuess("");
+        setSporcleDraft("");
+        setMessage("Another tab changed this drill. Its latest saved run is now shown.");
+      } else if (run.closed && !closed && run.guessedIds.length === run.targetIds.length) {
+        setMessage("Complete. All blanks filled.");
+        setConfettiBurst((burst) => burst + 1);
+      }
+    } catch {
+      setStorageError(true);
+    } finally {
+      setPendingSaves((count) => count - 1);
+    }
   }
 
   function resumeRun() {
@@ -452,7 +374,8 @@ export default function App() {
     setCourseId(nextCourse.id);
     setSubjectId(nextSubject.id);
     setQuestionId(nextQuestion.id);
-    resetRun("Saved run resumed.");
+    resetRun("Saved run resumed.", nextQuestion.id);
+    activeSessionRef.current.runId = progressMap[nextQuestion.id]?.run?.id ?? null;
     setTargetIds(run.targetIds);
     setGuessedIds(new Set(run.guessedIds));
     setPractice(run.practice);
@@ -461,7 +384,7 @@ export default function App() {
 
   function startFresh() {
     resetRun("New run started.");
-    persistRun(new Set(), false, answers.map((answer) => answer.id), false);
+    persistRun(new Set(), false, answers.map((answer) => answer.id), false, true);
   }
 
   function practiceMissed() {
@@ -469,7 +392,7 @@ export default function App() {
     resetRun("Practice the missed blanks. Previously correct answers are shown as context.");
     setTargetIds(missedIds);
     setPractice(true);
-    persistRun(new Set(), false, missedIds, true);
+    persistRun(new Set(), false, missedIds, true, true);
   }
   const hasMnemonic = questionHasMnemonic(question);
 
@@ -483,7 +406,8 @@ export default function App() {
     setShowMnemonics(false);
   }, [question?.id]);
 
-  function resetRun(nextMessage = "Fresh run started.") {
+  function resetRun(nextMessage = "Fresh run started.", nextQuestionId = questionId) {
+    activeSessionRef.current = { questionId: nextQuestionId, runId: null };
     setConfettiBurst(0);
     setTargetIds(null);
     setPractice(false);
@@ -548,9 +472,12 @@ export default function App() {
   }
 
   function loadQuestionRun(nextQuestion, nextMessage) {
-    resetRun(nextMessage);
-    const run = nextQuestion && savedRunFor(nextQuestion, progressMap[nextQuestion.id]);
+    resetRun(nextMessage, nextQuestion?.id);
+    const latestProgress = progressStore.read();
+    setProgressMap(latestProgress);
+    const run = nextQuestion && savedRunFor(nextQuestion, latestProgress[nextQuestion.id]);
     if (!run) return;
+    activeSessionRef.current.runId = latestProgress[nextQuestion.id]?.run?.id ?? null;
     setTargetIds(run.targetIds);
     setGuessedIds(new Set(run.guessedIds));
     setPractice(run.practice);
@@ -620,16 +547,13 @@ export default function App() {
     }
 
     const matchedAnswer = findMatchingAnswer(
-      column.answers.filter((answer) => targets.includes(answer.id)
-        && (question.answerMatching !== "active" || answer.id === activeAnswer.id)),
+      [activeAnswer].filter((answer) => targets.includes(answer.id)),
       guessedIds,
       normalizedGuess,
     );
 
     if (!matchedAnswer) {
-      setMessage(question.answerMatching === "active"
-        ? "No match for this blank yet."
-        : `No match in ${column.title} yet.`);
+      setMessage("No match for this blank yet.");
       return;
     }
 
@@ -673,12 +597,19 @@ export default function App() {
   }
 
   function handleSporcleFieldKeyDown(event, column, activeAnswer) {
-    if (event.key !== "Tab" && event.key !== "ArrowDown" && event.key !== "ArrowUp") {
+    if (event.key === "Escape") {
+      event.preventDefault();
+      controlsRef.current?.focus();
+      return;
+    }
+
+    // Leave Tab/Shift+Tab to the browser so every control remains reachable.
+    if (event.key !== "ArrowDown" && event.key !== "ArrowUp") {
       return;
     }
 
     event.preventDefault();
-    const moveBackward = event.key === "ArrowUp" || (event.key === "Tab" && event.shiftKey);
+    const moveBackward = event.key === "ArrowUp";
     const nextAnswerId = moveBackward
       ? findPreviousFieldAnswerId(navigationQuestion, column.id, activeAnswer.id, guessedIds)
       : findNextFieldAnswerId(navigationQuestion, column.id, activeAnswer.id, guessedIds);
@@ -890,14 +821,16 @@ export default function App() {
 
         <p id="messageText" role="status">{message}</p>
         {question.type === "sporcle-grid" && !isListRecall ? (
-          <p className="keyboard-hint">Use Tab or ↓ for the next blank, and Shift+Tab or ↑ for the previous blank.</p>
+          <p className="keyboard-hint" id="gridKeyboardHint">Use ↓ or ↑ to move between unanswered blanks. Tab and Shift+Tab move between controls. Escape returns to study controls.</p>
         ) : null}
         <p className="study-summary">
           Full attempts: {currentProgress?.attempts ?? 0} · Best: {currentProgress?.bestScore ?? 0}/{answers.length}
           {currentProgress?.lastAttempted ? ` · Last studied: ${currentProgress.lastAttempted}` : ""}
           {currentProgress?.practiceAttempts ? ` · Practice attempts: ${currentProgress.practiceAttempts}` : ""}
         </p>
-        {storageError ? <p role="alert">Progress could not be saved in this browser. Keep this tab open to continue this session.</p> : null}
+        {pendingSaves > 0 ? <p className="save-state">Saving progress…</p>
+          : runStarted && !storageError ? <p className="save-state">Progress saved in this browser.</p> : null}
+        {storageError ? <p role="alert">Progress could not be saved safely in this browser. Keep this tab open to continue this session.</p> : null}
       </section>
 
       {isListRecall ? (

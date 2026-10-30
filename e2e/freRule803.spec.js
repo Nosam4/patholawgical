@@ -99,9 +99,9 @@ test("Rule 803 accepts existing aliases and navigates across the new columns bef
   await expect(rowFor(page, 7).getByRole("textbox")).toBeFocused();
 
   await rowFor(page, 14).getByRole("button").click();
-  await rowFor(page, 14).getByRole("textbox").press("Tab");
+  await rowFor(page, 14).getByRole("textbox").press("ArrowDown");
   await expect(rowFor(page, 12).getByRole("textbox")).toBeFocused();
-  await rowFor(page, 12).getByRole("textbox").press("Shift+Tab");
+  await rowFor(page, 12).getByRole("textbox").press("ArrowUp");
   await expect(rowFor(page, 14).getByRole("textbox")).toBeFocused();
   await rowFor(page, 14).getByRole("textbox").press("ArrowDown");
   await expect(rowFor(page, 12).getByRole("textbox")).toBeFocused();

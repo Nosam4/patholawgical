@@ -13,6 +13,9 @@ Live site: https://nosam4.github.io/patholawgical/
   its own set while the app is open; reloading starts new shuffled sets. The button
   is disabled when the selected subject has only one available drill.
 - Supports flowchart prompts with a global guess input.
+- Flowcharts include an expandable **Text view: steps and branches** with linked
+  steps and labeled connections. It shows the same recalled, revealed, and context
+  answers as the diagram, while keeping unanswered targets hidden.
 - Supports Sporcle-style grid prompts with clickable blanks.
 - Showers confetti from the top of the screen when every blank in a question or
   missed-answer practice run is answered correctly. Respects reduced-motion settings.
@@ -42,7 +45,9 @@ Live site: https://nosam4.github.io/patholawgical/
   blanks covering corporations, partnerships, and LLCs across all three review
   depths. Each drill includes course PDF references and legal-source links, with
   current-law clarifications. See [coverage and corrections](docs/florida-business-entities-curriculum.md).
-- Tab or ↓ moves to the next unanswered grid blank; Shift+Tab or ↑ moves to the previous one.
+- Grid answers are checked against the selected blank. List recall still accepts items in any order.
+- ↓ moves to the next unanswered grid blank; ↑ moves to the previous one.
+  Tab and Shift+Tab use normal browser focus navigation; Escape returns to study controls.
 - Includes a source-backed Professional Responsibility / MPRE curriculum covering
   Model Rules 1–8.
 - Evidence → **Hearsay Exception Elements** adds eight drills from the recent
@@ -103,6 +108,11 @@ checks for resume, scoring, keyboard navigation, and revealed desktop/mobile
 flowchart layouts before uploading the Pages artifact.
 
 Progress stays on the current browser and origin; it does not sync between devices.
+Tabs coordinate saves per question. Shared runs merge recalled answers and count
+completion once; a newer **Start Fresh** run takes precedence over stale saves.
+Existing whole-map progress remains readable. Safe saving requires browser storage
+and Web Locks (available in supported modern browsers on HTTPS or localhost).
+If either is unavailable, a warning appears and studying continues in memory only.
 Corrected question text invalidates saved runs for that question so outdated answers
 are not restored. Unsubmitted text is not saved.
 
@@ -130,6 +140,15 @@ Questions can be:
 Flowchart nodes may set `quiz: false` for always-visible context, `clue` for a
 visible subsection hint, and `kind` to one of `rule`, `decision`, `exception`,
 `outcome`, or `note` for semantic styling.
+
+For a substantive correction to a prompt, clue, accepted alias, or other legal
+qualification, set or increment the question's `contentVersion` (for example,
+`contentVersion: 1`, then `2` for a later correction). This invalidates outdated
+scores and unfinished runs even when the canonical answer is unchanged. Leave
+the field absent on unchanged existing drills to preserve legacy progress; keep
+the version unchanged for source-link, spelling, or layout edits that do not
+change what is being tested. Canonical answer/ID changes still invalidate progress
+automatically.
 
 To give a Sporcle column an optional mnemonic, add a `mnemonic` string whose
 characters match the answer order (for example, `mnemonic: "USFPOS"`). The

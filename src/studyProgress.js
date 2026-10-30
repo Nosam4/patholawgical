@@ -7,7 +7,12 @@ export function questionRevision(question) {
     const order = new Map(question.progressAnswerOrder.map((id, index) => [id, index]));
     answers.sort((a, b) => (order.get(a.id) ?? answers.length) - (order.get(b.id) ?? answers.length));
   }
-  return JSON.stringify(answers.map(({ id, answer }) => [id, answer]));
+  const answerRevision = JSON.stringify(answers.map(({ id, answer }) => [id, answer]));
+  // Preserve legacy signatures until an author explicitly versions a substantive
+  // correction to a prompt, clue, accepted alias, or other doctrinal context.
+  return question?.contentVersion == null
+    ? answerRevision
+    : JSON.stringify([question.contentVersion, answerRevision]);
 }
 
 export function validAnswerIds(question, ids) {

@@ -1,0 +1,55 @@
+.flowchart-text-view {
+  margin: 0.75rem 0 1rem;
+  border: 1px solid var(--border, #d5dcdf);
+  border-radius: 8px;
+}
+
+.flowchart-text-view > summary {
+  padding: 0.75rem;
+  cursor: pointer;
+  color: var(--accent, #275d58);
+  font-weight: 700;
+}
+
+.flowchart-text-view > summary:focus-visible,
+.flowchart-text-view a:focus-visible {
+  outline: 3px solid #275d58;
+  outline-offset: 2px;
+}
+
+.flowchart-text-content {
+  padding: 0 1rem 1rem;
+  overflow-wrap: anywhere;
+}
+
+.flowchart-text-steps,
+.flowchart-text-branches {
+  padding-left: 1.5rem;
+}
+
+.flowchart-text-steps > li {
+  margin: 0.75rem 0;
+  padding: 0.75rem;
+  border: 1px solid var(--border, #d5dcdf);
+  border-radius: 6px;
+  scroll-margin-top: 1rem;
+}
+
+.flowchart-text-steps h3,
+.flowchart-text-answer {
+  margin: 0 0 0.375rem;
+}
+
+.flowchart-text-steps h3 {
+  font-size: 1rem;
+}
+
+.flowchart-text-status {
+  margin: 0;
+  font-size: 0.875rem;
+  font-weight: 700;
+}
+
+.flowchart-text-branches li {
+  margin: 0.5rem 0;
+}

@@ -1,5 +1,6 @@
 import assert from "node:assert/strict";
 import { test } from "node:test";
+import { courseCatalog } from "./courseData.js";
 import {
   STORAGE_KEY,
   buildUpdatedProgressMap,
@@ -57,6 +58,48 @@ test("isNodeMatch accepts simple singular and plural differences", () => {
   };
 
   assert.equal(isNodeMatch(node, normalizeAnswer("district court")), true);
+});
+
+test("numeric signs and comparisons cannot turn into an unsigned threshold", () => {
+  const question = courseCatalog.flatMap((course) => course.subjects.flatMap((subject) => subject.questions))
+    .find((entry) => entry.id === "fl-be-federal-securities");
+  const ownership = getQuestionAnswers(question).find((entry) => entry.id === "fl-be-short-swing-owner");
+  assert.ok(ownership);
+  for (const guess of ["<10%", "<=10%", ">10%", ">=10%", "≤10%", "≥10%", "=10%", "!=10%", "≠10%", "-10%", "−10%", "–10%", "+10%", "(− 10%)"]) {
+    assert.equal(isNodeMatch(ownership, normalizeAnswer(guess)), false, guess);
+  }
+  for (const guess of ["10%", "10 percent", "10", "ten percent"]) {
+    assert.equal(isNodeMatch(ownership, normalizeAnswer(guess)), true, guess);
+  }
+});
+
+test("explicit signed and comparative answers preserve their operators", () => {
+  assert.equal(isNodeMatch({ answer: "<= 10%" }, normalizeAnswer("≤10%")), true);
+  assert.equal(isNodeMatch({ answer: ">= 10%" }, normalizeAnswer("≥ 10%")), true);
+  assert.equal(isNodeMatch({ answer: "!= 10%" }, normalizeAnswer("≠10%")), true);
+  assert.equal(isNodeMatch({ answer: "-10%" }, normalizeAnswer("− 10%")), true);
+  assert.equal(isNodeMatch({ answer: "-10%" }, normalizeAnswer("–10%")), true);
+  assert.equal(isNodeMatch({ answer: "<=10%" }, normalizeAnswer(">=10%")), false);
+  assert.equal(isNodeMatch({ answer: "<10%" }, normalizeAnswer("<=10%")), false);
+  assert.equal(isNodeMatch({ answer: "-10%" }, normalizeAnswer("+10%")), false);
+  assert.equal(isNodeMatch({ answer: "1.5" }, normalizeAnswer("15")), false);
+});
+
+test("harmless punctuation and citation hyphens still match", () => {
+  assert.equal(isNodeMatch({ answer: "UCC § 1-203" }, normalizeAnswer("ucc 1-203")), true);
+  assert.equal(isNodeMatch({ answer: "Rule 10b-5" }, normalizeAnswer("rule 10b-5")), true);
+  assert.equal(isNodeMatch({ answer: "Rules 3.3(a)–(c)" }, normalizeAnswer("rules 3.3(a)-(c)")), true);
+  assert.equal(isNodeMatch({ answer: "but-for causation" }, normalizeAnswer("but for causation")), true);
+});
+
+test("every current catalog canonical answer and alias remains accepted", () => {
+  for (const course of courseCatalog) for (const subject of course.subjects) {
+    for (const question of subject.questions) for (const answer of getQuestionAnswers(question)) {
+      for (const guess of [answer.answer, ...(answer.acceptedAnswers ?? [])]) {
+        assert.equal(isNodeMatch(answer, normalizeAnswer(guess)), true, `${question.id}/${answer.id}: ${guess}`);
+      }
+    }
+  }
 });
 
 test("findMatchingAnswer searches unanswered answers only", () => {
