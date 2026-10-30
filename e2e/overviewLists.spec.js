@@ -83,6 +83,35 @@ test("list resume and missed practice preserve earned scores and existing Overvi
   await expect(page.locator(".list-item-blank")).toHaveCount(answers.length);
 });
 
+test("CANT hints stay aligned through unordered recall, resume, and missed practice", async ({ page }) => {
+  await openLists(page);
+  await page.getByLabel("Select subject", { exact: true }).selectOption("florida-civil-procedure");
+  await page.getByLabel("Select question", { exact: true }).selectOption("fl-lists-class-prerequisites");
+  await page.getByRole("button", { name: "Show Mnemonic", exact: true }).click();
+  await expect(page.locator(".list-item-mnemonic")).toHaveText([..."CANT"]);
+  await expect(page.locator(".list-item-answer")).toHaveCount(0);
+  await submit(page, "typicality");
+  const typicality = page.locator('[data-answer-id="fl-lists-class-prerequisites-typicality"]');
+  await expect(typicality.locator(".list-item-mnemonic")).toHaveText("T");
+  await expect(page.locator(".completion-indicator")).toHaveText("Recalled 1 of 4");
+  await page.reload();
+  await page.getByRole("button", { name: "Resume saved run", exact: true }).click();
+  await expect(page.getByLabel("Select question", { exact: true })).toHaveValue("fl-lists-class-prerequisites");
+  await expect(page.locator(".completion-indicator")).toHaveText("Recalled 1 of 4");
+  await page.getByRole("button", { name: "Reveal Missed Answers", exact: true }).click();
+  await expect(page.locator(".list-item-answer")).toHaveText([
+    "Commonality", "Adequacy of representation", "Numerosity", "Typicality",
+  ]);
+  await page.getByRole("button", { name: "Practice missed answers (3)", exact: true }).click();
+  await page.getByRole("button", { name: "Show Mnemonic", exact: true }).click();
+  await expect(page.locator(".list-item-mnemonic")).toHaveText([..."CANT"]);
+  await expect(typicality.locator(".list-item-status")).toHaveText("Previously recalled");
+  for (const answer of ["numerosity", "adequacy", "commonality"]) await submit(page, answer);
+  await expect(page.locator(".completion-indicator")).toHaveText("Practice: Recalled 3 of 3");
+  await expect(page.locator(".study-summary")).toContainText("Full attempts: 1 · Best: 1/4");
+  await expect(page.locator(".study-summary")).toContainText("Practice attempts: 1");
+});
+
 for (const width of [1280, 390]) {
   test(`every pilot list reveals in source order with readable context at ${width}px`, async ({ page }) => {
     await page.setViewportSize({ width, height: 844 });

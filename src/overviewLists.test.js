@@ -38,6 +38,33 @@ test("SCANND presentation preserves the arrest-warrant list's legacy scores and 
   assert.deepEqual(savedRunFor(question, saved[question.id]).guessedIds, legacyIds.slice(0, 4));
 });
 
+test("CANT preserves class-action scores and resumes answers from the original order", () => {
+  const question = overviewListQuestions.find((item) => item.id === "fl-lists-class-prerequisites");
+  const legacyAnswers = [
+    ["numerosity", "Numerosity"], ["commonality", "Commonality"],
+    ["typicality", "Typicality"], ["adequacy", "Adequacy of representation"],
+  ].map(([key, answer]) => [`fl-lists-class-prerequisites-${key}`, answer]);
+  const legacyIds = legacyAnswers.map(([id]) => id);
+  const entry = {
+    revision: JSON.stringify(legacyAnswers), attempts: 2, bestScore: 2,
+    missedIds: legacyIds.slice(2),
+    run: { targetIds: legacyIds, guessedIds: legacyIds.slice(0, 2), practice: false, closed: false },
+  };
+  assert.deepEqual(getQuestionAnswers(question).map(({ answer }) => answer), [
+    "Commonality", "Adequacy of representation", "Numerosity", "Typicality",
+  ]);
+  assert.deepEqual(getColumnMnemonicClues(question.columns[0]), [..."CANT"]);
+  assert.equal(questionRevision(question), entry.revision);
+  const run = savedRunFor(question, entry);
+  assert.deepEqual(run, { targetIds: legacyIds, guessedIds: legacyIds.slice(0, 2), practice: false });
+  assert.deepEqual(missedAnswerIds(question, entry), legacyIds.slice(2));
+  const saved = saveRun({ progressMap: { [question.id]: entry }, question,
+    targetIds: run.targetIds, guessedIds: new Set([...run.guessedIds, legacyIds[3]]) });
+  assert.equal(saved[question.id].attempts, 2);
+  assert.equal(saved[question.id].bestScore, 2);
+  assert.deepEqual(savedRunFor(question, saved[question.id]).guessedIds, [legacyIds[0], legacyIds[1], legacyIds[3]]);
+});
+
 test("the thirteen-list bank stays under its fifteen-list ceiling across all review depths", () => {
   assert.equal(courseCatalog.find((course) => course.id === OVERVIEW_LISTS_COURSE_ID), overviewListsCourse);
   assert.equal(overviewListQuestions.length, 13);

@@ -13,7 +13,8 @@ function item(listId, key, answer, acceptedAnswers, explanation) {
   };
 }
 
-function civilList(id, title, prompt, columnTitle, answers, chapter, pages, rule, listExplanation) {
+function civilList(id, title, prompt, columnTitle, answers, chapter, pages, rule, listExplanation,
+  { mnemonic, progressAnswerOrder } = {}) {
   return {
     id: `fl-lists-${id}`,
     subjectId: "florida-civil-procedure",
@@ -30,7 +31,9 @@ function civilList(id, title, prompt, columnTitle, answers, chapter, pages, rule
       `Official reference: Florida Rule of Civil Procedure ${rule}. Verified October 23, 2026.`,
     ],
     listExplanation,
-    columns: [{ id: `fl-lists-${id}-items`, title: columnTitle, answers }],
+    ...(progressAnswerOrder ? { progressAnswerOrder } : {}),
+    columns: [{ id: `fl-lists-${id}-items`, title: columnTitle,
+      ...(mnemonic ? { mnemonic } : {}), answers }],
   };
 }
 
@@ -68,28 +71,34 @@ export const overviewListsCivilAndBusinessQuestions = [
     "Recall the four prerequisites to class representation under Florida Rule 1.220(a).",
     "Prerequisites",
     [
-      item("class-prerequisites", "numerosity", "Numerosity", [
-        "impracticability of joinder",
-        "joinder impracticable",
-      ], "The class is large enough that separately joining every member is impracticable."),
       item("class-prerequisites", "commonality", "Commonality", [
         "common questions of law or fact",
         "common question of law or fact",
       ], "The representative's claim or defense raises legal or factual questions common to those raised by each class member's claim or defense."),
-      item("class-prerequisites", "typicality", "Typicality", [
-        "typical claims or defenses",
-        "typical claim or defense",
-      ], "The representative's claim or defense is typical of each class member's claim or defense."),
       item("class-prerequisites", "adequacy", "Adequacy of representation", [
         "adequacy",
         "adequate representation",
         "fair and adequate representation",
       ], "The representative can fairly and adequately protect and represent each class member's interests."),
+      item("class-prerequisites", "numerosity", "Numerosity", [
+        "impracticability of joinder",
+        "joinder impracticable",
+      ], "The class is large enough that separately joining every member is impracticable."),
+      item("class-prerequisites", "typicality", "Typicality", [
+        "typical claims or defenses",
+        "typical claim or defense",
+      ], "The representative's claim or defense is typical of each class member's claim or defense."),
     ],
     11,
     "23–26",
     "1.220(a)",
     "All four prerequisites are required. They do not alone establish that a class action may proceed: the court must also find a basis under Rule 1.220(b). Predominance and superiority belong to the separate subdivision (b)(3) route rather than this four-item list.",
+    {
+      mnemonic: "CANT",
+      // Presentation order changes without invalidating existing saved progress.
+      progressAnswerOrder: ["numerosity", "commonality", "typicality", "adequacy"]
+        .map((key) => `fl-lists-class-prerequisites-${key}`),
+    },
   ),
   {
     ...civilList(

@@ -10,10 +10,12 @@ any order using the persistent **List answer** input. Empty numbered slots have
 no element-specific clues. Answers appear in each list's study order; that
 display order is not a required submission order. The six-item arrest-warrant
 course checklist uses **SCANND**: Signature, County, Amount of bail, Name,
-Nature of the offense, Date. **Show Mnemonic** displays those initials.
+Nature of the offense, Date. Class-action prerequisites use **CANT**: Commonality,
+Adequacy of representation, Numerosity, Typicality. **Show Mnemonic** displays
+each list's initials.
 Duplicate answers do not add credit. Reveal marks missing entries, and
-missed-answer practice preserves the
-full-drill best score. Counts measure recalled entries in a run, not mastery.
+missed-answer practice preserves the full-drill best score. Counts measure
+recalled entries in a run, not mastery.
 
 ## Coverage
 
