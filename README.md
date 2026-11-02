@@ -64,6 +64,10 @@ Live site: https://nosam4.github.io/patholawgical/
   **Should We Patent It?** and **Can We Ship It?** It has separate patent and
   copyright, trade secret, trademark, and launch-decision drills, with deck links
   and page/slide references. See [coverage and sources](docs/ai-and-law-quiz4.md).
+- AI and the Law → **Quiz #5** adds 12 focused drills from **Bias, Work & Human
+  Judgment**: sources and measures of bias, AI's effects on workers, Florida
+  filing responsibility, and the limits of delegating human judgment. See
+  [coverage and sources](docs/ai-and-law-quiz5.md).
 - Includes 64 outline-based Sales & Leases drills across eight sections, with
   slide and case context, statutory links, and expandable course-material references.
   See [coverage and source corrections](docs/sales-and-leases-curriculum.md).

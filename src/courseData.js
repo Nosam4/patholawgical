@@ -24,8 +24,11 @@ import { aiAndLawWeek3Questions, aiAndLawWeek4Questions } from "./aiAndLawQuesti
 import { aiAndLawWeek5Questions, aiAndLawWeek6Questions } from "./aiAndLawWeeks5And6.js";
 import { aiAndLawWeeks8And9Questions } from "./aiAndLawWeeks8And9.js";
 import { aiAndLawQuiz4Subject } from "./aiAndLawQuiz4.js";
+import { aiAndLawQuiz5Subject } from "./aiAndLawQuiz5.js";
 import { evidenceAnalysisSubject } from "./evidenceAnalysisQuestions.js";
 import { evidenceConfrontationSubject } from "./evidenceConfrontationQuestions.js";
+import { evidenceSlidesSubject } from "./evidenceSlideQuestions.js";
+import { evidenceCaseSubject } from "./evidenceCaseQuestions.js";
 import { evidenceHearsaySubject } from "./evidenceHearsayQuestions.js";
 
 const [
@@ -76,6 +79,7 @@ const freRuleNamesQuestion = {
           ["limiting evidence", "limited admissibility"],
         ),
         ruleNameAnswer("106", "Remainder of or Related Statements", ["rule of completeness"]),
+        ruleNameAnswer("107", "Illustrative Aids", ["illustrative aid"]),
         ruleNameAnswer(
           "1101",
           "Applicability of the Rules",
@@ -127,6 +131,9 @@ const freRuleNamesQuestion = {
         ruleNameAnswer("501", "Privilege in General"),
         ruleNameAnswer("601", "Competency to Testify in General"),
         ruleNameAnswer("602", "Need for Personal Knowledge", ["personal knowledge"]),
+        ruleNameAnswer("603", "Oath or Affirmation to Testify Truthfully", ["oath or affirmation"]),
+        ruleNameAnswer("605", "Judge's Competency as a Witness", ["judge competency"]),
+        ruleNameAnswer("606", "Juror's Competency as a Witness", ["juror competency"]),
         ruleNameAnswer("607", "Who May Impeach a Witness"),
         ruleNameAnswer(
           "608",
@@ -142,6 +149,7 @@ const freRuleNamesQuestion = {
         ),
         ruleNameAnswer("612", "Writing Used to Refresh a Witness's Memory"),
         ruleNameAnswer("613", "Witness's Prior Statement", ["prior statement"]),
+        ruleNameAnswer("614", "Court's Calling or Examining a Witness", ["court calling or examining a witness"]),
         ruleNameAnswer(
           "615",
           "Excluding Witnesses from the Courtroom; Preventing an Excluded Witness's Access to Trial Testimony",
@@ -680,6 +688,13 @@ const freRule1101Question = {
   sourceUrl: "https://www.law.cornell.edu/rules/fre/rule_1101",
   sourceLabel: "FRE Rule 1101",
   columns: [
+    {
+      id: "privilege-all-stages",
+      title: "Privilege in Every Stage",
+      answers: [
+        answer("rule-1101-privilege-survives", "privilege rules still apply in otherwise exempt proceedings", ["privilege", "privilege rules still apply"], "Grand jury, sentencing, and other listed exceptions"),
+      ],
+    },
     {
       id: "courts-and-judges",
       title: "To Courts and Judges",
@@ -1688,6 +1703,8 @@ export const courseCatalog = [
       evidenceAnalysisSubject,
       evidenceConfrontationSubject,
       evidenceHearsaySubject,
+      evidenceSlidesSubject,
+      evidenceCaseSubject,
       {
         id: "rule-names",
         title: "Rule Names",
@@ -1853,6 +1870,7 @@ export const courseCatalog = [
         questions: aiAndLawWeeks8And9Questions,
       },
       aiAndLawQuiz4Subject,
+      aiAndLawQuiz5Subject,
     ],
   },
   {

@@ -98,7 +98,7 @@ test("Evidence includes the FRE Rule 1101 sporcle-style question", () => {
   const casesColumn = question.columns.find((column) => column.id === "cases-and-proceedings");
 
   assert.equal(question.type, "sporcle-grid");
-  assert.equal(getQuestionAnswerCount(question), 16);
+  assert.equal(getQuestionAnswerCount(question), 17);
   assert.ok(casesColumn.answers.some((answer) => answer.id === "criminal-cases"));
   assert.ok(casesColumn.answers.some((answer) => answer.id === "contempt-proceedings"));
 });
@@ -127,7 +127,7 @@ test("Evidence includes the syllabus and class FRE rule names question", () => {
   const rule804 = hearsayColumn.answers.find((answer) => answer.indicator === "Rule 804");
 
   assert.equal(question.type, "sporcle-grid");
-  assert.equal(getQuestionAnswerCount(question), 52);
+  assert.equal(getQuestionAnswerCount(question), 57);
   assert.equal(rule101.answer, "Scope; Definitions");
   assert.equal(rule102.answer, "Purpose");
   assert.equal(rule1101.answer, "Applicability of the Rules");
@@ -247,6 +247,8 @@ test("Evidence organizes all 51 syllabus and class rules into individual Sporcle
       "evidence-basic-analysis",
       "evidence-confrontation-clause",
       "evidence-hearsay-exception-elements",
+      "evidence-slide-applications",
+      "evidence-master-cases",
       "rule-names",
       "general-provisions",
       "relevance-and-policy-exclusions",
