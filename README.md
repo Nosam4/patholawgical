@@ -68,6 +68,11 @@ Live site: https://nosam4.github.io/patholawgical/
   Judgment**: sources and measures of bias, AI's effects on workers, Florida
   filing responsibility, and the limits of delegating human judgment. See
   [coverage and sources](docs/ai-and-law-quiz5.md).
+- Trial Advocacy → **Expert Witnesses** adds **Direct**, **Cross**, and **Voir Dire**
+  from the simplified Dr. Morgan Kahn and Dr. Leslie Torres scripts. Recall the
+  numbered questions and direct/cross closing lines; supplied witness responses
+  and page references appear after answering or revealing. Courtroom instructions,
+  exhibit requests, and the conditional voir dire objection and argument stay visible.
 - Includes 64 outline-based Sales & Leases drills across eight sections, with
   slide and case context, statutory links, and expandable course-material references.
   See [coverage and source corrections](docs/sales-and-leases-curriculum.md).

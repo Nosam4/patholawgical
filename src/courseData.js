@@ -18,6 +18,7 @@ import { sarahBakerCrossExaminationQuestion } from "./crossExaminationQuestions.
 import { trialAdvocacyLitanyQuestions } from "./trialAdvocacyLitanies.js";
 import { trialAdvocacyLitanyWordsSubject } from "./trialAdvocacyLitanyWords.js";
 import { miniTrialSubject } from "./miniTrialQuestions.js";
+import { expertWitnessesSubject } from "./expertWitnessQuestions.js";
 import { salesAndLeasesSubjects } from "./salesAndLeasesQuestions.js";
 import { salesAnalysisPatternsSubject } from "./salesAnalysisPatterns.js";
 import { aiAndLawWeek3Questions, aiAndLawWeek4Questions } from "./aiAndLawQuestions.js";
@@ -1879,6 +1880,7 @@ export const courseCatalog = [
     term: "Fall 2026",
     subjects: [
       miniTrialSubject,
+      expertWitnessesSubject,
       {
         id: "opening-statements",
         title: "Opening Statements",
