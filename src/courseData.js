@@ -19,6 +19,7 @@ import { trialAdvocacyLitanyQuestions } from "./trialAdvocacyLitanies.js";
 import { trialAdvocacyLitanyWordsSubject } from "./trialAdvocacyLitanyWords.js";
 import { miniTrialSubject } from "./miniTrialQuestions.js";
 import { expertWitnessesSubject } from "./expertWitnessQuestions.js";
+import { finalTrialSubject } from "./finalTrialQuestions.js";
 import { salesAndLeasesSubjects } from "./salesAndLeasesQuestions.js";
 import { salesAnalysisPatternsSubject } from "./salesAnalysisPatterns.js";
 import { aiAndLawWeek3Questions, aiAndLawWeek4Questions } from "./aiAndLawQuestions.js";
@@ -1879,6 +1880,7 @@ export const courseCatalog = [
     title: "Trial Advocacy",
     term: "Fall 2026",
     subjects: [
+      finalTrialSubject,
       miniTrialSubject,
       expertWitnessesSubject,
       {

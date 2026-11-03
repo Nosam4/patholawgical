@@ -73,6 +73,12 @@ Live site: https://nosam4.github.io/patholawgical/
   numbered questions and direct/cross closing lines; supplied witness responses
   and page references appear after answering or revealing. Courtroom instructions,
   exhibit requests, and the conditional voir dire objection and argument stay visible.
+- Trial Advocacy → **Final Trial** adds the latest V1 **Closing Statement**,
+  **Harley Judson Cross Examination**, **Jordan Emerson Direct Examination**, and
+  **Stipulations** drafts. Optional Judson chapters and Emerson rehabilitation
+  questions have separate drills. Recall counsel's script in order; anticipated
+  answers, citations, conditions, and preparation references retain their source
+  roles. See [draft coverage](docs/final-trial-drafts.md).
 - Includes 64 outline-based Sales & Leases drills across eight sections, with
   slide and case context, statutory links, and expandable course-material references.
   See [coverage and source corrections](docs/sales-and-leases-curriculum.md).
