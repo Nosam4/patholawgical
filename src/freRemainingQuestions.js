@@ -1006,47 +1006,68 @@ export const freRule803Question = {
   progressAnswerOrder: rule803ExceptionNames.map(([id]) => `rule-803-${id}`),
 };
 
-export const freRule804Question = question(
-  "804",
-  "declarant-unavailable",
-  "Hearsay Exceptions When the Declarant Is Unavailable",
-  "Fill the five grounds for unavailability and the five operative Rule 804 exceptions.",
-  [
-    {
-      id: "unavailability",
-      title: "Unavailable When",
-      answers: [
-        entry("rule-804-privilege", "exempted because privilege applies", ["privilege"], "(a)(1)"),
-        entry("rule-804-refusal", "refuses to testify despite a court order", ["refusal despite court order"], "(a)(2)"),
-        entry("rule-804-memory", "testifies to not remembering the subject matter", ["lack of memory", "does not remember"], "(a)(3)"),
-        entry("rule-804-death-illness", "death or then-existing physical or mental illness", ["death illness or infirmity"], "(a)(4)"),
-        entry("rule-804-absence", "absent and attendance or testimony cannot be procured by reasonable means", ["absence despite reasonable efforts"], "(a)(5)"),
-        entry("rule-804-wrongful-cause", "not if the proponent wrongfully caused unavailability to prevent testimony", ["proponent caused unavailability"], "Limit"),
-      ],
-    },
-    {
-      id: "exceptions",
-      title: "Exceptions",
-      answers: [
-        entry("rule-804-former-testimony", "Former Testimony", [], "(b)(1)"),
-        entry("rule-804-dying-declaration", "Statement Under the Belief of Imminent Death", ["dying declaration"], "(b)(2)"),
-        entry("rule-804-against-interest", "Statement Against Interest", [], "(b)(3)"),
-        entry("rule-804-family-history", "Statement of Personal or Family History", ["personal or family history"], "(b)(4)"),
-        entry("rule-804-forfeiture", "Statement Offered Against a Party That Wrongfully Caused the Declarant's Unavailability", ["forfeiture by wrongdoing"], "(b)(6)"),
-      ],
-    },
-    {
-      id: "key-conditions",
-      title: "Key Conditions",
-      answers: [
-        entry("rule-804-opportunity-motive", "opportunity and similar motive to develop former testimony", ["opportunity and similar motive"], "Former testimony"),
-        entry("rule-804-homicide-civil", "homicide prosecution or civil case", ["homicide or civil case"], "Dying declaration"),
-        entry("rule-804-corroboration", "corroborating circumstances clearly indicate trustworthiness", ["corroborating circumstances"], "Criminal statement against interest"),
-        entry("rule-804-intent", "wrongful causation intended to make the declarant unavailable", ["intent to cause unavailability"], "Forfeiture"),
-      ],
-    },
+export const freRule804Question = {
+  ...question(
+    "804",
+    "declarant-unavailable",
+    "Hearsay Exceptions When the Declarant Is Unavailable",
+    "Fill the five grounds for unavailability and the five operative Rule 804 exceptions.",
+    [
+      {
+        id: "unavailability",
+        title: "Unavailable When",
+        mnemonic: "RANTED",
+        answers: [
+          entry("rule-804-refusal", "refuses to testify despite a court order", ["refusal despite court order"], "(a)(2)"),
+          entry("rule-804-absence", "absent and attendance or testimony cannot be procured by reasonable means", ["absence despite reasonable efforts"], "(a)(5)"),
+          entry("rule-804-wrongful-cause", "not if the proponent wrongfully caused unavailability to prevent testimony", ["proponent caused unavailability"], "Limit"),
+          entry("rule-804-memory", "testifies to not remembering the subject matter", ["lack of memory", "does not remember"], "(a)(3)"),
+          entry("rule-804-privilege", "exempted because privilege applies", ["privilege"], "(a)(1)"),
+          entry("rule-804-death-illness", "death or then-existing physical or mental illness", ["death illness or infirmity"], "(a)(4)"),
+        ],
+      },
+      {
+        id: "exceptions",
+        title: "Exceptions",
+        answers: [
+          entry("rule-804-former-testimony", "Former Testimony", [], "(b)(1)"),
+          entry("rule-804-dying-declaration", "Statement Under the Belief of Imminent Death", ["dying declaration"], "(b)(2)"),
+          entry("rule-804-against-interest", "Statement Against Interest", [], "(b)(3)"),
+          entry("rule-804-family-history", "Statement of Personal or Family History", ["personal or family history"], "(b)(4)"),
+          entry("rule-804-forfeiture", "Statement Offered Against a Party That Wrongfully Caused the Declarant's Unavailability", ["forfeiture by wrongdoing"], "(b)(6)"),
+        ],
+      },
+      {
+        id: "key-conditions",
+        title: "Key Conditions",
+        answers: [
+          entry("rule-804-opportunity-motive", "opportunity and similar motive to develop former testimony", ["opportunity and similar motive"], "Former testimony"),
+          entry("rule-804-homicide-civil", "homicide prosecution or civil case", ["homicide or civil case"], "Dying declaration"),
+          entry("rule-804-corroboration", "corroborating circumstances clearly indicate trustworthiness", ["corroborating circumstances"], "Criminal statement against interest"),
+          entry("rule-804-intent", "wrongful causation intended to make the declarant unavailable", ["intent to cause unavailability"], "Forfeiture"),
+        ],
+      },
+    ],
+  ),
+  // Preserve saved runs and scores from the original subsection order.
+  progressAnswerOrder: [
+    "rule-804-privilege",
+    "rule-804-refusal",
+    "rule-804-memory",
+    "rule-804-death-illness",
+    "rule-804-absence",
+    "rule-804-wrongful-cause",
+    "rule-804-former-testimony",
+    "rule-804-dying-declaration",
+    "rule-804-against-interest",
+    "rule-804-family-history",
+    "rule-804-forfeiture",
+    "rule-804-opportunity-motive",
+    "rule-804-homicide-civil",
+    "rule-804-corroboration",
+    "rule-804-intent",
   ],
-);
+};
 
 export const freRule805Question = question(
   "805",
