@@ -29,7 +29,7 @@ import { aiAndLawQuiz4Subject } from "./aiAndLawQuiz4.js";
 import { aiAndLawQuiz5Subject } from "./aiAndLawQuiz5.js";
 import { evidenceAnalysisSubject } from "./evidenceAnalysisQuestions.js";
 import { evidenceConfrontationSubject } from "./evidenceConfrontationQuestions.js";
-import { evidenceSlidesSubject } from "./evidenceSlideQuestions.js";
+import { evidenceAidsAndSummariesQuestion, evidenceWitnessFoundationsQuestion } from "./evidenceFoundationQuestions.js";
 import { evidenceCaseSubject } from "./evidenceCaseQuestions.js";
 import { evidenceHearsaySubject } from "./evidenceHearsayQuestions.js";
 
@@ -1705,7 +1705,6 @@ export const courseCatalog = [
       evidenceAnalysisSubject,
       evidenceConfrontationSubject,
       evidenceHearsaySubject,
-      evidenceSlidesSubject,
       evidenceCaseSubject,
       {
         id: "rule-names",
@@ -1738,7 +1737,7 @@ export const courseCatalog = [
       {
         id: "privileges-and-witnesses",
         title: "Privileges & Witnesses",
-        questions: frePrivilegesAndWitnessesQuestions,
+        questions: [...frePrivilegesAndWitnessesQuestions, evidenceWitnessFoundationsQuestion],
       },
       {
         id: "opinions-and-hearsay",
@@ -1748,7 +1747,7 @@ export const courseCatalog = [
       {
         id: "authentication-and-contents",
         title: "Authentication & Contents",
-        questions: freAuthenticationAndContentsQuestions,
+        questions: [...freAuthenticationAndContentsQuestions, evidenceAidsAndSummariesQuestion],
       },
       {
         id: "objections",

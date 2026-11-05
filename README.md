@@ -58,6 +58,12 @@ Live site: https://nosam4.github.io/patholawgical/
   recorded-recollection checklist, the two business-records checklists, and
   hearsay within hearsay under FRE 805. Recall list items in any order, reveal
   omissions, and practice misses. See [coverage and sources](docs/evidence-hearsay-elements.md).
+- Evidence now focuses on cumulative final review: 82 drills across 11 subjects.
+  Midterm applications, the midterm-only case quiz, and the duplicate full analysis
+  checklist are removed. Rule-name memorization, courtroom objection scripts,
+  all 13 final-exam cases, and every existing rule drill remain. Witness foundations
+  and illustrative aids versus summaries sit in their regular rule subjects.
+  See [review scope](docs/evidence-final-review.md).
 - AI and the Law → **Weeks 8–9: Intellectual Property** adds 15 recall drills
   covering copyright, fair use and the assigned cases, AI inventorship, patent
   eligibility, trademarks, and trade secrets. The Week 9 Class 2 **Can We Ship It?**

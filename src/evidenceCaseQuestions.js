@@ -1,12 +1,12 @@
 import { evidenceDrill as drill, group as g, recall as r } from "./evidenceStudyHelpers.js";
 
 const master = "MASTER CASE LIST FOR EVIDENCE EXAM Final.docx: all 13 entries. The document supplies names only; facts and principles below are study summaries of the linked judicial opinions.";
-const scope = "Full-exam list. Old Chief, Daubert, and Huddleston appear in the supplied pre-midterm decks. The remaining cases concern later syllabus topics; their inclusion here does not establish midterm coverage.";
+const scope = "Cumulative final-exam review: all 13 master-list cases belong to the same full-course case bank.";
 
 // Preserve every source-list entry, including its spelling, separately from the canonical case name.
 export const evidenceCases = [
   {
-    key: "old-chief", listedName: "Old Chief", name: "Old Chief v. United States", short: "Old Chief", midterm: true,
+    key: "old-chief", listedName: "Old Chief", name: "Old Chief v. United States", short: "Old Chief",
     citation: "519 U.S. 172 (1997)", topic: "Relevance and Rule 403", aliases: ["old chief v us", "old chief v united states"],
     sourceUrl: "https://www.law.cornell.edu/supct/html/95-6556.ZO.html",
     facts: "An accused offered to concede felony status to keep the name and nature of a prior assault conviction from the jury in a firearm-possession case.",
@@ -18,7 +18,7 @@ export const evidenceCases = [
     ],
   },
   {
-    key: "crawford", listedName: "Crawford", name: "Crawford v. Washington", short: "Crawford", midterm: false,
+    key: "crawford", listedName: "Crawford", name: "Crawford v. Washington", short: "Crawford",
     citation: "541 U.S. 36 (2004)", topic: "Testimonial hearsay", aliases: ["crawford v washington"],
     sourceUrl: "https://www.law.cornell.edu/supct/html/02-9410.ZO.html",
     facts: "The prosecution used an absent wife's recorded police interrogation against her husband, although he had no opportunity to cross-examine her.",
@@ -30,7 +30,7 @@ export const evidenceCases = [
     ],
   },
   {
-    key: "hammon", listedName: "Hammon", name: "Hammon v. Indiana", short: "Hammon", midterm: false,
+    key: "hammon", listedName: "Hammon", name: "Hammon v. Indiana", short: "Hammon",
     citation: "Decided with Davis, 547 U.S. 813 (2006)", topic: "Past events versus an emergency", aliases: ["hammon v indiana"],
     sourceUrl: "https://www.law.cornell.edu/supct/html/05-5224.ZO.html",
     facts: "After a domestic disturbance had ended and the parties were separated, police questioned the wife about past events and obtained an affidavit.",
@@ -42,7 +42,7 @@ export const evidenceCases = [
     ],
   },
   {
-    key: "davis", listedName: "Davis", name: "Davis v. Washington", short: "Davis", midterm: false,
+    key: "davis", listedName: "Davis", name: "Davis v. Washington", short: "Davis",
     citation: "547 U.S. 813 (2006)", topic: "Primary purpose and ongoing emergency", aliases: ["davis v washington"],
     sourceUrl: "https://www.law.cornell.edu/supct/html/05-5224.ZO.html",
     facts: "A woman identified her assailant to a 911 operator while describing an assault as it happened and seeking help.",
@@ -54,7 +54,7 @@ export const evidenceCases = [
     ],
   },
   {
-    key: "bryant", listedName: "Bryant", name: "Michigan v. Bryant", short: "Bryant", midterm: false,
+    key: "bryant", listedName: "Bryant", name: "Michigan v. Bryant", short: "Bryant",
     citation: "562 U.S. 344 (2011)", topic: "Context of the ongoing emergency", aliases: ["michigan v bryant"],
     sourceUrl: "https://www.law.cornell.edu/supct/html/09-150.ZO.html",
     facts: "Police found a mortally wounded shooting victim at a gas station and asked who shot him and where; the armed shooter's location was unknown.",
@@ -66,7 +66,7 @@ export const evidenceCases = [
     ],
   },
   {
-    key: "williams", listedName: "Williams", name: "Williams v. Illinois", short: "Williams", midterm: false,
+    key: "williams", listedName: "Williams", name: "Williams v. Illinois", short: "Williams",
     citation: "567 U.S. 50 (2012)", topic: "Expert basis testimony and confrontation", aliases: ["williams v illinois"],
     sourceUrl: "https://www.law.cornell.edu/supremecourt/text/10-8505",
     facts: "At a bench trial, a DNA expert compared a defendant's profile with a profile produced by an outside laboratory whose analyst did not testify.",
@@ -79,7 +79,7 @@ export const evidenceCases = [
     ],
   },
   {
-    key: "owens", listedName: "Owens", name: "United States v. Owens", short: "Owens", midterm: false,
+    key: "owens", listedName: "Owens", name: "United States v. Owens", short: "Owens",
     citation: "484 U.S. 554 (1988)", topic: "Prior identification and memory loss", aliases: ["us v owens", "united states v owens"],
     sourceUrl: "https://www.law.cornell.edu/supremecourt/text/484/554",
     facts: "An injured correctional counselor remembered identifying his attacker but, at trial, could not recall seeing the attacker's face or the basis for the identification.",
@@ -91,7 +91,7 @@ export const evidenceCases = [
     ],
   },
   {
-    key: "hillmon", listedName: "Hillman", name: "Mutual Life Insurance Co. v. Hillmon", short: "Hillmon", midterm: false,
+    key: "hillmon", listedName: "Hillman", name: "Mutual Life Insurance Co. v. Hillmon", short: "Hillmon",
     citation: "145 U.S. 285 (1892)", topic: "Intent and subsequent conduct", aliases: ["hillman", "mutual life v hillmon", "mutual life insurance co v hillmon"],
     sourceUrl: "https://www.law.cornell.edu/supremecourt/text/145/285",
     facts: "In a dispute over the identity of a body and life-insurance proceeds, letters expressed the writer's intention to leave Wichita and travel with another man.",
@@ -104,7 +104,7 @@ export const evidenceCases = [
     ],
   },
   {
-    key: "bruton", listedName: "Bruton", name: "Bruton v. United States", short: "Bruton", midterm: false,
+    key: "bruton", listedName: "Bruton", name: "Bruton v. United States", short: "Bruton",
     citation: "391 U.S. 123 (1968)", topic: "Joint trials and codefendant confessions", aliases: ["bruton v united states", "bruton v us"],
     sourceUrl: "https://www.law.cornell.edu/supremecourt/text/391/123",
     facts: "At a joint trial, a postal inspector recounted a nontestifying codefendant's confession expressly naming the other defendant as an accomplice.",
@@ -116,7 +116,7 @@ export const evidenceCases = [
     ],
   },
   {
-    key: "daubert", listedName: "Daubert", name: "Daubert v. Merrell Dow Pharmaceuticals", short: "Daubert", midterm: true,
+    key: "daubert", listedName: "Daubert", name: "Daubert v. Merrell Dow Pharmaceuticals", short: "Daubert",
     citation: "509 U.S. 579 (1993)", topic: "Expert reliability", aliases: ["daubert v merrell dow", "daubert v merrell dow pharmaceuticals inc"],
     sourceUrl: "https://www.law.cornell.edu/supremecourt/text/509/579",
     facts: "Children alleging that Bendectin caused birth defects challenged exclusion of their scientific experts under a general-acceptance-only standard.",
@@ -124,11 +124,11 @@ export const evidenceCases = [
       r("rule", "Governing Federal Rule", "702", ["rule 702"]),
       r("role", "The trial judge's reliability-screening role", "Gatekeeper", ["gatekeeping"]),
       r("frye", "Is Frye general acceptance the exclusive federal admissibility test?", "No", ["one factor", "not exclusive"]),
-      r("factors", "Are testability, peer review, error rates, standards, and acceptance an exhaustive checklist?", "No", ["flexible", "nonexclusive"], "Use flexible reliability analysis plus fit to the disputed issue. The Midterm: Slide Applications section separately drills each factor."),
+      r("factors", "Are testability, peer review, error rates, standards, and acceptance an exhaustive checklist?", "No", ["flexible", "nonexclusive"], "Use flexible reliability analysis plus fit to the disputed issue."),
     ],
   },
   {
-    key: "melendez-diaz", listedName: "Melendez-Diaz", name: "Melendez-Diaz v. Massachusetts", short: "Melendez-Diaz", midterm: false,
+    key: "melendez-diaz", listedName: "Melendez-Diaz", name: "Melendez-Diaz v. Massachusetts", short: "Melendez-Diaz",
     citation: "557 U.S. 305 (2009)", topic: "Forensic certificates", aliases: ["melendez diaz", "melendez diaz v massachusetts"],
     sourceUrl: "https://www.law.cornell.edu/supct/html/07-591.ZO.html",
     facts: "The prosecution introduced sworn laboratory certificates identifying seized material as cocaine without producing the analysts for cross-examination.",
@@ -140,7 +140,7 @@ export const evidenceCases = [
     ],
   },
   {
-    key: "upjohn", listedName: "Upjohn", name: "Upjohn Co. v. United States", short: "Upjohn", midterm: false,
+    key: "upjohn", listedName: "Upjohn", name: "Upjohn Co. v. United States", short: "Upjohn",
     citation: "449 U.S. 383 (1981)", topic: "Corporate attorney-client privilege", aliases: ["upjohn v united states", "upjohn co v united states", "upjohn v us"],
     sourceUrl: "https://www.law.cornell.edu/supremecourt/text/449/383",
     facts: "Corporate lawyers investigated questionable payments through employee questionnaires and interviews; the IRS sought the internal communications.",
@@ -152,7 +152,7 @@ export const evidenceCases = [
     ],
   },
   {
-    key: "huddleston", listedName: "Huddleston (stolen videotapes case)", name: "Huddleston v. United States", short: "Huddleston", midterm: true,
+    key: "huddleston", listedName: "Huddleston (stolen videotapes case)", name: "Huddleston v. United States", short: "Huddleston",
     citation: "485 U.S. 681 (1988)", topic: "Other acts and conditional relevance", aliases: ["huddleston v united states", "huddleston v us", "huddleston stolen videotapes case"],
     sourceUrl: "https://www.law.cornell.edu/supremecourt/text/485/681",
     facts: "In a stolen-videotape prosecution, evidence about a separate suspicious television sale was offered to show knowledge that the goods were stolen.",
@@ -177,9 +177,8 @@ export const evidenceCaseSubject = {
   id: "evidence-master-cases",
   title: "Master Case List",
   questions: [
-    identifyCases("midterm", "Name the Case: Three in the Midterm Slides", evidenceCases.filter(item => item.midterm)),
     identifyCases("all", "Name the Case: All 13 Master-List Cases", evidenceCases),
-    ...evidenceCases.map(item => drill(`case-${item.key}`, `${item.short}: ${item.topic}${item.midterm ? " · Midterm slides" : " · Later topics"}`,
+    ...evidenceCases.map(item => drill(`case-${item.key}`, `${item.short}: ${item.topic}`,
       `${item.facts} Recall the short answer for each issue; explanations appear after answering or revealing.`,
       [g("principles", "Recall the Principle", ...item.rows)],
       [master, scope, `${item.name}, ${item.citation}.`, ...(item.notes ?? [])], item.sourceUrl, `${item.name} — Supreme Court opinion`)),

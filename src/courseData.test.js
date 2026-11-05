@@ -238,7 +238,8 @@ test("Evidence organizes all 51 syllabus and class rules into individual Sporcle
   const substantiveSubjects = evidence.subjects.filter(
     (subject) => syllabusSubjectIds.has(subject.id),
   );
-  const questions = substantiveSubjects.flatMap((subject) => subject.questions);
+  const questions = substantiveSubjects.flatMap((subject) => subject.questions)
+    .filter((question) => /^FRE Rule /.test(question.title));
   const ruleNumbers = questions.map((question) => question.title.match(/^FRE Rule (\d+):/)?.[1]);
 
   assert.deepEqual(
@@ -247,7 +248,6 @@ test("Evidence organizes all 51 syllabus and class rules into individual Sporcle
       "evidence-basic-analysis",
       "evidence-confrontation-clause",
       "evidence-hearsay-exception-elements",
-      "evidence-slide-applications",
       "evidence-master-cases",
       "rule-names",
       "general-provisions",
@@ -269,6 +269,24 @@ test("Evidence organizes all 51 syllabus and class rules into individual Sporcle
   assert.ok(questions.every((question) => question.type === "sporcle-grid"));
   assert.ok(questions.every((question) => getQuestionAnswerCount(question) > 0));
   assert.ok(questions.every((question) => question.sourceUrl));
+});
+
+test("Evidence keeps cumulative fundamentals without the duplicate analysis checklist", () => {
+  const evidence = courseCatalog.find((course) => course.id === "evidence-fall-2026");
+  const questions = evidence.subjects.flatMap((subject) => subject.questions);
+
+  assert.equal(questions.length, 82);
+  assert.equal(questions.reduce((total, question) => total + getQuestionAnswerCount(question), 0), 670);
+  assert.deepEqual(findEvidenceSubject("evidence-basic-analysis").questions.map((question) => question.id), [
+    "evidence-analysis-condensed",
+  ]);
+  assert.ok(findEvidenceSubject("privileges-and-witnesses").questions.some(
+    (question) => question.id === "evidence-slides-witness-foundations",
+  ));
+  assert.ok(findEvidenceSubject("authentication-and-contents").questions.some(
+    (question) => question.id === "evidence-slides-aids-summaries",
+  ));
+  assert.equal(findEvidenceQuestion("evidence-analysis-full"), undefined);
 });
 
 test("remaining FRE trainers include the current high-value rule details", () => {
