@@ -28,9 +28,9 @@ test("Criminal Procedure is available at each review depth and saves an answered
   const questionId = await page.getByLabel("Select question", { exact: true }).inputValue();
   const question = questions.find((item) => item.id === questionId);
   const answers = getQuestionAnswers(question);
-  await page.locator(`[data-answer-id="${answers[0].id}"] button`).click();
-  await page.getByRole("textbox").fill(answers[0].acceptedAnswers?.[0] ?? answers[0].answer);
-  await page.getByRole("textbox").press("Enter");
+  await page.locator(`[data-answer-id="${answers[0].id}"] input`).click();
+  await page.locator("input:focus").fill(answers[0].acceptedAnswers?.[0] ?? answers[0].answer);
+  await page.locator("input:focus").press("Enter");
   await expect(page.locator(".completion-indicator")).toHaveText(`Filled 1 of ${answers.length}`);
   await page.reload();
   await page.getByRole("button", { name: "Resume saved run", exact: true }).click();
@@ -42,13 +42,13 @@ test("Criminal Procedure is available at each review depth and saves an answered
 test("a felony deadline does not fill the selected misdemeanor deadline", async ({ page }) => {
   await openCrimPro(page);
   await page.getByLabel("Select question", { exact: true }).selectOption("fl-crimpro-speedy-default");
-  await page.locator('[data-answer-id="fl-crimpro-ordinary-speedy-misdemeanor"] button').click();
-  await page.getByRole("textbox").fill("175 days");
-  await page.getByRole("textbox").press("Enter");
+  await page.locator('[data-answer-id="fl-crimpro-ordinary-speedy-misdemeanor"] input').click();
+  await page.locator("input:focus").fill("175 days");
+  await page.locator("input:focus").press("Enter");
   await expect(page.locator(".completion-indicator")).toHaveText("Filled 0 of 6");
-  await expect(page.getByRole("textbox")).toHaveValue("175 days");
-  await page.getByRole("textbox").fill("90");
-  await page.getByRole("textbox").press("Enter");
+  await expect(page.locator("input:focus")).toHaveValue("175 days");
+  await page.locator("input:focus").fill("90");
+  await page.locator("input:focus").press("Enter");
   await expect(page.locator(".completion-indicator")).toHaveText("Filled 1 of 6");
   await expect(page.locator('[data-answer-id="fl-crimpro-ordinary-speedy-felony"] input')).toBeFocused();
 });

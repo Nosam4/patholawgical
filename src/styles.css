@@ -517,8 +517,7 @@ button:focus-visible, select:focus-visible, a:focus-visible {
 }
 
 .answer-value,
-.answer-row form,
-.blank-answer {
+.answer-row form {
   width: 100%;
   min-height: 48px;
 }
@@ -569,23 +568,16 @@ button:focus-visible, select:focus-visible, a:focus-visible {
   outline-offset: -3px;
 }
 
-.blank-answer {
-  border: 0;
-  border-radius: 0;
-  padding: 0 10px;
+.answer-row input:placeholder-shown:not(:focus) {
   background: #f8fafb;
-  color: var(--ink);
+  background-image: repeating-linear-gradient(to right, #6d7782 0 6px, transparent 6px 10px);
+  background-size: calc(100% - 20px) 2px;
+  background-position: center;
+  background-repeat: no-repeat;
 }
 
-.blank-answer:hover {
-  background: #eef4f3;
-  filter: none;
-}
-
-.blank-answer span {
-  display: block;
-  width: 100%;
-  border-bottom: 2px dashed #6d7782;
+.answer-row input:placeholder-shown:not(:focus):hover {
+  background-color: #eef4f3;
 }
 
 .list-recall-panel {

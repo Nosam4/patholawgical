@@ -7,7 +7,7 @@ test("repeated warranty answers fill only the selected clue", async ({ page }) =
   await page.getByLabel("Select question", { exact: true }).selectOption("sales-lease-warranties");
 
   const word = page.locator('[data-answer-id="sales-lease-warranties-word"]');
-  await word.getByRole("button").click();
+  await word.getByRole("textbox").click();
   await expect(word.getByRole("textbox")).toHaveAccessibleDescription(/Merchantability disclaimer must name/);
   await word.getByRole("textbox").fill("written and conspicuous");
   await word.getByRole("textbox").press("Enter");
@@ -17,7 +17,7 @@ test("repeated warranty answers fill only the selected clue", async ({ page }) =
   const pending = ["asis", "fitness", "form"];
   for (const [index, id] of pending.entries()) {
     const row = page.locator(`[data-answer-id="sales-lease-warranties-${id}"]`);
-    await row.getByRole("button").click();
+    await row.getByRole("textbox").click();
     await row.getByRole("textbox").fill("a conspicuous writing");
     await row.getByRole("textbox").press("Enter");
     await expect(row).toHaveClass(/correct/);
@@ -37,7 +37,7 @@ test("percentage answers reject contradictory comparison operators", async ({ pa
   await page.getByLabel("Select subject", { exact: true }).selectOption("florida-business-entities");
   await page.getByLabel("Select question", { exact: true }).selectOption("fl-be-federal-securities");
   const row = page.locator('[data-answer-id="fl-be-short-swing-owner"]');
-  await row.getByRole("button").click();
+  await row.getByRole("textbox").click();
   for (const guess of ["<10%", "≤10%", "-10%"] ) {
     await row.getByRole("textbox").fill(guess);
     await row.getByRole("textbox").press("Enter");

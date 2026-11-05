@@ -34,9 +34,9 @@ test("randomizing preserves a partial run and restores it when returning", async
   await page.goto("./");
   const question = page.getByLabel("Select question", { exact: true });
   const initial = await question.inputValue();
-  await page.getByRole("button", { name: "Blank answer 1 for Required for Competence", exact: true }).click();
-  await page.getByRole("textbox").fill("knowledge");
-  await page.getByRole("textbox").press("Enter");
+  await page.getByRole("textbox", { name: "Answer 1 for Required for Competence", exact: true }).click();
+  await page.locator("input:focus").fill("knowledge");
+  await page.locator("input:focus").press("Enter");
   await page.getByRole("button", { name: "Randomize", exact: true }).click();
   await expect(question).not.toHaveValue(initial);
   await question.selectOption(initial);

@@ -18,7 +18,6 @@ async function chooseQuestion(page, course, subject, question) {
 
 async function fillGridAnswer(page, answer) {
   const row = page.locator(`.answer-row[data-answer-id="${answer.id}"]`);
-  if (await row.getByRole("button").count()) await row.getByRole("button").click();
   await row.getByRole("textbox").fill(answer.answer);
   await row.getByRole("textbox").press("Enter");
 }

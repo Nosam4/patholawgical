@@ -16,7 +16,7 @@ Live site: https://nosam4.github.io/patholawgical/
 - Flowcharts include an expandable **Text view: steps and branches** with linked
   steps and labeled connections. It shows the same recalled, revealed, and context
   answers as the diagram, while keeping unanswered targets hidden.
-- Supports Sporcle-style grid prompts with clickable blanks.
+- Supports Sporcle-style grid prompts with directly editable answer boxes.
 - Showers confetti from the top of the screen when every blank in a question or
   missed-answer practice run is answered correctly. Respects reduced-motion settings.
 - Reveals missed answers on demand.
@@ -47,7 +47,10 @@ Live site: https://nosam4.github.io/patholawgical/
   current-law clarifications. See [coverage and corrections](docs/florida-business-entities-curriculum.md).
 - Grid answers are checked against the selected blank. List recall still accepts items in any order.
 - ↓ moves to the next unanswered grid blank; ↑ moves to the previous one.
-  Tab and Shift+Tab use normal browser focus navigation; Escape returns to study controls.
+  Tab and Shift+Tab move directly into the next or previous answer box, with normal
+  browser focus navigation allowing access to links and controls outside the grid.
+  Unfinished text stays in each box while moving between answers. Press Enter to
+  check the selected answer; Escape returns to study controls.
 - Includes a source-backed Professional Responsibility / MPRE curriculum covering
   Model Rules 1–8.
 - Evidence → **Hearsay Exception Elements** adds eight drills from the recent

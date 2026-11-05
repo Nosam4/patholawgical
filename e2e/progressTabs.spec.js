@@ -3,8 +3,6 @@ import { PROGRESS_ENTRY_PREFIX } from "../src/progressStore.js";
 
 async function submit(page, id, guess) {
   const row = page.locator(`[data-answer-id="${id}"]`);
-  const button = row.getByRole("button");
-  if (await button.count()) await button.click();
   await row.getByRole("textbox").fill(guess);
   await row.getByRole("textbox").press("Enter");
   await expect(page.locator(".save-state")).toHaveText("Progress saved in this browser.");
@@ -75,7 +73,7 @@ test("unavailable safe coordination warns and keeps the session usable in memory
   await page.addInitScript(() => Object.defineProperty(navigator, "locks", { value: undefined }));
   await page.goto("./");
   const row = page.locator('[data-answer-id="pr-1-1-1-1"]');
-  await row.getByRole("button").click();
+  await row.getByRole("textbox").click();
   await row.getByRole("textbox").fill("knowledge");
   await row.getByRole("textbox").press("Enter");
   await expect(page.getByRole("alert")).toContainText("Progress could not be saved safely");
@@ -100,7 +98,7 @@ test("an accepted answer survives immediate reload while another tab holds the s
 
   try {
     const row = page.locator('[data-answer-id="pr-1-1-1-1"]');
-    await row.getByRole("button").click();
+    await row.getByRole("textbox").click();
     await row.getByRole("textbox").fill("knowledge");
     await row.getByRole("textbox").press("Enter");
     await expect(page.locator(".save-state")).toHaveText("Saving progress…");

@@ -25,7 +25,7 @@ test("Weeks 8–9 accepts aliases, preserves progress, practices misses, and gra
   }
 
   const patentRow = page.locator(`[data-answer-id="${patent.id}"]`);
-  await patentRow.getByRole("button").click();
+  await patentRow.getByRole("textbox").click();
   await patentRow.getByRole("textbox").fill("patents");
   await patentRow.getByRole("textbox").press("Enter");
   await expect(patentRow.locator(".answer-value")).toHaveText("Patent");
@@ -49,7 +49,7 @@ test("Weeks 8–9 accepts aliases, preserves progress, practices misses, and gra
   await page.getByLabel("Select question", { exact: true }).selectOption(tradeSecrets.id);
   const leakRow = page.locator('[data-answer-id="ai-weeks8-9-trade-secrets-applied-leak"]');
   const authorshipRow = page.locator('[data-answer-id="ai-weeks8-9-trade-secrets-applied-authorship"]');
-  await leakRow.getByRole("button").click();
+  await leakRow.getByRole("textbox").click();
   await leakRow.getByRole("textbox").fill("contract");
   await leakRow.getByRole("textbox").press("Enter");
   await expect(page.locator(".completion-indicator")).toHaveText(`Filled 0 of ${tradeSecretAnswers.length}`);

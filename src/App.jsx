@@ -140,7 +140,7 @@ function SporcleGrid({
   guessedIds,
   revealed,
   activeAnswerId,
-  draft,
+  drafts,
   onActivate,
   onDraftChange,
   onFieldKeyDown,
@@ -148,6 +148,12 @@ function SporcleGrid({
   showMnemonics,
   contextIds,
 }) {
+  const inputRefs = useRef(new Map());
+
+  useEffect(() => {
+    inputRefs.current.get(activeAnswerId)?.focus();
+  }, [activeAnswerId, question.id]);
+
   return (
     <section className={`panel sporcle-panel${question.clueLayout === "above" ? " stacked-clues" : ""}${question.answerLayout === "stacked" ? " stacked-answers" : ""}`}>
       {question.sourceUrl ? (
@@ -174,8 +180,6 @@ function SporcleGrid({
                   const isStatic = answer.quiz === false || contextIds.has(answer.id);
                   const solved = !isStatic && guessedIds.has(answer.id);
                   const showAnswer = isStatic || solved || revealed;
-                  const active = activeAnswerId === answer.id;
-
                   return (
                     <li
                       data-answer-id={answer.id}
@@ -219,28 +223,23 @@ function SporcleGrid({
                             <span className="answer-value">{answer.answer}</span>
                             {answer.explanation ? <p className="answer-explanation">{answer.explanation}</p> : null}
                           </>
-                        ) : active ? (
+                        ) : (
                           <form onSubmit={(event) => onSubmit(event, column, answer)}>
                             <input
+                              ref={(input) => {
+                                if (input) inputRefs.current.set(answer.id, input);
+                                else inputRefs.current.delete(answer.id);
+                              }}
                               aria-label={`Answer ${answerIndex + 1} for ${column.title}`}
                               aria-describedby={answer.indicator ? `answer-clue-${answer.id} gridKeyboardHint` : "gridKeyboardHint"}
                               autoComplete="off"
-                              autoFocus
-                              onChange={(event) => onDraftChange(event.target.value)}
+                              placeholder=" "
+                              onFocus={() => onActivate(answer.id)}
+                              onChange={(event) => onDraftChange(answer.id, event.target.value)}
                               onKeyDown={(event) => onFieldKeyDown(event, column, answer)}
-                              value={draft}
+                              value={drafts[answer.id] ?? ""}
                             />
                           </form>
-                        ) : (
-                          <button
-                            aria-label={`Blank answer ${answerIndex + 1} for ${column.title}`}
-                            aria-describedby={answer.indicator ? `answer-clue-${answer.id}` : undefined}
-                            className="blank-answer"
-                            onClick={() => onActivate(answer.id)}
-                            type="button"
-                          >
-                            <span />
-                          </button>
                         )}
                       </div>
                     </li>
@@ -281,6 +280,7 @@ export default function App() {
   const [flowchartGuess, setFlowchartGuess] = useState("");
   const [activeAnswerId, setActiveAnswerId] = useState("");
   const [sporcleDraft, setSporcleDraft] = useState("");
+  const [gridDrafts, setGridDrafts] = useState({});
   const [showMnemonics, setShowMnemonics] = useState(false);
   const [listFocusVersion, setListFocusVersion] = useState(0);
   const [message, setMessage] = useState("Choose a blank and start filling from memory.");
@@ -351,6 +351,7 @@ export default function App() {
         setConfettiBurst(0);
         setFlowchartGuess("");
         setSporcleDraft("");
+        setGridDrafts({});
         setMessage("Another tab changed this drill. Its latest saved run is now shown.");
       } else if (run.closed && !closed && run.guessedIds.length === run.targetIds.length) {
         setMessage("Complete. All blanks filled.");
@@ -417,6 +418,7 @@ export default function App() {
     setFlowchartGuess("");
     setActiveAnswerId("");
     setSporcleDraft("");
+    setGridDrafts({});
     if (isListRecall) {
       setShowMnemonics(false);
       setListFocusVersion((version) => version + 1);
@@ -539,7 +541,7 @@ export default function App() {
       return;
     }
 
-    const normalizedGuess = normalizeAnswer(sporcleDraft);
+    const normalizedGuess = normalizeAnswer(gridDrafts[activeAnswer.id] ?? "");
 
     if (!normalizedGuess) {
       setMessage("Type an answer before submitting.");
@@ -567,7 +569,11 @@ export default function App() {
         guessedIds: nextGuessedIds,
       }),
     );
-    setSporcleDraft("");
+    setGridDrafts((drafts) => {
+      const nextDrafts = { ...drafts };
+      delete nextDrafts[matchedAnswer.id];
+      return nextDrafts;
+    });
   }
 
   function handleListSubmit(event) {
@@ -603,7 +609,7 @@ export default function App() {
       return;
     }
 
-    // Leave Tab/Shift+Tab to the browser so every control remains reachable.
+    // Every blank is an input, so native Tab navigation also allows typing immediately.
     if (event.key !== "ArrowDown" && event.key !== "ArrowUp") {
       return;
     }
@@ -614,10 +620,7 @@ export default function App() {
       ? findPreviousFieldAnswerId(navigationQuestion, column.id, activeAnswer.id, guessedIds)
       : findNextFieldAnswerId(navigationQuestion, column.id, activeAnswer.id, guessedIds);
 
-    setActiveAnswerId(
-      nextAnswerId,
-    );
-    setSporcleDraft("");
+    setActiveAnswerId(nextAnswerId);
   }
 
   function handleReveal() {
@@ -626,6 +629,7 @@ export default function App() {
     setRevealed(true);
     setActiveAnswerId("");
     setSporcleDraft("");
+    setGridDrafts({});
     setMessage("Missed answers are now revealed.");
   }
 
@@ -821,7 +825,7 @@ export default function App() {
 
         <p id="messageText" role="status">{message}</p>
         {question.type === "sporcle-grid" && !isListRecall ? (
-          <p className="keyboard-hint" id="gridKeyboardHint">Use ↓ or ↑ to move between unanswered blanks. Tab and Shift+Tab move between controls. Escape returns to study controls.</p>
+          <p className="keyboard-hint" id="gridKeyboardHint">Tab moves to the next answer box; Shift+Tab moves back. Unfinished text stays in each box. Use ↓ or ↑ to cycle through unanswered blanks. Press Enter to check an answer. Escape returns to study controls.</p>
         ) : null}
         <p className="study-summary">
           Full attempts: {currentProgress?.attempts ?? 0} · Best: {currentProgress?.bestScore ?? 0}/{answers.length}
@@ -849,14 +853,11 @@ export default function App() {
       ) : question.type === "sporcle-grid" ? (
         <SporcleGrid
           activeAnswerId={activeAnswerId}
-          draft={sporcleDraft}
+          drafts={gridDrafts}
           guessedIds={guessedIds}
           contextIds={contextIds}
-          onActivate={(answerId) => {
-            setActiveAnswerId(answerId);
-            setSporcleDraft("");
-          }}
-          onDraftChange={setSporcleDraft}
+          onActivate={setActiveAnswerId}
+          onDraftChange={(answerId, value) => setGridDrafts((drafts) => ({ ...drafts, [answerId]: value }))}
           onFieldKeyDown={handleSporcleFieldKeyDown}
           onSubmit={handleSporcleSubmit}
           question={question}

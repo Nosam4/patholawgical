@@ -50,8 +50,6 @@ async function openRule803(page) {
 
 async function submitRule(page, rule, guess = officialNames[rule - 1]) {
   const row = rowFor(page, rule);
-  const blank = row.getByRole("button");
-  if (await blank.count()) await blank.click();
   const input = row.getByRole("textbox");
   await input.fill(guess);
   await input.press("Enter");
@@ -93,12 +91,29 @@ for (const width of [1280, 390]) {
   });
 }
 
+test("native Tab crosses mnemonic columns and keeps both answer drafts", async ({ page }) => {
+  await openRule803(page);
+  const lastInFirstColumn = rowFor(page, 14).getByRole("textbox");
+  const firstInSecondColumn = rowFor(page, 12).getByRole("textbox");
+  await lastInFirstColumn.fill("unfinished first-column answer");
+  await lastInFirstColumn.press("Tab");
+  await expect(firstInSecondColumn).toBeFocused();
+  await page.keyboard.type("unfinished second-column answer");
+  await firstInSecondColumn.press("Shift+Tab");
+  await expect(lastInFirstColumn).toBeFocused();
+  await expect(lastInFirstColumn).toHaveValue("unfinished first-column answer");
+  await lastInFirstColumn.press("Tab");
+  await expect(firstInSecondColumn).toBeFocused();
+  await expect(firstInSecondColumn).toHaveValue("unfinished second-column answer");
+  await expect(page.locator(".completion-indicator")).toHaveText("Filled 0 of 23");
+});
+
 test("Rule 803 accepts existing aliases and navigates across the new columns before resuming", async ({ page }) => {
   await openRule803(page);
   await submitRule(page, 6, "business records");
   await expect(rowFor(page, 7).getByRole("textbox")).toBeFocused();
 
-  await rowFor(page, 14).getByRole("button").click();
+  await rowFor(page, 14).getByRole("textbox").click();
   await rowFor(page, 14).getByRole("textbox").press("ArrowDown");
   await expect(rowFor(page, 12).getByRole("textbox")).toBeFocused();
   await rowFor(page, 12).getByRole("textbox").press("ArrowUp");

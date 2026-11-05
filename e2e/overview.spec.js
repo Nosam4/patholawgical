@@ -24,9 +24,9 @@ async function answerFirstBlank(page, questionId) {
   const question = overview.subjects.flatMap((subject) => subject.questions)
     .find((item) => item.id === questionId);
   const answers = getQuestionAnswers(question);
-  await page.locator(`[data-answer-id="${answers[0].id}"]`).getByRole("button").click();
-  await page.getByRole("textbox").fill(answers[0].answer);
-  await page.getByRole("textbox").press("Enter");
+  await page.locator(`[data-answer-id="${answers[0].id}"]`).getByRole("textbox").click();
+  await page.locator("input:focus").fill(answers[0].answer);
+  await page.locator("input:focus").press("Enter");
   await expect(page.locator(".completion-indicator")).toHaveText(`Filled 1 of ${answers.length}`);
   return answers.length;
 }
@@ -74,13 +74,14 @@ test("changing review depth preserves an included drill's answers and unfinished
   await subjectSelect(page).selectOption(timelineSubject);
   await expect(questionSelect(page)).toHaveValue(numbersQuestion);
   await answerFirstBlank(page, numbersQuestion);
-  await page.getByRole("textbox").fill("unfinished entry");
+  const unfinished = page.locator(".answer-slot input").first();
+  await unfinished.fill("unfinished entry");
   for (const level of ["standard", "comprehensive", "core"]) {
     await reviewSelect(page).selectOption(level);
     await expect(subjectSelect(page)).toHaveValue(timelineSubject);
     await expect(questionSelect(page)).toHaveValue(numbersQuestion);
     await expect(page.locator(".completion-indicator")).toHaveText("Filled 1 of 23");
-    await expect(page.getByRole("textbox")).toHaveValue("unfinished entry");
+    await expect(unfinished).toHaveValue("unfinished entry");
   }
 });
 

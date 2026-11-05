@@ -28,9 +28,9 @@ test("Business Entities is available at each review depth and saves an answered 
   await page.getByLabel("Select review depth", { exact: true }).selectOption("core");
   await page.getByLabel("Select question", { exact: true }).selectOption(identityQuestion.id);
   const answers = getQuestionAnswers(identityQuestion);
-  await page.locator('[data-answer-id="fl-be-identity-separate"] button').click();
-  await page.getByRole("textbox").fill("separate entity");
-  await page.getByRole("textbox").press("Enter");
+  await page.locator('[data-answer-id="fl-be-identity-separate"] input').click();
+  await page.locator("input:focus").fill("separate entity");
+  await page.locator("input:focus").press("Enter");
   await expect(page.locator(".completion-indicator")).toHaveText(`Filled 1 of ${answers.length}`);
   await expect(page.locator('[data-answer-id="fl-be-identity-separate"] .answer-value'))
     .toHaveText("Separate legal entity");
@@ -48,13 +48,13 @@ test("another corporate answer cannot fill the selected entity-identity blank", 
   const target = answers.find((answer) => answer.id === "fl-be-identity-separate");
   const other = answers.find((answer) => !isAnswerMatch(target, normalizeAnswer(answer.answer)));
   expect(other).toBeTruthy();
-  await page.locator(`[data-answer-id="${target.id}"] button`).click();
-  await page.getByRole("textbox").fill(other.answer);
-  await page.getByRole("textbox").press("Enter");
+  await page.locator(`[data-answer-id="${target.id}"] input`).click();
+  await page.locator("input:focus").fill(other.answer);
+  await page.locator("input:focus").press("Enter");
   await expect(page.locator(".completion-indicator")).toHaveText(`Filled 0 of ${answers.length}`);
-  await expect(page.getByRole("textbox")).toHaveValue(other.answer);
-  await page.getByRole("textbox").fill(target.answer);
-  await page.getByRole("textbox").press("Enter");
+  await expect(page.locator("input:focus")).toHaveValue(other.answer);
+  await page.locator("input:focus").fill(target.answer);
+  await page.locator("input:focus").press("Enter");
   await expect(page.locator(".completion-indicator")).toHaveText(`Filled 1 of ${answers.length}`);
 });
 

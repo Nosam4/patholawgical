@@ -20,7 +20,6 @@ async function openQuiz4(page) {
 
 async function submitAnswer(page, answer, guess = answer.answer) {
   const row = page.locator(`[data-answer-id="${answer.id}"]`);
-  if (await row.getByRole("button").count()) await row.getByRole("button").click();
   await row.getByRole("textbox").fill(guess);
   await row.getByRole("textbox").press("Enter");
   await expect(row.locator(".answer-value")).toHaveText(answer.answer);

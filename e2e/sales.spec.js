@@ -12,7 +12,7 @@ test("Sales drill accepts an alias in the selected blank and resumes after reloa
   await page.getByLabel("Select subject", { exact: true }).selectOption("sales-formation");
   await page.getByLabel("Select question", { exact: true }).selectOption("sales-firm-offers");
   const row = page.locator('[data-answer-id="sales-firm-offers-cap"]');
-  await row.getByRole("button").click();
+  await row.getByRole("textbox").click();
   await row.getByRole("textbox").fill("3 months");
   await row.getByRole("textbox").press("Enter");
   await expect(row).toHaveClass(/correct/);
