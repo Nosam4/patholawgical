@@ -636,49 +636,65 @@ const freRule403Question = {
     {
       id: "factors-influence-judges",
       title: "Judicial Factors",
+      mnemonic: "CARVE",
       answers: [
-        answer(
-          "rule-403-emotions-irrational-prejudice",
-          "risk of emotional or irrational prejudice",
-          [
-            "extent to which the evidence will arouse emotions or irrational prejudice among the jurors",
-            "arouse emotions or irrational prejudice among jurors",
-            "emotional or irrational prejudice",
-          ],
-        ),
-        answer(
-          "rule-403-jury-overvalue",
-          "risk the jury will overvalue the evidence",
-          ["extent to which the jury might overvalue the evidence", "jury might overvalue the evidence"],
-        ),
-        answer(
-          "rule-403-connection-to-elements",
-          "strength of connection to the case elements",
-          [
+        {
+          ...answer("rule-403-connection-to-elements", "strength of connection to the case elements", [
             "strength of the connection between the evidence and the elements of the case",
             "connection between the evidence and the elements",
             "strength of connection to the elements",
-          ],
-        ),
-        answer(
-          "rule-403-less-prejudicial-alternatives",
-          "less prejudicial or confusing alternatives",
-          [
+          ]),
+          mnemonicLabel: "Connection to the case elements",
+        },
+        {
+          ...answer("rule-403-less-prejudicial-alternatives", "less prejudicial or confusing alternatives", [
             "alternatives to present the same facts by less prejudicial or confusing means",
             "alternative means to present the same facts",
-          ],
-        ),
-        answer(
-          "rule-403-redaction",
-          "ability to redact and reduce harm",
-          [
+          ]),
+          mnemonicLabel: "Alternatives with less prejudice or confusion",
+        },
+        {
+          ...answer("rule-403-redaction", "ability to redact and reduce harm", [
             "possibility of redaction to reduce prejudice or other harm",
             "redact to reduce prejudice",
             "possibility to redact and reduce harm",
-          ],
-        ),
+          ]),
+          mnemonicLabel: "Redaction to reduce harm",
+        },
+        {
+          ...answer("rule-403-jury-overvalue", "risk the jury will overvalue the evidence", [
+            "extent to which the jury might overvalue the evidence",
+            "jury might overvalue the evidence",
+          ]),
+          mnemonicLabel: "Value overestimation by the jury",
+        },
+        {
+          ...answer("rule-403-emotions-irrational-prejudice", "risk of emotional or irrational prejudice", [
+            "extent to which the evidence will arouse emotions or irrational prejudice among the jurors",
+            "arouse emotions or irrational prejudice among jurors",
+            "emotional or irrational prejudice",
+          ]),
+          mnemonicLabel: "Emotional or irrational prejudice",
+        },
       ],
     },
+  ],
+  // Keep the original answer order for saved scores and unfinished runs.
+  progressAnswerOrder: [
+    "rule-403-court-may-exclude",
+    "rule-403-probative-value",
+    "rule-403-substantially-outweighed",
+    "rule-403-unfair-prejudice",
+    "rule-403-confusing-issues",
+    "rule-403-misleading-jury",
+    "rule-403-cumulative-evidence",
+    "rule-403-undue-delay",
+    "rule-403-wasting-time",
+    "rule-403-emotions-irrational-prejudice",
+    "rule-403-jury-overvalue",
+    "rule-403-connection-to-elements",
+    "rule-403-less-prejudicial-alternatives",
+    "rule-403-redaction",
   ],
 };
 

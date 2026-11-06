@@ -141,25 +141,27 @@ test("Evidence includes the syllabus and class FRE rule names question", () => {
   );
 });
 
-test("Rule 403 includes the five factors that influence judges", () => {
+test("Rule 403 judicial factors follow the CARVE mnemonic", () => {
   const question = findEvidenceQuestion("fre-rule-403-balancing");
   const factors = question.columns.find(
     (column) => column.id === "factors-influence-judges",
   );
 
   assert.equal(factors.title, "Judicial Factors");
+  assert.equal(factors.mnemonic, "CARVE");
   assert.equal(factors.answers.length, 5);
   assert.equal(getQuestionAnswerCount(question), 14);
   assert.deepEqual(
     factors.answers.map((item) => item.id),
     [
-      "rule-403-emotions-irrational-prejudice",
-      "rule-403-jury-overvalue",
       "rule-403-connection-to-elements",
       "rule-403-less-prejudicial-alternatives",
       "rule-403-redaction",
+      "rule-403-jury-overvalue",
+      "rule-403-emotions-irrational-prejudice",
     ],
   );
+  assert.equal(factors.answers.map((item) => item.mnemonicLabel[0]).join(""), "CARVE");
 });
 
 test("Rule 403 dangers follow the UCMNUW mnemonic", () => {
