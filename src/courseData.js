@@ -11,6 +11,9 @@ import { floridaCivilProcedureQuestions } from "./floridaCivilProcedureQuestions
 import { floridaCivilProcedureTimelineQuestions } from "./floridaCivilProcedureTimelines.js";
 import { floridaCriminalProcedureQuestions } from "./floridaCriminalProcedureQuestions.js";
 import { floridaBusinessEntitiesQuestions } from "./floridaBusinessEntitiesQuestions.js";
+import { floridaTrustsQuestions } from "./floridaTrustsQuestions.js";
+import { floridaWillsQuestions } from "./floridaWillsQuestions.js";
+import { floridaEvidenceDistinctionsQuestions } from "./floridaEvidenceDistinctionsQuestions.js";
 import { overviewListsCourse } from "./overviewLists.js";
 import { professionalResponsibilitySubjects } from "./professionalResponsibilityQuestions.js";
 import { jordanPeytonDirectExaminationQuestion } from "./directExaminationQuestions.js";
@@ -1842,6 +1845,21 @@ export const courseCatalog = [
         id: "florida-business-entities",
         title: "Business Entities",
         questions: floridaBusinessEntitiesQuestions,
+      },
+      {
+        id: "florida-trusts",
+        title: "Florida Trusts",
+        questions: floridaTrustsQuestions,
+      },
+      {
+        id: "florida-wills",
+        title: "Florida Wills",
+        questions: floridaWillsQuestions,
+      },
+      {
+        id: "florida-evidence-distinctions",
+        title: "Florida Evidence Distinctions",
+        questions: floridaEvidenceDistinctionsQuestions,
       },
     ],
   },

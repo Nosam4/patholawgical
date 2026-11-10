@@ -77,7 +77,9 @@ test("the thirteen-list bank stays under its fifteen-list ceiling across all rev
     assert.equal(getOverviewSubjects(overviewListsCourse, level), overviewListsCourse.subjects);
   }
   const overview = courseCatalog.find((course) => course.id === OVERVIEW_COURSE_ID);
-  assert.equal(overview.subjects.flatMap((subject) => subject.questions).length, 152);
+  assert.ok(overview.subjects.every((subject) =>
+    subject.questions.every((question) => !overviewListQuestions.includes(question)),
+  ));
 });
 
 test("list progress IDs cannot collide with existing drills or answers", () => {

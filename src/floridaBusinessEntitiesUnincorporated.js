@@ -196,6 +196,69 @@ export const floridaBusinessEntitiesUnincorporatedQuestions = [
       ]),
     ], "Valid agreement provisions can vary these defaults within § 620.1110. A limited partner given management powers has fiduciary duties for that role under § 620.1305, while control alone does not create GP liability. The derivative complaint must plead demand efforts or futility with particularity."),
 
+  drill("gp-authority-filings", "Authority Filings and Property Transfers", partnershipFile, "11–12", "620.8303; 620.8304; 620.8302",
+    "Distinguish an authority filing from the special recording needed to affect real-property transactions.", [
+      column("gp-filings-authority", "Authority Statements", [
+        ["grant", "Optional Department of State filing stating a partner's powers or limits", "Statement of partnership authority", "statement of authority"],
+        ["deny", "Filing used to dispute a fact or authority asserted in an existing authority statement", "Statement of denial"],
+        ["ordinary", "Does merely filing an authority limitation ordinarily give every outsider knowledge of it?", "No"],
+        ["record", "For statutory notice of a partnership-name real-property transfer limitation, record a certified copy in the local office for recording what?", "Real-property transfers", "real property transfers", "transfers of real property", "deeds", "real estate transfers"],
+      ]),
+      column("gp-filings-transfers", "Reliance and Title", [
+        ["knowledge", "A value-giving outsider cannot rely conclusively on a filed grant if the outsider has contrary what?", "Knowledge", "actual knowledge", "knowledge of lack of authority"],
+        ["expires", "Absent earlier cancellation, an authority statement expires this many years after filing or its latest amendment", "5 years", "five years", "5"],
+        ["name", "Subject to authority limits, a partner transferring partnership-name property executes the instrument in whose name?", "Partnership", "the partnership", "partnership name", "the partnership's name"],
+        ["shelter", "Can the partnership recover from a later transferee if it could not recover under § 620.8302(2) from an earlier transferee?", "No"],
+      ]),
+    ], "Real-property grants and limits require the certified-copy recording specified in § 620.8303. Other filed limitations and actual knowledge can defeat a grant. Recovery after an unauthorized transfer depends on title, value, and the transferee's knowledge or notification; the handout's shorthand is not a universal recovery rule."),
+
+  drill("lp-contributions-limits", "Limited Partnership Contributions and Distribution Limits", partnershipFile, "18–19", "620.1502; 620.1508; 620.1110",
+    "Recall contribution obligations and qualify the handout's abbreviated distribution-solvency test.", [
+      column("lp-contribution-promises", "Contribution Promises", [
+        ["record", "A partner's contribution obligation must appear in a record bearing the partner's what?", "Signature", "signed", "partner's signature"],
+        ["death", "Does death or disability itself excuse a promised contribution?", "No"],
+        ["substitute", "At the LP's option, an unperformed nonmonetary contribution can be replaced by its stated value in what?", "Money", "cash"],
+        ["compromise", "Default partner consent needed to compromise a contribution obligation", "All partners", "unanimous consent", "unanimity"],
+      ]),
+      column("lp-contribution-protection", "Protecting Claims", [
+        ["creditor", "A creditor relying on a contribution promise without notice of its compromise may enforce which obligation?", "Original obligation", "original contribution obligation", "uncompromised obligation", "original promise"],
+        ["liabilities", "The balance-sheet distribution test starts with total assets compared with total what?", "Liabilities", "total liabilities"],
+        ["preferences", "That test also protects partners with superior winding-up rights by adding their ____ rights", "Preferential", "preferential rights", "preferences", "superior preferential rights"],
+      ]),
+    ], "Apply valid agreement variations within § 620.1110. Even unanimous internal compromise does not defeat the protected relying creditor's original claim. Section 620.1508 adds superior dissolution preferences to liabilities; the handout's assets-versus-liabilities summary omits that component. The separate debts-as-due test also applies."),
+
+  drill("lp-derivative-procedure", "Limited Partnership Derivative Procedure", partnershipFile, "20", "620.2002; 620.2003; 620.2004; 620.2005",
+    "Recall how a partner may pursue an LP's claim and distinguish the LP's recovery from a possible expense award.", [
+      column("lp-derivative-demand", "Demand and Standing", [
+        ["recipient", "Partners to whom the derivative plaintiff ordinarily directs a demand", "General partners", "GPs", "the general partners"],
+        ["wait", "After demand, the GPs must fail to bring the action within what kind of time?", "Reasonable time", "a reasonable time"],
+        ["excuse", "Demand may be excused when making it would be what?", "Futile", "futility"],
+        ["start", "The plaintiff must hold this status when commencing the action", "Partner", "a partner", "partnership status"],
+      ]),
+      column("lp-derivative-pleading", "Pleading and Recovery", [
+        ["earlier", "Absent qualifying successor status, the plaintiff must also have been a partner when the challenged ____ occurred", "Conduct", "wrongful conduct", "transaction", "act"],
+        ["detail", "Demand facts or reasons for futility must be pleaded with this level of detail", "Particularity", "with particularity"],
+        ["recipient", "Entity to which the derivative proceeds ordinarily belong", "Limited partnership", "LP", "the limited partnership"],
+        ["fees", "For an action successful in whole or part, a court may award reasonable expenses including attorney's what?", "Fees", "attorney fees", "attorney's fees"],
+      ]),
+    ], "Section 620.2003 permits qualifying succession by operation of law or the partnership agreement. Section 620.2002 uses a reasonable time after demand, not an automatic corporate-style 90-day clock. Expense reimbursement is discretionary; the underlying recovery belongs to the LP."),
+
+  drill("lp-conversion-merger", "Limited Partnership Conversion and Merger", partnershipFile, "20–21", "620.2103; 620.2102; 620.2105; 620.2109; 620.2110",
+    "Use the LP-specific approval rules and follow the entity's obligations through restructuring.", [
+      column("lp-restructure-approval", "Conversion Approval", [
+        ["plan", "The conversion's before-and-after forms, terms, and organizational documents must appear in a plan contained in a what?", "Record", "a record", "written record", "writing"],
+        ["gp", "Ordinary statutory conversion consent required from the general partners", "All general partners", "all GPs", "unanimous general partner consent"],
+        ["lp", "Ordinary statutory LP consent tracks a majority of these economic rights, including each class or group", "Distribution rights", "rights to receive distributions", "rights to distributions"],
+        ["personal", "A partner newly facing personal liability must consent unless that partner previously consented to the specific agreement provision allowing approval by fewer than whom?", "All partners", "all the partners", "every partner"],
+      ]),
+      column("lp-restructure-continuity", "Effects", [
+        ["same", "After conversion, is the converted organization legally the same entity?", "Yes"],
+        ["debt", "Do preconversion debts ordinarily continue as obligations of the converted entity?", "Yes"],
+        ["survivor", "In a merger, the disappearing entities' property and obligations vest in this organization", "Surviving organization", "survivor", "surviving entity"],
+        ["dissolve", "Absent agreement otherwise, does conversion itself dissolve the LP for winding-up purposes?", "No"],
+      ]),
+    ], "Apply valid partnership-agreement variations and § 620.2110's separate personal-liability consent protection. Consenting merely to a general amendment-by-less-than-all clause is insufficient. Merger approval and filings have their own provisions (§§ 620.2106–620.2108); conversion and merger are distinct from liquidation."),
+
   drill("llc-formation-agreement", "LLC Formation and Operating Agreement", corporationsFile, "42–43", "605.0201; 605.0102; 605.0105; 605.0401; 605.0407",
     "Recall Florida LLC formation documents, flexible membership, and the default management choice.", [
       column("llc-formation-documents", "Documents", [
@@ -334,6 +397,10 @@ export const floridaBusinessEntitiesUnincorporatedLevels = {
   "fl-be-gp-dissolution": "standard",
   "fl-be-special-partnerships": "core",
   "fl-be-lp-operation": "comprehensive",
+  "fl-be-gp-authority-filings": "comprehensive",
+  "fl-be-lp-contributions-limits": "standard",
+  "fl-be-lp-derivative-procedure": "comprehensive",
+  "fl-be-lp-conversion-merger": "comprehensive",
   "fl-be-llc-formation-agreement": "core",
   "fl-be-llc-voting": "core",
   "fl-be-llc-agency-shield": "core",

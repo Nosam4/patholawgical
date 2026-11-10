@@ -393,6 +393,72 @@ const corporations = [
       ]),
     ], "607.1502", "§§ 607.1501–607.1502, 607.602–607.606, 617.0505, 621.07; IRS S corporations, https://www.irs.gov/businesses/small-businesses-self-employed/s-corporations",
     "Foreign qualification has statutory exclusions such as holding internal meetings and interstate commerce. An S election is federal tax treatment, with eligibility requirements and some entity-level exceptions. A professional remains liable for her own misconduct and that of persons under her direct supervision/control. Nonprofit compensation and distributions must fit chapter 617's conditions."),
+
+  drill("share-transfer-restrictions", "Share-Transfer Restrictions", [null, null, "11"],
+    "Identify permitted transfer controls and the notice needed to enforce them against a buyer.", [
+      column("share-transfer-limits", "Controlling Transfers", [
+        ["first", "Right requiring an owner to offer shares to the corporation or other designated buyers before selling elsewhere", "Right of first refusal", "first refusal", "ROFR"],
+        ["purpose", "Beyond preserving entity status or securities exemptions, a restriction must serve a ____ purpose", "Reasonable", "reasonable purpose"],
+        ["approval", "A transfer-approval requirement cannot be manifestly what?", "Unreasonable", "manifestly unreasonable"],
+        ["earlier", "Are already-issued shares automatically bound by a later restriction if their owners neither join nor vote for it?", "No"],
+      ]),
+      column("share-transfer-notice", "Notice to a Buyer", [
+        ["certificate", "On a share certificate, a restriction's existence must be noted in this noticeable manner", "Conspicuously", "conspicuous", "conspicuously noted"],
+        ["uncertificated", "For shares without certificates, the restriction is disclosed in this statutory document", "Information statement", "share information statement"],
+        ["knowledge", "Without the required notation, enforcement against a buyer requires the buyer's what?", "Knowledge", "knowledge of the restriction", "actual knowledge"],
+      ]),
+    ], "607.0627", "§ 607.0627; checked November 9, 2026",
+    "The statute permits restrictions in articles, bylaws, or qualifying agreements. Do not assume every absolute prohibition is invalid: status-preservation purposes and the statutory reasonableness limits matter."),
+
+  drill("voting-arrangements", "Voting Trusts and Voting Agreements", [null, null, "19–20"],
+    "Distinguish transferring voting control to a trustee from a contract about how shareholders vote.", [
+      column("voting-trust", "Voting Trust", [
+        ["trustee", "Person who receives the shares and exercises the voting rights under the trust agreement", "Trustee", "voting trustee"],
+        ["benefit", "The contributing shareholders retain this ownership interest rather than voting the shares themselves", "Beneficial ownership", "beneficial interest", "equitable ownership", "equitable interest"],
+        ["starts", "The trust takes effect when the first covered shares are registered in whose name?", "Trustee", "the trustee", "voting trustee"],
+      ]),
+      column("voting-agreement", "Voting Agreement", [
+        ["form", "Shareholders create a statutory voting agreement by doing this to their agreement", "Signing", "signing it", "signing the agreement", "signed agreement"],
+        ["transfer", "Must an ordinary voting agreement transfer shares to a trustee?", "No"],
+        ["remedy", "Besides damages, a voting agreement is specifically what?", "Enforceable", "specifically enforceable"],
+        ["transferee", "A transferee taking subject to the agreement is bound when the transferee has this", "Notice", "notice of the agreement"],
+      ]),
+    ], "607.0730", "§§ 607.0730–607.0731; checked November 9, 2026",
+    "A voting trust uses a signed agreement and transfer of shares; the trustee delivers its agreement and beneficial-owner list to the principal office. A statutory voting agreement requires two or more signing shareholders and is distinct from a proxy or a § 607.0732 management agreement."),
+
+  drill("shareholder-management-agreements", "Shareholder Management Agreements", [null, null, "20–21"],
+    "Recall the special agreement that can alter the corporation's usual management structure.", [
+      column("management-agreement-creation", "Creation and Powers", [
+        ["board", "A qualifying agreement may eliminate or restrict this usual management body", "Board of directors", "board", "directors"],
+        ["approval", "At creation, whose approval or signatures must satisfy § 607.0732(2)?", "All shareholders", "every shareholder", "unanimous shareholder approval"],
+        ["known", "A standalone signed agreement must be made known to this entity", "Corporation", "the corporation", "company"],
+        ["amend", "Unless the agreement provides otherwise, amendment or termination requires whose consent?", "All current shareholders", "all shareholders", "every current shareholder", "unanimous shareholder consent"],
+      ]),
+      column("management-agreement-effects", "Consequences", [
+        ["buyer", "Remedy available to a buyer who lacked knowledge of the agreement when buying shares", "Rescission", "rescind the purchase"],
+        ["liability", "When board powers are transferred, liability for those powers shifts to the persons receiving the what?", "Discretion or powers", "powers", "discretion", "management authority", "authority"],
+        ["registration", "The agreement ceases to be effective when shares are registered under section 12 of this federal act", "Securities Exchange Act of 1934", "Securities Exchange Act", "Exchange Act", "1934 Act"],
+        ["shield", "Does merely performing this agreement by dispensing with covered corporate formalities impose shareholder liability for corporate debts?", "No"],
+      ]),
+    ], "607.0732", "§ 607.0732; checked November 9, 2026",
+    "The handout's unanimous-amendment statement is a default: § 607.0732(2)(b) allows the agreement to provide otherwise. The buyer's rescission suit must begin by the earlier of 90 days after discovery or 2 years after purchase. Distribution changes remain subject to § 607.06401."),
+
+  drill("officer-appointment-departure", "Officers: Appointment, Duties, and Departure", [null, null, "32–34"],
+    "Separate holding corporate office from contractual employment rights.", [
+      column("officer-organization", "Appointment and Conduct", [
+        ["appoint", "Corporate body that may appoint officers, with further appointment authority available if properly delegated", "Board of directors", "board", "directors"],
+        ["multiple", "May one individual simultaneously hold more than one corporate office?", "Yes"],
+        ["faith", "Officers must act in good ____", "Faith", "good faith"],
+        ["interest", "Officers must reasonably believe their conduct serves the corporation's ____ interests", "Best", "best interests"],
+      ]),
+      column("officer-departure", "Leaving Office", [
+        ["resign", "An officer resigns by delivering notice in this form", "Written", "writing", "written notice", "in writing"],
+        ["cause", "Must the board always establish cause to remove an officer?", "No"],
+        ["contract", "Does appointment by itself create employment contract rights?", "No"],
+        ["survive", "Does removal by itself extinguish an officer's existing contract rights?", "No"],
+      ]),
+    ], "607.08401", "§§ 607.08401, 607.0841, 607.08411–607.0843; checked November 9, 2026",
+    "Bylaws or the board define officer duties and assign minute-keeping and record-authentication responsibilities. The appointing officer or another authorized officer may also remove officers under § 607.0842. Removal can be effective while leaving a separate breach-of-contract claim."),
 ];
 
 export const floridaBusinessEntitiesQuestions = [
@@ -425,5 +491,9 @@ export const floridaBusinessEntitiesLevels = Object.freeze({
   "fl-be-dissolution": "standard",
   "fl-be-federal-securities": "comprehensive",
   "fl-be-special-corporations": "comprehensive",
+  "fl-be-share-transfer-restrictions": "standard",
+  "fl-be-voting-arrangements": "standard",
+  "fl-be-shareholder-management-agreements": "standard",
+  "fl-be-officer-appointment-departure": "standard",
   ...floridaBusinessEntitiesUnincorporatedLevels,
 });

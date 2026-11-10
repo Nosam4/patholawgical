@@ -142,3 +142,49 @@ test("timing aliases preserve business days, calendar months, and Florida's one-
   assert.ok(!accepts("gp-dissociation-timing-demand", "90 days"));
   assert.ok(!accepts("sh-meetings-minimum", "60 days"));
 });
+
+test("Geis voting and management arrangements preserve their different consent and ownership rules", () => {
+  assert.ok(accepts("voting-trust-benefit", "equitable ownership"));
+  assert.ok(!accepts("voting-trust-benefit", "legal ownership"));
+  assert.ok(accepts("voting-agreement-transfer", "no"));
+  assert.ok(!accepts("voting-agreement-transfer", "yes"));
+  assert.ok(accepts("management-agreement-creation-approval", "all shareholders"));
+  assert.ok(!accepts("management-agreement-creation-approval", "majority of shareholders"));
+  assert.ok(accepts("management-agreement-effects-buyer", "rescission"));
+  assert.ok(!accepts("management-agreement-effects-buyer", "appraisal"));
+  assert.ok(accepts("share-transfer-notice-knowledge", "actual knowledge"));
+  assert.ok(!accepts("share-transfer-notice-knowledge", "no knowledge"));
+});
+
+test("an officer's removal and a transferee's title do not erase independent legal protections", () => {
+  for (const id of [
+    "officer-departure-cause",
+    "officer-departure-contract",
+    "officer-departure-survive",
+    "share-transfer-limits-earlier",
+    "gp-filings-authority-ordinary",
+    "gp-filings-transfers-shelter",
+  ]) {
+    assert.ok(accepts(id, "no"), id);
+    assert.ok(!accepts(id, "yes"), id);
+  }
+  assert.ok(accepts("gp-filings-transfers-expires", "five years"));
+  assert.ok(!accepts("gp-filings-transfers-expires", "90 days"));
+  assert.ok(accepts("gp-filings-authority-deny", "statement of denial"));
+  assert.ok(!accepts("gp-filings-authority-deny", "statement of dissociation"));
+});
+
+test("LP enforcement and conversion keep the LP rules separate from corporate and GP defaults", () => {
+  assert.ok(accepts("lp-derivative-demand-wait", "reasonable time"));
+  assert.ok(!accepts("lp-derivative-demand-wait", "90 days"));
+  assert.ok(accepts("lp-derivative-pleading-recipient", "limited partnership"));
+  assert.ok(!accepts("lp-derivative-pleading-recipient", "plaintiff"));
+  assert.ok(accepts("lp-restructure-approval-lp", "distribution rights"));
+  assert.ok(!accepts("lp-restructure-approval-lp", "headcount"));
+  assert.ok(accepts("lp-restructure-approval-gp", "all general partners"));
+  assert.ok(!accepts("lp-restructure-approval-gp", "majority of general partners"));
+  assert.ok(accepts("lp-contribution-protection-preferences", "preferential rights"));
+  assert.ok(!accepts("lp-contribution-protection-preferences", "profits"));
+  assert.ok(accepts("lp-contribution-promises-death", "no"));
+  assert.ok(!accepts("lp-contribution-promises-death", "yes"));
+});

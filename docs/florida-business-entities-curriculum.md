@@ -1,7 +1,7 @@
 # Florida Business Entities curriculum
 
-Business Entities is a subject in Overview of Florida Law. The 42 original
-short-answer drills contain 299 recall blanks across corporations, general and
+Business Entities is a subject in Overview of Florida Law. The 50 original
+short-answer drills contain 360 recall blanks across corporations, general and
 limited partnerships, LLPs/LLLPs, and LLCs. Course materials determine scope;
 official statutes and decisions verify the legal targets. The application does
 not redistribute the source PDFs or their proprietary hypotheticals.
@@ -41,15 +41,76 @@ saved progress in other subjects are unchanged.
 | Review depth | Drills | Blanks |
 | --- | ---: | ---: |
 | Core | 19 | 136 |
-| Standard | 36 | 254 |
-| Comprehensive | 42 | 299 |
+| Standard | 41 | 291 |
+| Comprehensive | 50 | 360 |
 
 Core includes formation, governance, financial and liability foundations for all
 three major entity families. Standard adds meeting procedure, rights enforcement,
 conflicts, property, and exits. Comprehensive adds derivative procedure,
 indemnification, federal securities claims, special corporations, LP operation,
-and LLC economic transfers and member actions. The full selection rationale is
+and LLC economic transfers and member actions. The Geis expansion adds voting
+and management agreements, share-transfer restrictions, officer appointment and
+departure, and LP contribution limits to Standard. Comprehensive also adds
+partnership authority filings and property transfers, LP derivative procedure,
+and LP conversions and mergers. The full selection rationale is
 in [Overview review levels](overview-review-levels.md).
+
+## November 9 Geis coverage audit
+
+Both named Geis files already supplied the original Business Entities bank.
+The audit retained all 42 existing drills and their identifiers and added eight
+focused drills with 61 blanks for substantial topics that previously had no
+dedicated practice:
+
+| Source | PDF pages | Added practice |
+| --- | --- | --- |
+| FL.Geis.Corporations.pdf | 11 | Share-transfer restrictions and purchaser notice |
+| FL.Geis.Corporations.pdf | 19–20 | Voting trusts and voting agreements |
+| FL.Geis.Corporations.pdf | 20–21 | Shareholder management agreements |
+| FL.Geis.Corporations.pdf | 32–34 | Officers: appointment, duties, and departure |
+| FL.Geis.Partnerships.pdf | 11–12 | Authority filings and property transfers |
+| FL.Geis.Partnerships.pdf | 18–19 | LP contribution obligations and distribution limits |
+| FL.Geis.Partnerships.pdf | 20 | LP derivative procedure |
+| FL.Geis.Partnerships.pdf | 20–21 | LP conversion approval, continuity, and merger effects |
+
+These expand the existing **Business Entities** subject; they do not duplicate
+the same material under new Corporation or Partnership subjects. Each source
+continues to appear by its exact filename in the relevant Course material panel.
+Original source text, filled annotation answers, and the existing drills were
+checked together. The PDFs remain local and are not copied into the website.
+
+The additions were checked against the 2026 Florida Statutes on November 9,
+2026. The principal clarifications are:
+
+- A management agreement can supply its own amendment/termination rule; the
+  handout's unanimous-consent description is the statutory default.
+  [§ 607.0732](https://www.flsenate.gov/Laws/Statutes/2026/607.0732)
+- Share-transfer controls require authorized purposes and appropriate notice;
+  an absent certificate notation does not bind a buyer without knowledge.
+  [§ 607.0627](https://www.flsenate.gov/Laws/Statutes/2026/607.0627)
+- A voting trust transfers shares to a trustee; a signed voting agreement need
+  not. [§ 607.0730](https://www.flsenate.gov/Laws/Statutes/2026/607.0730),
+  [§ 607.0731](https://www.flsenate.gov/Laws/Statutes/2026/607.0731)
+- Effective removal from office can coexist with contractual employment rights.
+  [§ 607.0842](https://www.flsenate.gov/Laws/Statutes/2026/607.0842),
+  [§ 607.0843](https://www.flsenate.gov/Laws/Statutes/2026/607.0843)
+- Merely filing a partnership authority limit ordinarily does not notify every
+  outsider. Partnership-name real-property transfers have special certified-copy
+  recording rules; unauthorized-transfer recovery depends on title and notice.
+  [§ 620.8303](https://www.flsenate.gov/Laws/Statutes/2026/620.8303),
+  [§ 620.8302](https://www.flsenate.gov/Laws/Statutes/2026/620.8302)
+- An LP's balance-sheet distribution test includes superior winding-up
+  preferences as well as liabilities. LP derivative demand uses a reasonable
+  time; it does not import a fixed corporate 90-day waiting period.
+  [§ 620.1508](https://www.flsenate.gov/Laws/Statutes/2026/620.1508),
+  [§ 620.2002](https://www.flsenate.gov/Laws/Statutes/2026/620.2002)
+- LP conversion approval tracks general-partner consent and limited-partner
+  distribution rights, subject to agreement variations and separate protection
+  for a partner facing new personal liability. Conversion preserves entity
+  continuity and existing debts.
+  [§ 620.2103](https://www.flsenate.gov/Laws/Statutes/2026/620.2103),
+  [§ 620.2110](https://www.flsenate.gov/Laws/Statutes/2026/620.2110),
+  [§ 620.2105](https://www.flsenate.gov/Laws/Statutes/2026/620.2105)
 
 ## Verified legal distinctions
 

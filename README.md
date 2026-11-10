@@ -41,10 +41,20 @@ Live site: https://nosam4.github.io/patholawgical/
   recall drills across Core, Standard, and Comprehensive, with source-page
   references and clarifications for updated Florida rules. See
   [curriculum sources and corrections](docs/florida-criminal-procedure-curriculum.md).
-- Overview of Florida Law → **Business Entities** adds 42 recall drills with 299
+- Overview of Florida Law → **Business Entities** adds 50 recall drills with 360
   blanks covering corporations, partnerships, and LLCs across all three review
   depths. Each drill includes course PDF references and legal-source links, with
-  current-law clarifications. See [coverage and corrections](docs/florida-business-entities-curriculum.md).
+  current-law clarifications. The Geis Corporations and Partnerships handouts
+  supply additional voting, officer, transfer, authority-filing, and LP drills.
+  See [coverage and corrections](docs/florida-business-entities-curriculum.md).
+- Overview of Florida Law → **Florida Trusts** and **Florida Wills** add original
+  recall drills from `FL.Kramer.Trusts.pdf` and `FL.Kramer.Wills.pdf`. Each subject
+  supports all three review depths and includes PDF page references, official
+  legal sources, and clarifications where a course summary needs qualification.
+  See [coverage and corrections](docs/florida-trusts-and-wills-curriculum.md).
+- Overview of Florida Law → **Florida Evidence Distinctions** adds Florida/federal
+  comparisons from `FL.Rose.EvidDist.pdf`. This subject has its own progress and
+  review-depth selections. See [coverage and corrections](docs/florida-evidence-distinctions-curriculum.md).
 - Grid answers are checked against the selected blank. List recall still accepts items in any order.
 - ↓ moves to the next unanswered grid blank; ↑ moves to the previous one.
   Tab and Shift+Tab move directly into the next or previous answer box, with normal

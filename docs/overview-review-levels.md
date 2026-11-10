@@ -15,10 +15,13 @@ Each cell gives **drills / answer blanks**, including overlap among drills. Coun
 | Florida Civil Procedure | 11 / 96 | 21 / 177 | 26 / 213 |
 | Florida Civil Procedure: Timelines | 2 / 31 | 7 / 86 | 34 / 283 |
 | Florida Criminal Procedure | 18 / 134 | 26 / 189 | 33 / 237 |
-| Business Entities | 19 / 136 | 36 / 254 | 42 / 299 |
-| **Total** | **64 / 485** | **107 / 811** | **152 / 1137** |
+| Business Entities | 19 / 136 | 41 / 291 | 50 / 360 |
+| Florida Trusts | 11 / 61 | 21 / 112 | 24 / 124 |
+| Florida Wills | 13 / 74 | 25 / 140 | 28 / 158 |
+| Florida Evidence Distinctions | 15 / 87 | 28 / 162 | 33 / 189 |
+| **Total** | **103 / 707** | **186 / 1262** | **245 / 1669** |
 
-Core reduces the current blank count by about 57%. Most of that reduction comes from deferring detailed procedure and repeated timeline formats, rather than cutting qualifications out of existing rules.
+Core reduces the current blank count by about 58%. Most of that reduction comes from deferring detailed procedure and repeated timeline formats, rather than cutting qualifications out of existing rules.
 
 ## Selection rationale
 
@@ -66,16 +69,36 @@ agency and liability. Each major entity family is available in the default path.
 
 Standard adds corporate powers, annual reports, veil piercing, meeting numbers,
 inspection, board action, conflicts, fundamental changes and dissolution;
+share-transfer restrictions, voting arrangements, management agreements, and officers;
 partnership profit-sharing exceptions, property, transfers, dissociation and
-dissolution; and LLC economics, fiduciary limits and exit rules.
+dissolution, plus LP contribution and distribution limits; and LLC economics,
+fiduciary limits and exit rules.
 
 Comprehensive adds derivative-demand procedure, indemnification, federal securities
-claims, special corporation forms, LP operation, and LLC transfers and member
+claims, special corporation forms, partnership authority filings, LP operation,
+LP derivative procedure and conversion/merger, and LLC transfers and member
 actions. These are selected coverage choices from the supplied unit, not a claim
 to reproduce every topic in the handouts. See [sources and corrections](florida-business-entities-curriculum.md).
 
+### Florida Trusts and Florida Wills
+
+Both subjects use the Kramer PDFs to set the scope of original recall drills.
+Core introduces the formation and validity requirements, protected interests,
+and principal administration rules. Standard adds broader rights, remedies,
+and procedural details; Comprehensive includes the entire available bank.
+Each drill retains its qualifications and source clarifications at every depth.
+See [coverage and corrections](florida-trusts-and-wills-curriculum.md).
+
+### Florida Evidence Distinctions
+
+The Rose PDF supplies the Florida/federal comparison topics. Core introduces
+the principal admissibility, witness, and hearsay distinctions; Standard adds
+broader comparisons; Comprehensive includes every available drill. A course
+summary that differs from a current primary source is qualified in the drill's
+Course material panel. See [coverage and corrections](florida-evidence-distinctions-curriculum.md).
+
 ## Maintenance
 
-`src/overviewReview.js` defines the minimum levels and imports the explicit Business Entities classifications from its curriculum modules. Every current Overview drill ID is classified. New IDs fall back to Comprehensive at runtime so they remain accessible without silently expanding Core. The catalog-coverage test fails until each new drill receives an explicit classification. Filtering another course returns its original subjects unchanged.
+`src/overviewReview.js` defines the minimum levels and imports explicit classifications from the Business Entities, Trusts, Wills, and Evidence Distinctions modules. Every current Overview drill ID is classified. New IDs fall back to Comprehensive at runtime so they remain accessible without silently expanding Core. The catalog-coverage test fails until each new drill receives an explicit classification. Filtering another course returns its original subjects unchanged.
 
 The review selector does not introduce time-limited sessions, adaptive selection, difficulty settings, or progress migrations. New curriculum drills receive separate persistent IDs.
