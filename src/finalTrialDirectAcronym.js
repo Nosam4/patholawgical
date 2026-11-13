@@ -5,21 +5,11 @@ export const finalTrialDirectAcronymQuestion = {
   answerMatching: "active",
   answerLayout: "stacked",
   clueLayout: "above",
-  prompt: "Recall the direct-examination acronym and its eight memory cues in order. Use Show Mnemonic for letter hints. Qualifications, assignment, materials reviewed, and compensation come before this sequence.",
+  prompt: "Recall the eight PRACTICE memory cues in order. Use Show Mnemonic for letter hints. Qualifications, assignment, materials reviewed, and compensation come before this sequence.",
   courseSources: [
     "FinalTrial/Drafts/V4_DirectExam_Emerson_DefenseExpert_FinalTrial.docx",
   ],
   columns: [
-    {
-      id: "final-trial-direct-acronym-word",
-      title: "Acronym",
-      answers: [
-        {
-          id: "final-trial-direct-acronym-practice",
-          answer: "PRACTICE",
-        },
-      ],
-    },
     {
       id: "final-trial-direct-acronym-cues",
       title: "Memory cues in examination order",
