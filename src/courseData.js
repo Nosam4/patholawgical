@@ -30,6 +30,7 @@ import { aiAndLawWeek5Questions, aiAndLawWeek6Questions } from "./aiAndLawWeeks5
 import { aiAndLawWeeks8And9Questions } from "./aiAndLawWeeks8And9.js";
 import { aiAndLawQuiz4Subject } from "./aiAndLawQuiz4.js";
 import { aiAndLawQuiz5Subject } from "./aiAndLawQuiz5.js";
+import { aiAndLawPresentationSubject } from "./aiAndLawPresentation.js";
 import { evidenceAnalysisSubject } from "./evidenceAnalysisQuestions.js";
 import { evidenceConfrontationSubject } from "./evidenceConfrontationQuestions.js";
 import { evidenceAidsAndSummariesQuestion, evidenceWitnessFoundationsQuestion } from "./evidenceFoundationQuestions.js";
@@ -1906,6 +1907,7 @@ export const courseCatalog = [
       },
       aiAndLawQuiz4Subject,
       aiAndLawQuiz5Subject,
+      aiAndLawPresentationSubject,
     ],
   },
   {
