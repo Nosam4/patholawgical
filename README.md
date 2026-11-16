@@ -87,6 +87,11 @@ Live site: https://nosam4.github.io/patholawgical/
   Judgment**: sources and measures of bias, AI's effects on workers, Florida
   filing responsibility, and the limits of delegating human judgment. See
   [coverage and sources](docs/ai-and-law-quiz5.md).
+- Trial Advocacy → **Litanies (Courtroom Scripts)** has six spoken-line drills:
+  admitting evidence, refreshing recollection, the Three C's, refreshing on cross,
+  a witness's request to see a prior statement, and impeachment by omission.
+  Conditional directions stay visible; each drill names its course source.
+  See [coverage and sources](docs/trial-advocacy-litanies.md).
 - Trial Advocacy → **Expert Witnesses** adds **Direct**, **Cross**, and **Voir Dire**
   from the simplified Dr. Morgan Kahn and Dr. Leslie Torres scripts. Recall the
   numbered questions and direct/cross closing lines; supplied witness responses

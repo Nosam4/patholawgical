@@ -1914,6 +1914,7 @@ export const courseCatalog = [
     term: "Fall 2026",
     subjects: [
       finalTrialSubject,
+      trialAdvocacyLitanyWordsSubject,
       miniTrialSubject,
       expertWitnessesSubject,
       {
@@ -1939,7 +1940,6 @@ export const courseCatalog = [
         title: "Litanies",
         questions: trialAdvocacyLitanyQuestions,
       },
-      trialAdvocacyLitanyWordsSubject,
     ],
   },
 ];
